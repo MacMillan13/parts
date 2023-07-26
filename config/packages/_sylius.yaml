@@ -1,0 +1,99 @@
+imports:
+    - { resource: "@SyliusCoreBundle/Resources/config/app/config.yml" }
+
+    - { resource: "@BitBagSyliusCmsPlugin/Resources/config/config.yml" }
+    - { resource: "@BitBagSyliusWishlistPlugin/Resources/config/config.yml" }
+
+    - { resource: "@SyliusAdminBundle/Resources/config/app/config.yml" }
+    - { resource: "@SyliusApiBundle/Resources/config/app/config.yaml" }
+
+    - { resource: "@SyliusShopBundle/Resources/config/app/config.yml" }
+    - { resource: "./../../src/Resources/config/resources/*" }
+
+parameters:
+    sylius_core.public_dir: '%kernel.project_dir%/public'
+
+sylius_shop:
+    product_grid:
+        include_all_descendants: true
+
+sylius_order:
+    resources:
+        order:
+            classes:
+                model: BitBag\OpenMarketplace\Entity\Order
+                controller: BitBag\OpenMarketplace\Controller\Resource\OrderController
+                repository: BitBag\OpenMarketplace\Repository\OrderRepository
+                form: Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType\OrderType
+        order_item:
+            classes:
+                model: BitBag\OpenMarketplace\Entity\OrderItem
+
+sylius_product:
+    resources:
+        product:
+            classes:
+                model: BitBag\OpenMarketplace\Entity\Product
+        product_variant:
+            classes:
+                repository: BitBag\OpenMarketplace\Repository\ProductVariantRepository
+
+sylius_user:
+    resources:
+        shop:
+            user:
+                classes:
+                    model: BitBag\OpenMarketplace\Entity\ShopUser
+                    interface: BitBag\OpenMarketplace\Entity\ShopUserInterface
+
+sylius_shipping:
+    resources:
+        shipment:
+            classes:
+                model: BitBag\OpenMarketplace\Entity\Shipment
+                interface: BitBag\OpenMarketplace\Entity\ShipmentInterface
+                repository: BitBag\OpenMarketplace\Repository\ShipmentRepository
+
+sylius_payment:
+    resources:
+        payment:
+            classes:
+                repository: BitBag\OpenMarketplace\Repository\PaymentRepository
+
+sylius_customer:
+    resources:
+        customer:
+            classes:
+                repository: BitBag\OpenMarketplace\Repository\CustomerRepository
+
+sylius_review:
+    resources:
+        product:
+            review:
+                classes:
+                    repository: BitBag\OpenMarketplace\Repository\ProductReviewRepository
+
+sylius_taxonomy:
+    resources:
+        taxon:
+            classes:
+                model: Sylius\Component\Core\Model\Taxon
+                repository: BitBag\OpenMarketplace\Repository\TaxonRepository
+
+sylius_ui:
+    events:
+        sylius.shop.checkout.header:
+            blocks:
+                before_header_legacy:
+                    template: "@SyliusUi/Block/_legacySonataEvent.html.twig"
+                    priority: 15
+                    context:
+                        event: sylius.shop.checkout.address.before_header # Intentionally using "address" event for backwards compatibility
+                header:
+                    template: "@SyliusShop/Checkout/_header.html.twig"
+                    priority: 10
+                after_header_legacy:
+                    template: "@SyliusUi/Block/_legacySonataEvent.html.twig"
+                    priority: 5
+                    context:
+                        event: sylius.shop.checkout.address.after_header # Intentionally using "address" event for backwards compatibility
