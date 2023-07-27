@@ -6,3 +6,9 @@ bitbag_sylius_cms_plugin:
 
 bitbag_sylius_wishlist_plugin:
     resource: "@BitBagSyliusWishlistPlugin/Resources/config/routing.yml"
+
+sylius_shop_homepage:
+    path: /
+    methods: [GET]
+    defaults:
+        _controller: BitBag\OpenMarketplace\Controller\Custom\CustomHomepageController::indexAction
