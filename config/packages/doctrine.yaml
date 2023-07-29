@@ -23,3 +23,9 @@ doctrine:
                 type: xml
                 dir: '%kernel.project_dir%/src/Resources/config/doctrine'
                 prefix: 'BitBag\OpenMarketplace\Entity'
+            App:
+                is_bundle: false
+                type: attribute
+                dir: '%kernel.project_dir%/src/App/Entity'
+                prefix: 'BitBag\OpenMarketplace\App\Entity'
+                alias: App

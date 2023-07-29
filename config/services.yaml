@@ -8,5 +8,13 @@ services:
         autowire: true
         autoconfigure: true
 
+    BitBag\OpenMarketplace\App\:
+        resource: '../src/App/*'
+        exclude: '../src/App/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    BitBag\OpenMarketplace\App\Controller\:
+        resource: '../src/App/Controller'
+        tags: ['controller.service_arguments']
+
     BitBag\OpenMarketplace\Controller\Custom\CustomHomepageController:
         tags: ['controller.service_arguments']

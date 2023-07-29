@@ -63,4 +63,5 @@ return [
     BitBag\SyliusCmsPlugin\BitBagSyliusCmsPlugin::class => ['all' => true],
     BitBag\SyliusWishlistPlugin\BitBagSyliusWishlistPlugin::class => ['all' => true],
     Nelmio\CorsBundle\NelmioCorsBundle::class => ['all' => true],
+    Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],
 ];

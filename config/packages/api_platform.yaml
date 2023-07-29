@@ -5,6 +5,7 @@ api_platform:
             - '%kernel.project_dir%/config/api_platform'
             - '%kernel.project_dir%/src/Entity'
             - '%kernel.project_dir%/src/Resources/config/api_resources'
+            - '%kernel.project_dir%/src/App/Entity'
     patch_formats:
         json: ['application/merge-patch+json']
     swagger:
