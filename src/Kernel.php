@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace BitBag\OpenMarketplace;
 
 use PSS\SymfonyMockerContainer\DependencyInjection\MockerContainer;
 use Sylius\Bundle\CoreBundle\Application\Kernel as SyliusKernel;

@@ -28,15 +28,15 @@ class ProductDraft implements ResourceInterface, ProductDraftInterface
 
     protected ?UuidInterface $uuid = null;
 
-    protected string $code;
+    protected string $code = '';
 
     protected bool $shippingRequired = false;
 
     protected ?ShippingCategoryInterface $shippingCategory = null;
 
-    protected bool $isVerified;
+    protected bool $isVerified = false;
 
-    protected string $status;
+    protected string $status = ProductDraftInterface::STATUS_CREATED;
 
     protected ?\DateTimeInterface $verifiedAt;
 
@@ -44,7 +44,7 @@ class ProductDraft implements ResourceInterface, ProductDraftInterface
 
     protected \DateTimeInterface $createdAt;
 
-    protected int $versionNumber;
+    protected int $versionNumber = 1;
 
     /** @var Collection<int|string, ImageInterface> */
     protected Collection $images;
@@ -60,7 +60,7 @@ class ProductDraft implements ResourceInterface, ProductDraftInterface
     /** @var Collection<int, AttributeValueInterface> */
     protected Collection $attributes;
 
-    protected TaxonInterface|null $mainTaxon;
+    protected TaxonInterface|null $mainTaxon = null;
 
     /** @var Collection<array-key, ProductDraftTaxonInterface> */
     protected Collection $productDraftTaxons;
@@ -71,15 +71,10 @@ class ProductDraft implements ResourceInterface, ProductDraftInterface
     public function __construct()
     {
         $this->images = new ArrayCollection();
-        $this->code = '';
-        $this->status = ProductDraftInterface::STATUS_CREATED;
         $this->productListingPrices = new ArrayCollection();
         $this->translations = new ArrayCollection();
-        $this->isVerified = false;
         $this->createdAt = new \DateTime();
-        $this->versionNumber = 1;
         $this->attributes = new ArrayCollection();
-        $this->mainTaxon = null;
         $this->productDraftTaxons = new ArrayCollection();
         $this->channels = new ArrayCollection();
     }
