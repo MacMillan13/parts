@@ -2,7 +2,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en_US
-    mongodb_server: "mongodb://%env(MONGO_USER)%:%env(MONGO_PASSWORD)%@localhost:27017/?authSource=auth-db"
+    mongodb_server: "mongodb://localhost:27017"
 
 services:
     _defaults:
