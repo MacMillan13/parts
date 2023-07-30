@@ -4,10 +4,20 @@ declare(strict_types=1);
 
 namespace BitBag\OpenMarketplace\App\Controller;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use \Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class RestAbstractController extends AbstractController
 {
+    /**
+     * @param HttpClientInterface $client
+     * @param DocumentManager $dm
+     */
+    public function __construct(protected HttpClientInterface $client, protected DocumentManager $dm)
+    {
+    }
+
     /**
      * @return \string[][]
      */

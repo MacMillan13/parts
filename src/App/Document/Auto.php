@@ -16,7 +16,7 @@ class Auto
     protected $autoData;
 
     #[MongoDB\Field(type: 'string')]
-    protected $key;
+    protected $vinCode;
 
     /**
      * @param object $autoData
@@ -24,19 +24,18 @@ class Auto
      */
     public function setAutoData(object $autoData): Auto
     {
-
         $this->autoData = $autoData;
 
         return $this;
     }
 
     /**
-     * @param string $key
+     * @param string $vinCode
      * @return $this
      */
-    public function setKey(string $key): Auto
+    public function setVinCode(string $vinCode): Auto
     {
-        $this->key = $key;
+        $this->vinCode = $vinCode;
 
         return $this;
     }

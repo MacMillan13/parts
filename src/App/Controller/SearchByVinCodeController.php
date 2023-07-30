@@ -5,18 +5,14 @@ declare(strict_types=1);
 namespace BitBag\OpenMarketplace\App\Controller;
 
 use BitBag\OpenMarketplace\App\Document\Auto;
-use Doctrine\ODM\MongoDB\DocumentManager;
+use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 #[Route(path: "/api/v3/")]
 class SearchByVinCodeController extends RestAbstractController
 {
-    public function __construct(private HttpClientInterface $client, private DocumentManager $dm)
-    {
-    }
-
     /**
      * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
@@ -25,11 +21,11 @@ class SearchByVinCodeController extends RestAbstractController
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
      */
-    #[Route(path: "search-by-vin/{vinCode}", name: "search_by_vin", methods: ["GET"])]
-    public function searchByVinCode($vinCode): Response
+    #[Route(path: "search/vin/{vinCode}", name: "search_by_vin", methods: ["GET"])]
+    public function searchByVinCode(string $vinCode): Response
     {
         try {
-            $auto = $this->dm->getRepository(Auto::class)->findOneBy(['key' => $vinCode]);
+            $auto = $this->dm->getRepository(Auto::class)->findOneBy(['vinCode' => $vinCode]);
 
             if (empty($auto)) {
 
@@ -40,19 +36,25 @@ class SearchByVinCodeController extends RestAbstractController
                 );
 
                 if (!empty($responseArray = $response->toArray())) {
-                    $object = (object)$responseArray[0];
-                    $newAuto = new Auto();
-                    $newAuto->setAutoData($object);
-                    $newAuto->setKey($vinCode);
+                    $autoData = (object)$responseArray[0];
+                    $auto = new Auto();
+                    $auto->setAutoData($autoData);
+                    $auto->setVinCode($vinCode);
 
-                    $this->dm->persist($newAuto);
+                    $this->dm->persist($auto);
                     $this->dm->flush();
+                } else {
+                    throw new \Exception('The Vin Code does not exist');
                 }
             }
 
             return $this->json(['data' => $auto->getAutoData()], Response::HTTP_OK);
 
-        } catch (\Exception $exception) {
+        } catch (ClientException $exception) {
+
+            return $this->json(['error' => 'Sorry. We cannot get needed data.'], Response::HTTP_BAD_REQUEST);
+
+        } catch (\Exception|TransportExceptionInterface $exception) {
 
             return $this->json(['error' => $exception->getMessage()], Response::HTTP_BAD_REQUEST);
         }
