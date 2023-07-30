@@ -11,7 +11,7 @@ services:
 
     BitBag\OpenMarketplace\App\:
         resource: '../src/App/*'
-        exclude: '../src/App/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+        exclude: '../src/App/{DependencyInjection,Document,Entity,Migrations,Tests,Kernel.php}'
 
     BitBag\OpenMarketplace\App\Controller\:
         resource: '../src/App/Controller'
