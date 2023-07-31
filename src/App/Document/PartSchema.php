@@ -7,13 +7,13 @@ namespace BitBag\OpenMarketplace\App\Document;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 #[MongoDB\Document]
-class PartCatalogGroup
+class PartSchema
 {
     #[MongoDB\Id]
     protected $id;
 
     #[MongoDB\Field(type: 'raw')]
-    protected $catalogData;
+    protected $partSchemaData;
 
     #[MongoDB\Field(type: 'string')]
     protected $catalogId;
@@ -28,21 +28,21 @@ class PartCatalogGroup
     protected $dateTime;
 
     /**
-     * @param object $catalogData
+     * @param object $partData
      * @return $this
      */
-    public function setCatalogData(object $catalogData): PartCatalogGroup
+    public function setPartSchemaData(object $partData): PartSchema
     {
-        $this->catalogData = $catalogData;
+        $this->partSchemaData = $partData;
 
         return $this;
     }
 
     /**
      * @param string $catalogId
-     * @return PartCatalogGroup
+     * @return PartSchema
      */
-    public function setCatalogId(string $catalogId): PartCatalogGroup
+    public function setCatalogId(string $catalogId): PartSchema
     {
         $this->catalogId = $catalogId;
 
@@ -51,9 +51,9 @@ class PartCatalogGroup
 
     /**
      * @param string $carId
-     * @return PartCatalogGroup
+     * @return PartSchema
      */
-    public function setCarId(string $carId): PartCatalogGroup
+    public function setCarId(string $carId): PartSchema
     {
         $this->carId = $carId;
 
@@ -62,9 +62,9 @@ class PartCatalogGroup
 
     /**
      * @param string $groupId
-     * @return PartCatalogGroup
+     * @return PartSchema
      */
-    public function setGroupId(string $groupId): PartCatalogGroup
+    public function setGroupId(string $groupId): PartSchema
     {
         $this->groupId = $groupId;
 
@@ -74,7 +74,7 @@ class PartCatalogGroup
     /**
      * @return $this
      */
-    public function setDateTime(): PartCatalogGroup
+    public function setDateTime(): PartSchema
     {
         $this->dateTime = new \DateTime();
 
@@ -82,10 +82,18 @@ class PartCatalogGroup
     }
 
     /**
-     * @return array
+     * @return string
      */
-    public function getCatalogData()
+    public function getId(): string
     {
-        return $this->catalogData;
+        return $this->id;
+    }
+
+    /**
+     * @return object
+     */
+    public function getPartData()
+    {
+        return $this->partSchemaData;
     }
 }

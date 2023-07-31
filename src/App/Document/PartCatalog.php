@@ -21,6 +21,9 @@ class PartCatalog
     #[MongoDB\Field(type: 'string')]
     protected $carId;
 
+    #[MongoDB\Field(type: 'date')]
+    protected $dateTime;
+
     /**
      * @param object $catalogData
      * @return $this
@@ -50,6 +53,16 @@ class PartCatalog
     public function setCarId(string $carId): PartCatalog
     {
         $this->carId = $carId;
+
+        return $this;
+    }
+
+    /**
+     * @return PartCatalogGroup
+     */
+    public function setDateTime(): PartCatalogGroup
+    {
+        $this->dateTime = new \DateTime();
 
         return $this;
     }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BitBag\OpenMarketplace\App\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use MongoId;
 
 #[MongoDB\Document]
 class Part
@@ -12,64 +13,86 @@ class Part
     #[MongoDB\Id]
     protected $id;
 
-    #[MongoDB\Field(type: 'raw')]
-    protected $partData;
+    #[MongoDB\Field(type: 'string')]
+    protected $partNumber;
 
     #[MongoDB\Field(type: 'string')]
-    protected $catalogId;
+    protected $name;
 
     #[MongoDB\Field(type: 'string')]
-    protected $carId;
+    protected $notice;
 
     #[MongoDB\Field(type: 'string')]
-    protected $groupId;
+    protected $description;
+
+    #[MongoDB\Field(type: 'id')]
+    protected $partSchemaId;
+
+    #[MongoDB\Field(type: 'date')]
+    protected $dateTime;
 
     /**
-     * @param object $partData
+     * @param string $partNumber
+     * @return Part
+     */
+    public function setPartNumber(string $partNumber): Part
+    {
+        $this->partNumber = $partNumber;
+
+        return $this;
+    }
+
+    /**
+     * @param string $name
      * @return $this
      */
-    public function setPartData(object $partData): Part
+    public function setName(string $name): Part
     {
-        $this->partData = $partData;
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * @param string $catalogId
-     * @return Part
+     * @param string $notice
+     * @return $this
      */
-    public function setCatalogId(string $catalogId): Part
+    public function setNotice(string $notice): Part
     {
-        $this->catalogId = $catalogId;
+        $this->notice = $notice;
 
         return $this;
     }
 
     /**
-     * @param string $carId
-     * @return Part
+     * @param string $description
+     * @return $this
      */
-    public function setCarId(string $carId): Part
+    public function setDescription(string $description): Part
     {
-        $this->carId = $carId;
+        $this->description = $description;
 
         return $this;
     }
 
     /**
-     * @param string $groupId
      * @return Part
      */
-    public function setGroupId(string $groupId): Part
+    public function setDateTime(): Part
     {
-        $this->groupId = $groupId;
+        $this->dateTime = new \DateTime();
 
         return $this;
     }
 
-    public function getPartData()
+    /**
+     * @param MongoId $partSchemaId
+     * @return $this
+     */
+    public function setPartSchemaId(MongoId $partSchemaId): Part
     {
-        return $this->partData;
+        $this->partSchemaId = $partSchemaId;
+
+        return $this;
     }
 }

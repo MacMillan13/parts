@@ -38,8 +38,8 @@ class SearchByVinCodeController extends RestAbstractController
                 if (!empty($responseArray = $response->toArray())) {
                     $autoData = (object)$responseArray[0];
                     $auto = new Auto();
-                    $auto->setAutoData($autoData);
-                    $auto->setVinCode($vinCode);
+                    $auto->setAutoData($autoData)
+                        ->setVinCode($vinCode);
 
                     $this->dm->persist($auto);
                     $this->dm->flush();

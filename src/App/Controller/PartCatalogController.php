@@ -14,7 +14,7 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 #[Route(path: "/api/v3/")]
 class PartCatalogController extends RestAbstractController
 {
-    #[Route(path: "get-catalog/{catalogId}/{carId}/{criteria}", name: "get_catalog", methods: ["GET"])]
+    #[Route(path: "catalog/part/{catalogId}/{carId}/{criteria}", name: "get_catalog_part", methods: ["GET"])]
     public function getPartCatalog(string $catalogId, string $carId, string $criteria): Response
     {
         try {
@@ -31,9 +31,9 @@ class PartCatalogController extends RestAbstractController
                 if (!empty($responseArray = $response->toArray())) {
                     $catalogData = (object)$responseArray;
                     $partCatalog = new PartCatalog();
-                    $partCatalog->setCatalogData($catalogData);
-                    $partCatalog->setCatalogId($catalogId);
-                    $partCatalog->setCarId($carId);
+                    $partCatalog->setCatalogData($catalogData)
+                        ->setCatalogId($catalogId)
+                        ->setCarId($carId);
 
                     $this->dm->persist($partCatalog);
                     $this->dm->flush();
@@ -54,7 +54,7 @@ class PartCatalogController extends RestAbstractController
         }
     }
 
-    #[Route(path: "get-catalog/{catalogId}/{carId}/{criteria}/{groupId}", name: "get_catalog_group", methods: ["GET"])]
+    #[Route(path: "catalog/part/{catalogId}/{carId}/{criteria}/{groupId}", name: "get_catalog_part_group", methods: ["GET"])]
     public function getPartCatalogGroup(string $catalogId, string $carId, string $criteria, string $groupId): Response
     {
         try {
@@ -72,10 +72,10 @@ class PartCatalogController extends RestAbstractController
                 if (!empty($responseArray = $response->toArray())) {
                     $catalogData = (object)$responseArray;
                     $partCatalogGroup = new PartCatalogGroup();
-                    $partCatalogGroup->setCatalogData($catalogData);
-                    $partCatalogGroup->setCatalogId($catalogId);
-                    $partCatalogGroup->setCarId($carId);
-                    $partCatalogGroup->setGroupId($groupId);
+                    $partCatalogGroup->setCatalogData($catalogData)
+                        ->setCatalogId($catalogId)
+                        ->setCarId($carId)
+                        ->setGroupId($groupId);
 
                     $this->dm->persist($partCatalogGroup);
                     $this->dm->flush();
