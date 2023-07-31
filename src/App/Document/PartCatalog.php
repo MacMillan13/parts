@@ -21,9 +21,6 @@ class PartCatalog
     #[MongoDB\Field(type: 'string')]
     protected $carId;
 
-    #[MongoDB\Field(type: 'string')]
-    protected $criteria;
-
     #[MongoDB\Field(type: 'date')]
     protected $dateTime;
 
@@ -50,17 +47,6 @@ class PartCatalog
     }
 
     /**
-     * @param string $criteria
-     * @return PartCatalog
-     */
-    public function setCriteria(string $criteria): PartCatalog
-    {
-        $this->criteria = $criteria;
-
-        return $this;
-    }
-
-    /**
      * @param string $carId
      * @return PartCatalog
      */
@@ -72,7 +58,7 @@ class PartCatalog
     }
 
     /**
-     * @return PartCatalogGroup
+     * @return PartCatalog
      */
     public function setDateTime(): PartCatalog
     {
@@ -111,14 +97,6 @@ class PartCatalog
     public function getCarId()
     {
         return $this->carId;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCriteria()
-    {
-        return $this->criteria;
     }
 
     /**

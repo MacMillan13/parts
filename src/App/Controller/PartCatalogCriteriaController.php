@@ -4,35 +4,36 @@ declare(strict_types=1);
 
 namespace BitBag\OpenMarketplace\App\Controller;
 
-use BitBag\OpenMarketplace\App\Document\PartCatalog;
-use BitBag\OpenMarketplace\App\Document\PartCatalogGroup;
+use BitBag\OpenMarketplace\App\Document\PartCatalogCriteria;
+use BitBag\OpenMarketplace\App\Document\PartCatalogCriteriaGroup;
 use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 #[Route(path: "/api/v3/")]
-class PartCatalogController extends RestAbstractController
+class PartCatalogCriteriaController extends RestAbstractController
 {
-    #[Route(path: "part/catalog/{catalogId}/{carId}", name: "get_common_part_catalog", methods: ["GET"])]
-    public function getPartCatalog(string $catalogId, string $carId): Response
+    #[Route(path: "part/catalog-criteria/{catalogId}/{carId}/{criteria}", name: "get_part_catalog_criteria", methods: ["GET"])]
+    public function getPartCatalog(string $catalogId, string $carId, string $criteria): Response
     {
         try {
-            $partCatalog = $this->dm->getRepository(PartCatalog::class)->findOneBy(['catalogId' => $catalogId, 'carId' => $carId]);
+            $partCatalog = $this->dm->getRepository(PartCatalogCriteria::class)->findOneBy(['catalogId' => $catalogId,
+                'carId' => $carId, 'criteria' => $criteria]);
 
             if (empty($partCatalog)) {
-
                 $response = $this->client->request(
                     'GET',
-                    $_ENV['PART_CATALOG_API'] . 'catalogs/' . $catalogId . '/groups2/?carId=' . $carId,
+                    $_ENV['PART_CATALOG_API'] . 'catalogs/' . $catalogId . '/groups2/?carId=' . $carId . '&criteria=' . $criteria,
                     $this->getHeaders()
                 );
 
                 if (!empty($responseArray = $response->toArray())) {
                     $catalogData = (object)$responseArray;
-                    $partCatalog = new PartCatalog();
+                    $partCatalog = new PartCatalogCriteria();
                     $partCatalog->setCatalogData($catalogData)
                         ->setCatalogId($catalogId)
+                        ->setCriteria($criteria)
                         ->setDateTime()
                         ->setCarId($carId);
 
@@ -55,26 +56,27 @@ class PartCatalogController extends RestAbstractController
         }
     }
 
-    #[Route(path: "part/catalog/{catalogId}/{carId}/{groupId}", name: "get_common_part_catalog_group", methods: ["GET"])]
-    public function getPartCatalogGroup(string $catalogId, string $carId, string $groupId): Response
+    #[Route(path: "part/catalog-criteria/{catalogId}/{carId}/{criteria}/{groupId}", name: "get_part_catalog_criteria_group", methods: ["GET"])]
+    public function getPartCatalogGroup(string $catalogId, string $carId, string $criteria, string $groupId): Response
     {
         try {
-            $partCatalogGroup = $this->dm->getRepository(PartCatalogGroup::class)->findOneBy(['catalogId' => $catalogId,
+            $partCatalogGroup = $this->dm->getRepository(PartCatalogCriteriaGroup::class)->findOneBy(['catalogId' => $catalogId,
                 'carId' => $carId, 'groupId' => $groupId]);
 
             if (empty($partCatalogGroup)) {
 
                 $response = $this->client->request(
                     'GET',
-                    $_ENV['PART_CATALOG_API'] . 'catalogs/' . $catalogId . '/groups2/?carId=' . $carId . '&groupId=' . $groupId,
+                    $_ENV['PART_CATALOG_API'] . 'catalogs/' . $catalogId . '/groups2/?carId=' . $carId . '&criteria=' . $criteria . '&groupId=' . $groupId,
                     $this->getHeaders()
                 );
 
                 if (!empty($responseArray = $response->toArray())) {
                     $catalogData = (object)$responseArray;
-                    $partCatalogGroup = new PartCatalogGroup();
+                    $partCatalogGroup = new PartCatalogCriteriaGroup();
                     $partCatalogGroup->setCatalogData($catalogData)
                         ->setCatalogId($catalogId)
+                        ->setCriteria($criteria)
                         ->setCarId($carId)
                         ->setDateTime()
                         ->setGroupId($groupId);

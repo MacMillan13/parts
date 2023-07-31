@@ -7,7 +7,7 @@ namespace BitBag\OpenMarketplace\App\Document;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 #[MongoDB\Document]
-class PartCatalogGroup
+class PartCatalogCriteria
 {
     #[MongoDB\Id]
     protected $id;
@@ -22,7 +22,7 @@ class PartCatalogGroup
     protected $carId;
 
     #[MongoDB\Field(type: 'string')]
-    protected $groupId;
+    protected $criteria;
 
     #[MongoDB\Field(type: 'date')]
     protected $dateTime;
@@ -31,7 +31,7 @@ class PartCatalogGroup
      * @param object $catalogData
      * @return $this
      */
-    public function setCatalogData(object $catalogData): PartCatalogGroup
+    public function setCatalogData(object $catalogData): PartCatalogCriteria
     {
         $this->catalogData = $catalogData;
 
@@ -40,9 +40,9 @@ class PartCatalogGroup
 
     /**
      * @param string $catalogId
-     * @return PartCatalogGroup
+     * @return PartCatalogCriteria
      */
-    public function setCatalogId(string $catalogId): PartCatalogGroup
+    public function setCatalogId(string $catalogId): PartCatalogCriteria
     {
         $this->catalogId = $catalogId;
 
@@ -50,10 +50,21 @@ class PartCatalogGroup
     }
 
     /**
-     * @param string $carId
-     * @return PartCatalogGroup
+     * @param string $criteria
+     * @return PartCatalogCriteria
      */
-    public function setCarId(string $carId): PartCatalogGroup
+    public function setCriteria(string $criteria): PartCatalogCriteria
+    {
+        $this->criteria = $criteria;
+
+        return $this;
+    }
+
+    /**
+     * @param string $carId
+     * @return PartCatalogCriteria
+     */
+    public function setCarId(string $carId): PartCatalogCriteria
     {
         $this->carId = $carId;
 
@@ -61,20 +72,9 @@ class PartCatalogGroup
     }
 
     /**
-     * @param string $groupId
-     * @return PartCatalogGroup
+     * @return PartCatalogCriteriaGroup
      */
-    public function setGroupId(string $groupId): PartCatalogGroup
-    {
-        $this->groupId = $groupId;
-
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    public function setDateTime(): PartCatalogGroup
+    public function setDateTime(): PartCatalogCriteria
     {
         $this->dateTime = new \DateTime();
 
@@ -116,9 +116,9 @@ class PartCatalogGroup
     /**
      * @return mixed
      */
-    public function getGroupId()
+    public function getCriteria()
     {
-        return $this->groupId;
+        return $this->criteria;
     }
 
     /**
@@ -128,4 +128,6 @@ class PartCatalogGroup
     {
         return $this->dateTime;
     }
+
+
 }
