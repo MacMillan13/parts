@@ -34,6 +34,7 @@ class PartCatalogController extends RestAbstractController
                     $partCatalog->setCatalogData($catalogData)
                         ->setCatalogId($catalogId)
                         ->setCriteria($criteria)
+                        ->setDateTime()
                         ->setCarId($carId);
 
                     $this->dm->persist($partCatalog);
@@ -77,6 +78,7 @@ class PartCatalogController extends RestAbstractController
                         ->setCatalogId($catalogId)
                         ->setCriteria($criteria)
                         ->setCarId($carId)
+                        ->setDateTime()
                         ->setGroupId($groupId);
 
                     $this->dm->persist($partCatalogGroup);

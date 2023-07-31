@@ -18,6 +18,9 @@ class Auto
     #[MongoDB\Field(type: 'string')]
     protected $vinCode;
 
+    #[MongoDB\Field(type: 'date')]
+    protected $dateTime;
+
     /**
      * @param object $autoData
      * @return $this
@@ -36,6 +39,16 @@ class Auto
     public function setVinCode(string $vinCode): Auto
     {
         $this->vinCode = $vinCode;
+
+        return $this;
+    }
+
+    /**
+     * @return Auto
+     */
+    public function setDateTime(): Auto
+    {
+        $this->dateTime = new \DateTime();
 
         return $this;
     }

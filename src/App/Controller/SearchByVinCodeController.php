@@ -39,6 +39,7 @@ class SearchByVinCodeController extends RestAbstractController
                     $autoData = (object)$responseArray[0];
                     $auto = new Auto();
                     $auto->setAutoData($autoData)
+                        ->setDateTime()
                         ->setVinCode($vinCode);
 
                     $this->dm->persist($auto);

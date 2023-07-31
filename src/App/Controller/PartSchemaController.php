@@ -34,6 +34,7 @@ class PartSchemaController extends RestAbstractController
                     $partSchema->setPartSchemaData($partData)
                         ->setCatalogId($catalogId)
                         ->setCarId($carId)
+                        ->setDateTime()
                         ->setGroupId($groupId);
 
                     $this->dm->persist($partSchema);
@@ -46,8 +47,6 @@ class PartSchemaController extends RestAbstractController
                     throw new \Exception('The Part does not exist');
                 }
             }
-
-
 
             return $this->json(['data' => $partSchema->getPartData()], Response::HTTP_OK);
 
