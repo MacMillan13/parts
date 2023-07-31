@@ -13,10 +13,16 @@ class PartSuggestion
     protected $id;
 
     #[MongoDB\Field(type: 'string')]
-    protected $brand;
+    protected $catalogId;
 
     #[MongoDB\Field(type: 'string')]
-    protected $name;
+    protected $sid;
+
+    #[MongoDB\Field(type: 'string')]
+    protected $carId;
+
+    #[MongoDB\Field(type: 'raw')]
+    protected $data;
 
     #[MongoDB\Field(type: 'date')]
     protected $dateTime;
@@ -40,17 +46,17 @@ class PartSuggestion
     /**
      * @return mixed
      */
-    public function getBrand()
+    public function getCatalogId()
     {
-        return $this->brand;
+        return $this->catalogId;
     }
 
     /**
-     * @param mixed $brand
+     * @param mixed $catalogId
      */
-    public function setBrand($brand): PartSuggestion
+    public function setCatalogId($catalogId): PartSuggestion
     {
-        $this->brand = $brand;
+        $this->catalogId = $catalogId;
 
         return $this;
     }
@@ -58,17 +64,53 @@ class PartSuggestion
     /**
      * @return mixed
      */
-    public function getName()
+    public function getSid()
     {
-        return $this->name;
+        return $this->sid;
     }
 
     /**
-     * @param mixed $name
+     * @param mixed $sid
      */
-    public function setName($name): PartSuggestion
+    public function setSid($sid): PartSuggestion
     {
-        $this->name = $name;
+        $this->sid = $sid;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCarId()
+    {
+        return $this->carId;
+    }
+
+    /**
+     * @param mixed $carId
+     */
+    public function setCarId($carId): PartSuggestion
+    {
+        $this->carId = $carId;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getData()
+    {
+        return $this->data;
+    }
+
+    /**
+     * @param mixed $data
+     */
+    public function setData($data): PartSuggestion
+    {
+        $this->data = $data;
 
         return $this;
     }
