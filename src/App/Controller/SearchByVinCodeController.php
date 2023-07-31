@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BitBag\OpenMarketplace\App\Controller;
 
-use BitBag\OpenMarketplace\App\Document\Auto;
+use BitBag\OpenMarketplace\App\Document\CarVin;
 use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,7 +25,7 @@ class SearchByVinCodeController extends RestAbstractController
     public function searchByVinCode(string $vinCode): Response
     {
         try {
-            $auto = $this->dm->getRepository(Auto::class)->findOneBy(['vinCode' => $vinCode]);
+            $auto = $this->dm->getRepository(CarVin::class)->findOneBy(['vinCode' => $vinCode]);
 
             if (empty($auto)) {
 
@@ -37,7 +37,7 @@ class SearchByVinCodeController extends RestAbstractController
 
                 if (!empty($responseArray = $response->toArray())) {
                     $autoData = (object)$responseArray[0];
-                    $auto = new Auto();
+                    $auto = new CarVin();
                     $auto->setAutoData($autoData)
                         ->setDateTime()
                         ->setVinCode($vinCode);
