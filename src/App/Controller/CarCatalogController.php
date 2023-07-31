@@ -70,13 +70,13 @@ class CarCatalogController extends RestAbstractController
                         $carList = (object)$carListArray;
                         $carCatalogParameters->setCarList($carList);
 
-                        //TODO cron jobs for savings cars.
+                        //TODO cron jobs or queue for savings cars.
                     }
 
                     $this->dm->persist($carCatalogParameters);
                     $this->dm->flush();
                 } else {
-                    throw new \Exception('The Part Catalog does not exist');
+                    throw new \Exception('The data does not exist');
                 }
             }
 

@@ -39,7 +39,7 @@ class PartSchemaController extends RestAbstractController
 
                     $this->dm->persist($partSchema);
 
-                    //TODO cron jobs for savings parts.
+                    //TODO cron jobs or queue for savings parts.
                     $partSaverService->savePartFromSchema($partSchema, $responseArray, $this->dm);
 
                     $this->dm->flush();

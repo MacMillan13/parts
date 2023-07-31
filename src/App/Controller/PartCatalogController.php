@@ -39,7 +39,7 @@ class PartCatalogController extends RestAbstractController
                     $this->dm->persist($partCatalog);
                     $this->dm->flush();
                 } else {
-                    throw new \Exception('The Part Catalog does not exist');
+                    throw new \Exception('The data does not exist');
                 }
             }
 
