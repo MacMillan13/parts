@@ -74,7 +74,7 @@ class PartCatalog
     /**
      * @return PartCatalogGroup
      */
-    public function setDateTime(): PartCatalogGroup
+    public function setDateTime(): PartCatalog
     {
         $this->dateTime = new \DateTime();
 

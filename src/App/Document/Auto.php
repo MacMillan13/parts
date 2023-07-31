@@ -54,10 +54,10 @@ class Auto
     }
 
     /**
-     * @return array
+     * @return object
      */
-    public function getAutoData(): array
+    public function getAutoData(): object
     {
-        return $this->autoData;
+        return (object)$this->autoData;
     }
 }

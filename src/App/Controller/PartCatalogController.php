@@ -14,7 +14,7 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 #[Route(path: "/api/v3/")]
 class PartCatalogController extends RestAbstractController
 {
-    #[Route(path: "catalog/part/{catalogId}/{carId}/{criteria}", name: "get_catalog_part", methods: ["GET"])]
+    #[Route(path: "part/catalog/{catalogId}/{carId}/{criteria}", name: "get_catalog_part", methods: ["GET"])]
     public function getPartCatalog(string $catalogId, string $carId, string $criteria): Response
     {
         try {
@@ -56,7 +56,7 @@ class PartCatalogController extends RestAbstractController
         }
     }
 
-    #[Route(path: "catalog/part/{catalogId}/{carId}/{criteria}/{groupId}", name: "get_catalog_part_group", methods: ["GET"])]
+    #[Route(path: "part/catalog/{catalogId}/{carId}/{criteria}/{groupId}", name: "get_catalog_part_group", methods: ["GET"])]
     public function getPartCatalogGroup(string $catalogId, string $carId, string $criteria, string $groupId): Response
     {
         try {
