@@ -79,14 +79,6 @@ class CarBrand
         return $this->dateTime;
     }
 
-    /**
-     * @param mixed $id
-     */
-    public function setId($id): void
-    {
-        $this->id = $id;
-    }
-
     public function setDateTime(): CarBrand
     {
         $this->dateTime = new \DateTime();

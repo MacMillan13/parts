@@ -7,7 +7,7 @@ namespace BitBag\OpenMarketplace\App\Document;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 #[MongoDB\Document]
-class PartSuggestion
+class CarModel
 {
     #[MongoDB\Id]
     protected $id;
@@ -15,14 +15,8 @@ class PartSuggestion
     #[MongoDB\Field(type: 'string')]
     protected $catalogId;
 
-    #[MongoDB\Field(type: 'string')]
-    protected $sid;
-
-    #[MongoDB\Field(type: 'string')]
-    protected $carId;
-
     #[MongoDB\Field(type: 'raw')]
-    protected $data;
+    protected $models;
 
     #[MongoDB\Field(type: 'date')]
     protected $dateTime;
@@ -46,7 +40,7 @@ class PartSuggestion
     /**
      * @param mixed $catalogId
      */
-    public function setCatalogId($catalogId): PartSuggestion
+    public function setCatalogId($catalogId): CarModel
     {
         $this->catalogId = $catalogId;
 
@@ -56,53 +50,17 @@ class PartSuggestion
     /**
      * @return mixed
      */
-    public function getSid()
+    public function getModels()
     {
-        return $this->sid;
+        return $this->models;
     }
 
     /**
-     * @param mixed $sid
+     * @param mixed $models
      */
-    public function setSid($sid): PartSuggestion
+    public function setModels($models): CarModel
     {
-        $this->sid = $sid;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCarId()
-    {
-        return $this->carId;
-    }
-
-    /**
-     * @param mixed $carId
-     */
-    public function setCarId($carId): PartSuggestion
-    {
-        $this->carId = $carId;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getData()
-    {
-        return $this->data;
-    }
-
-    /**
-     * @param mixed $data
-     */
-    public function setData($data): PartSuggestion
-    {
-        $this->data = $data;
+        $this->models = $models;
 
         return $this;
     }
@@ -115,10 +73,14 @@ class PartSuggestion
         return $this->dateTime;
     }
 
-    public function setDateTime(): PartSuggestion
+    /**
+     * @return CarModel
+     */
+    public function setDateTime(): CarModel
     {
         $this->dateTime = new \DateTime();;
 
         return $this;
     }
+
 }

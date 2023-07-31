@@ -45,6 +45,9 @@ class Car
     #[MongoDB\Field(type: 'raw')]
     protected $parameters;
 
+    #[MongoDB\Field(type: 'date')]
+    protected $dateTime;
+
     /**
      * @return mixed
      */
