@@ -88,4 +88,46 @@ class PartCatalog
     {
         return $this->catalogData;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCatalogId()
+    {
+        return $this->catalogId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCarId()
+    {
+        return $this->carId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCriteria()
+    {
+        return $this->criteria;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDateTime()
+    {
+        return $this->dateTime;
+    }
+
+
 }
