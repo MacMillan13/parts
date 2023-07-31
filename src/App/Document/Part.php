@@ -25,6 +25,9 @@ class Part
     #[MongoDB\Field(type: 'string')]
     protected $description;
 
+    #[MongoDB\Field(type: 'collection')]
+    protected $cross;
+
     #[MongoDB\Field(type: 'id')]
     protected $partSchemaId;
 
@@ -92,6 +95,17 @@ class Part
     public function setPartSchemaId(MongoId $partSchemaId): Part
     {
         $this->partSchemaId = $partSchemaId;
+
+        return $this;
+    }
+
+    /**
+     * @param string $partNumber
+     * @return $this
+     */
+    public function setCross(string $partNumber): Part
+    {
+        $this->cross[] = $partNumber;
 
         return $this;
     }

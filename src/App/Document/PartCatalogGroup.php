@@ -24,6 +24,9 @@ class PartCatalogGroup
     #[MongoDB\Field(type: 'string')]
     protected $groupId;
 
+    #[MongoDB\Field(type: 'string')]
+    protected $criteria;
+
     #[MongoDB\Field(type: 'date')]
     protected $dateTime;
 
@@ -45,6 +48,17 @@ class PartCatalogGroup
     public function setCatalogId(string $catalogId): PartCatalogGroup
     {
         $this->catalogId = $catalogId;
+
+        return $this;
+    }
+
+    /**
+     * @param string $criteria
+     * @return PartCatalogGroup
+     */
+    public function setCriteria(string $criteria): PartCatalogGroup
+    {
+        $this->criteria = $criteria;
 
         return $this;
     }

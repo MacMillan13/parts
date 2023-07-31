@@ -24,6 +24,9 @@ class PartSchema
     #[MongoDB\Field(type: 'string')]
     protected $groupId;
 
+    #[MongoDB\Field(type: 'string')]
+    protected $criteria;
+
     #[MongoDB\Field(type: 'date')]
     protected $dateTime;
 
@@ -56,6 +59,17 @@ class PartSchema
     public function setCarId(string $carId): PartSchema
     {
         $this->carId = $carId;
+
+        return $this;
+    }
+
+    /**
+     * @param string $criteria
+     * @return PartSchema
+     */
+    public function setCriteria(string $criteria): PartSchema
+    {
+        $this->criteria = $criteria;
 
         return $this;
     }
