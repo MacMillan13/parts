@@ -18,6 +18,12 @@ class CarVin
     #[MongoDB\Field(type: 'string')]
     protected $vinCode;
 
+    #[MongoDB\Field(type: 'id')]
+    protected $catalogId;
+
+    #[MongoDB\Field(type: 'bool')]
+    protected $exactMatch;
+
     #[MongoDB\Field(type: 'date')]
     protected $dateTime;
 
@@ -59,5 +65,41 @@ class CarVin
     public function getAutoData(): object
     {
         return (object)$this->autoData;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCatalogId()
+    {
+        return $this->catalogId;
+    }
+
+    /**
+     * @param mixed $catalogId
+     */
+    public function setCatalogId($catalogId): CarVin
+    {
+        $this->catalogId = $catalogId;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getExactMatch()
+    {
+        return $this->exactMatch;
+    }
+
+    /**
+     * @param mixed $exactMatch
+     */
+    public function setExactMatch($exactMatch): CarVin
+    {
+        $this->exactMatch = $exactMatch;
+
+        return $this;
     }
 }

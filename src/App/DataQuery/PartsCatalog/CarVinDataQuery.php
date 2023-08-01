@@ -41,6 +41,7 @@ class CarVinDataQuery extends AbstractDataQuery
                 $auto = new CarVin();
                 $auto->setAutoData($autoData)
                     ->setDateTime()
+                    ->setExactMatch(true)
                     ->setVinCode($vinCode);
 
                 $this->dm->persist($auto);

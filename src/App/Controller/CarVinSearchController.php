@@ -6,6 +6,7 @@ namespace BitBag\OpenMarketplace\App\Controller;
 
 use BitBag\OpenMarketplace\App\DataQuery\PartsCatalog\CarVinDataQuery as PartsCatalogCarVinDataQuery;
 use BitBag\OpenMarketplace\App\DataQuery\Sophio\CarVinDataQuery as SophioCarVinDataQuery;
+use BitBag\OpenMarketplace\App\Service\Sophio\CarVinDecoderService;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpClient\Exception\ClientException;
@@ -21,8 +22,9 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 class CarVinSearchController extends AbstractController
 {
     /**
-     * @param PartsCatalogCarVinDataQuery $carVinDataQuery
-     * @param SophioCarVinDataQuery $carVinMissDataQuery
+     * @param PartsCatalogCarVinDataQuery $partsCatalogVinDataQuery
+     * @param SophioCarVinDataQuery $sophioVinDataQuery
+     * @param CarVinDecoderService $carVinDecoderService
      * @param string $vinCode
      * @return Response
      * @throws ClientExceptionInterface
@@ -31,23 +33,30 @@ class CarVinSearchController extends AbstractController
      * @throws ServerExceptionInterface
      */
     #[Route(path: "search/vin/{vinCode}", name: "search_by_vin", methods: ["GET"])]
-    public function searchByVinCode(PartsCatalogCarVinDataQuery $partsCatalogVinDataQuery, SophioCarVinDataQuery $sophioVinDataQuery, string $vinCode): Response
+    public function searchByVinCode(PartsCatalogCarVinDataQuery $partsCatalogVinDataQuery, SophioCarVinDataQuery $sophioVinDataQuery,
+                                    CarVinDecoderService $carVinDecoderService, string $vinCode): Response
     {
         try {
 
             $auto = $partsCatalogVinDataQuery->query($vinCode);
 
             if (empty($auto)) {
-                $vinData = $sophioVinDataQuery->query($vinCode);
 
-                if (!empty($vinData)) {
+                $carData = $sophioVinDataQuery->query($vinCode);
+
+                if (!empty($carData)) {
+
+                    $autoData = $carVinDecoderService->decoder($carData);
+
+                    return $this->json(['data' => $autoData, 'exactMatch' => false], Response::HTTP_OK);
 
                 } else {
+
                     throw new \Exception('Please search manually.');
                 }
             }
 
-            return $this->json(['data' => $auto->getAutoData()], Response::HTTP_OK);
+            return $this->json(['data' => $auto->getAutoData(), 'exactMatch' => true], Response::HTTP_OK);
 
         } catch (ClientException $exception) {
 
