@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace BitBag\OpenMarketplace\App\Controller;
 
 use BitBag\OpenMarketplace\App\DataQuery\PartsCatalog\CarModelDataQuery;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 #[Route(path: "/api/v3/")]
-class CarModelController extends RestAbstractController
+class CarModelController extends AbstractController
 {
     #[Route(path: "car/model/{catalogId}", name: "get_car_models", methods: ["GET"])]
     public function search(CarModelDataQuery $carModelDataQuery, string $catalogId): Response

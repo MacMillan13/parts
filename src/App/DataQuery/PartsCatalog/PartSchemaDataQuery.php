@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace BitBag\OpenMarketplace\App\DataQuery\PartsCatalog;
 
-use BitBag\OpenMarketplace\App\DataQuery\AbstractDataQuery;
 use BitBag\OpenMarketplace\App\Document\PartSchema;
 use BitBag\OpenMarketplace\App\Service\PartSaverService;
 use Doctrine\ODM\MongoDB\DocumentManager;

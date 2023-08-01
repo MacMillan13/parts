@@ -2,13 +2,12 @@
 
 declare(strict_types=1);
 
-namespace BitBag\OpenMarketplace\App\Controller;
+namespace BitBag\OpenMarketplace\App\DataQuery\Sophio;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use \Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-abstract class RestAbstractController extends AbstractController
+abstract class AbstractDataQuery
 {
     /**
      * @param HttpClientInterface $client
@@ -26,8 +25,7 @@ abstract class RestAbstractController extends AbstractController
         return [
             'headers' => [
                 'Accept' => 'application/json',
-                'Accept-Language' => 'en',
-                'Authorization' => 'OEM-API-08F0004D-C01F-4912-958E-CEF55A4306C9',
+                'Accept-Language' => 'en'
             ],
         ];
     }

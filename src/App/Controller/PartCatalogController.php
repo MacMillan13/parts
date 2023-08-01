@@ -6,13 +6,14 @@ namespace BitBag\OpenMarketplace\App\Controller;
 
 use BitBag\OpenMarketplace\App\DataQuery\PartsCatalog\PartCatalogDataQuery;
 use BitBag\OpenMarketplace\App\Document\PartCatalogGroup;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 #[Route(path: "/api/v3/")]
-class PartCatalogController extends RestAbstractController
+class PartCatalogController extends AbstractController
 {
     #[Route(path: "part/catalog/{catalogId}/{carId}", name: "get_common_part_catalog", methods: ["GET"])]
     public function getPartCatalog(PartCatalogDataQuery $partCatalogDataQuery, string $catalogId, string $carId): Response

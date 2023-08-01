@@ -6,13 +6,13 @@ namespace BitBag\OpenMarketplace\App\Controller;
 
 use BitBag\OpenMarketplace\App\DataQuery\PartsCatalog\PartSearchQueryDataQuery;
 use BitBag\OpenMarketplace\App\DataQuery\PartsCatalog\PartSearchSidDataQuery;
-use BitBag\OpenMarketplace\App\Document\PartSuggestionQuery;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route(path: "/api/v3/")]
-class PartSearchController extends RestAbstractController
+class PartSearchController extends AbstractController
 {
     #[Route(path: "part/search/{catalogId}/{query}", name: "search_part_by_query", methods: ["GET"])]
     public function searchPartByQuery(PartSearchQueryDataQuery $partSearchQueryDataQuery, string $catalogId,

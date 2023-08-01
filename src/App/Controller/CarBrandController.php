@@ -5,12 +5,22 @@ declare(strict_types=1);
 namespace BitBag\OpenMarketplace\App\Controller;
 
 use BitBag\OpenMarketplace\App\Document\CarBrand;
+use Doctrine\ODM\MongoDB\DocumentManager;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 #[Route(path: "/api/v3/")]
-class CarBrandController extends RestAbstractController
+class CarBrandController extends AbstractController
 {
+    /**
+     * @param DocumentManager $dm
+     */
+    public function __construct(private DocumentManager $dm)
+    {
+    }
+
     #[Route(path: "car/brand", name: "get_catalog_car", methods: ["GET"])]
     public function getCarCatalog(): Response
     {

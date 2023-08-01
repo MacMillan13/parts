@@ -6,13 +6,14 @@ namespace BitBag\OpenMarketplace\App\Controller;
 
 use BitBag\OpenMarketplace\App\DataQuery\PartsCatalog\CarCatalogDataQuery;
 use BitBag\OpenMarketplace\App\Document\CarCatalog;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route(path: "/api/v3/")]
-class CarCatalogController extends RestAbstractController
+class CarCatalogController extends AbstractController
 {
     #[Route(path: "car/catalog/{catalogId}/{modelId}", name: "get_catalog_car_parameters", methods: ["GET"])]
     public function getCarCatalogParameters(Request $request, CarCatalogDataQuery $carCatalogDataQuery,

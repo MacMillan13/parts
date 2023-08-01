@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace BitBag\OpenMarketplace\App\DataQuery\PartsCatalog;
 
-use BitBag\OpenMarketplace\App\DataQuery\AbstractDataQuery;
 use BitBag\OpenMarketplace\App\Document\CarVin;
 use Doctrine\ODM\MongoDB\MongoDBException;
-use Exception;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
@@ -18,16 +16,15 @@ class CarVinDataQuery extends AbstractDataQuery
 {
     /**
      * @param string $vinCode
-     * @return CarVin
-     * @throws MongoDBException
+     * @return CarVin|null
      * @throws ClientExceptionInterface
      * @throws DecodingExceptionInterface
+     * @throws MongoDBException
      * @throws RedirectionExceptionInterface
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
-     * @throws Exception
      */
-    public function query(string $vinCode): CarVin
+    public function query(string $vinCode): ?CarVin
     {
         $auto = $this->dm->getRepository(CarVin::class)->findOneBy(['vinCode' => $vinCode]);
 
@@ -50,7 +47,7 @@ class CarVinDataQuery extends AbstractDataQuery
                 $this->dm->flush();
             } else {
 
-                throw new Exception('The Vin Code does not exist');
+                return null;
             }
         }
 

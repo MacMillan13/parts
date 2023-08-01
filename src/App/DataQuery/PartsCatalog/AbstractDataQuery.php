@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BitBag\OpenMarketplace\App\DataQuery;
+namespace BitBag\OpenMarketplace\App\DataQuery\PartsCatalog;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
