@@ -272,4 +272,29 @@ class CarCatalog
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCatalogId()
+    {
+        return $this->catalogId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getModelId()
+    {
+        return $this->modelId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDateTime()
+    {
+        return $this->dateTime;
+    }
+
 }
