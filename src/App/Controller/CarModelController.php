@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BitBag\OpenMarketplace\App\Controller;
 
-use BitBag\OpenMarketplace\App\DataQuery\CarModelDataQuery;
+use BitBag\OpenMarketplace\App\DataQuery\PartsCatalog\CarModelDataQuery;
 use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

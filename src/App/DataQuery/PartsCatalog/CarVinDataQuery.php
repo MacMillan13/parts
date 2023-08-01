@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace BitBag\OpenMarketplace\App\DataQuery;
+namespace BitBag\OpenMarketplace\App\DataQuery\PartsCatalog;
 
+use BitBag\OpenMarketplace\App\DataQuery\AbstractDataQuery;
 use BitBag\OpenMarketplace\App\Document\CarVin;
 use Doctrine\ODM\MongoDB\MongoDBException;
 use Exception;

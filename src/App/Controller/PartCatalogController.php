@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BitBag\OpenMarketplace\App\Controller;
 
-use BitBag\OpenMarketplace\App\Document\PartCatalog;
+use BitBag\OpenMarketplace\App\DataQuery\PartsCatalog\PartCatalogDataQuery;
 use BitBag\OpenMarketplace\App\Document\PartCatalogGroup;
 use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,33 +15,11 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 class PartCatalogController extends RestAbstractController
 {
     #[Route(path: "part/catalog/{catalogId}/{carId}", name: "get_common_part_catalog", methods: ["GET"])]
-    public function getPartCatalog(string $catalogId, string $carId): Response
+    public function getPartCatalog(PartCatalogDataQuery $partCatalogDataQuery, string $catalogId, string $carId): Response
     {
         try {
-            $partCatalog = $this->dm->getRepository(PartCatalog::class)->findOneBy(['catalogId' => $catalogId, 'carId' => $carId]);
 
-            if (empty($partCatalog)) {
-
-                $response = $this->client->request(
-                    'GET',
-                    $_ENV['PART_CATALOG_API'] . 'catalogs/' . $catalogId . '/groups2/?carId=' . $carId,
-                    $this->getHeaders()
-                );
-
-                if (!empty($responseArray = $response->toArray())) {
-                    $catalogData = (object)$responseArray;
-                    $partCatalog = new PartCatalog();
-                    $partCatalog->setCatalogData($catalogData)
-                        ->setCatalogId($catalogId)
-                        ->setDateTime()
-                        ->setCarId($carId);
-
-                    $this->dm->persist($partCatalog);
-                    $this->dm->flush();
-                } else {
-                    throw new \Exception('The data does not exist');
-                }
-            }
+            $partCatalog = $partCatalogDataQuery->query($catalogId, $carId);
 
             return $this->json(['data' => $partCatalog->getCatalogData()], Response::HTTP_OK);
 
