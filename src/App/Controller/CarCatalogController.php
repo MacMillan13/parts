@@ -42,7 +42,7 @@ class CarCatalogController extends RestAbstractController
                 ->setExactModelId($exactModelId)
                 ->setEngineId($engineId);
 
-            $carCatalogParameters = $carCatalogDataQuery->getCatalogData($carCatalogParameters);
+            $carCatalogParameters = $carCatalogDataQuery->query($carCatalogParameters);
 
             return $this->json(['data' => $carCatalogParameters->getParameters()], Response::HTTP_OK);
 

@@ -7,7 +7,7 @@ namespace BitBag\OpenMarketplace\App\DataQuery;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class AbstractDataQuery
+abstract class AbstractDataQuery
 {
     /**
      * @param HttpClientInterface $client

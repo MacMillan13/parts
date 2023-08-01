@@ -8,7 +8,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use \Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class RestAbstractController extends AbstractController
+abstract class RestAbstractController extends AbstractController
 {
     /**
      * @param HttpClientInterface $client

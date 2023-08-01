@@ -17,7 +17,7 @@ class CarModelController extends RestAbstractController
     public function search(CarModelDataQuery $carModelDataQuery, string $catalogId): Response
     {
         try {
-            $carModel = $carModelDataQuery->getCarModelList($catalogId);
+            $carModel = $carModelDataQuery->query($catalogId);
 
             return $this->json(['data' => $carModel->getModels()], Response::HTTP_OK);
 

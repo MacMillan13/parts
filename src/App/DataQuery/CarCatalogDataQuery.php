@@ -39,7 +39,7 @@ class CarCatalogDataQuery extends AbstractDataQuery
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
      */
-    public function getCatalogData(CarCatalog $carCatalog): CarCatalog
+    public function query(CarCatalog $carCatalog): CarCatalog
     {
         $carCatalogSearch = $this->dm->getRepository(CarCatalog::class)
             ->findOneBy(['catalogId' => $carCatalog->getCatalogId(), 'modelId' => $carCatalog->getModelId(), 'yearId' => $carCatalog->getYearId(),

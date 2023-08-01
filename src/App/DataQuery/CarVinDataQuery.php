@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BitBag\OpenMarketplace\App\DataQuery;
 
-use BitBag\OpenMarketplace\App\Document\CarModel;
+use BitBag\OpenMarketplace\App\Document\CarVin;
 use Doctrine\ODM\MongoDB\MongoDBException;
 use Exception;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
@@ -13,44 +13,46 @@ use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
-class CarModelDataQuery extends AbstractDataQuery
+class CarVinDataQuery extends AbstractDataQuery
 {
     /**
-     * @param string $catalogId
-     * @return CarModel
+     * @param string $vinCode
+     * @return CarVin
      * @throws MongoDBException
      * @throws ClientExceptionInterface
      * @throws DecodingExceptionInterface
      * @throws RedirectionExceptionInterface
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
+     * @throws Exception
      */
-    public function query(string $catalogId): CarModel
+    public function query(string $vinCode): CarVin
     {
-        $carModel = $this->dm->getRepository(CarModel::class)->findOneBy(['catalogId' => $catalogId]);
+        $auto = $this->dm->getRepository(CarVin::class)->findOneBy(['vinCode' => $vinCode]);
 
-        if (empty($carModel)) {
+        if (empty($auto)) {
+
             $response = $this->client->request(
                 'GET',
-                $_ENV['PART_CATALOG_API'] . 'catalogs/' . $catalogId . '/models',
+                $_ENV['PART_CATALOG_API'] . 'car/info?q=' . $vinCode,
                 $this->getHeaders()
             );
 
             if (!empty($responseArray = $response->toArray())) {
-                $carModelData = (object)$responseArray;
-                $carModel = new CarModel();
-                $carModel->setModels($carModelData)
-                    ->setCatalogId($catalogId)
-                    ->setDateTime();
+                $autoData = (object)$responseArray[0];
+                $auto = new CarVin();
+                $auto->setAutoData($autoData)
+                    ->setDateTime()
+                    ->setVinCode($vinCode);
 
-                $this->dm->persist($carModel);
+                $this->dm->persist($auto);
                 $this->dm->flush();
-
             } else {
-                throw new Exception('The Part does not exist');
+
+                throw new Exception('The Vin Code does not exist');
             }
         }
 
-        return $carModel;
+        return $auto;
     }
 }
