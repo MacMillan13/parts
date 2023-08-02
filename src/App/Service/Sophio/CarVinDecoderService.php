@@ -21,10 +21,12 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 class CarVinDecoderService
 {
+    const DEFAULT_REGION = 'USA';
+    const DEFAULT_STEERING = 'Left hand';
+
     public function __construct(private CarModelDataQuery $carModelDataQuery, private CarCatalogDataQuery $carCatalogDataQuery,
         private DocumentManager $documentManager)
     {
-
     }
 
     /**
@@ -48,9 +50,48 @@ class CarVinDecoderService
 
         $carCatalog = $this->getCatalogWithTheRightModel($carModel, $brand);
 
-        $carCatalog = $this->getCatalogWithTheRightYear($carCatalog, $carData);
+        foreach ($carCatalog->getParameters() as $parameter) {
+            $carCatalog = $this->setValues($carCatalog, $parameter, $carData);
+        }
+
+        $carCatalog = $this->carCatalogDataQuery->query($carCatalog);
 
         $this->saveCarVin($carCatalog, $carData['vin']);
+
+        return $carCatalog;
+    }
+
+    /**
+     * @param CarCatalog $carCatalog
+     * @param array $parameter
+     * @param array $carData
+     * @return CarCatalog
+     */
+    private function setValues(CarCatalog $carCatalog, array $parameter, array $carData): CarCatalog
+    {
+        switch ($parameter['key']) {
+            case 'year':
+                foreach ($parameter['values'] as $item) {
+                    if ($carData['year'] === $item['value']) {
+                        $carCatalog->setYearId($item['idx']);
+                    }
+                }
+                break;
+            case 'sales_region':
+                foreach ($parameter['values'] as $item) {
+                    if (self::DEFAULT_REGION === $item['value']) {
+                        $carCatalog->setRegionId($item['idx']);
+                    }
+                }
+                break;
+            case 'steering':
+                foreach ($parameter['values'] as $item) {
+                    if (self::DEFAULT_STEERING === $item['value']) {
+                        $carCatalog->setSteeringId($item['idx']);
+                    }
+                }
+                break;
+        }
 
         return $carCatalog;
     }
@@ -93,47 +134,6 @@ class CarVinDecoderService
         $carCatalog->setCatalogId($brand);
 
         return $this->carCatalogDataQuery->query($carCatalog);
-    }
-
-    /**
-     * @param CarCatalog $carCatalog
-     * @param array $carData
-     * @return CarCatalog
-     * @throws ClientExceptionInterface
-     * @throws DecodingExceptionInterface
-     * @throws MongoDBException
-     * @throws RedirectionExceptionInterface
-     * @throws ServerExceptionInterface
-     * @throws TransportExceptionInterface
-     */
-    private function getCatalogWithTheRightYear(CarCatalog $carCatalog, array $carData): CarCatalog
-    {
-        $carCatalog = $this->setTheRightYear($carCatalog, $carData);
-
-        return $this->carCatalogDataQuery->query($carCatalog);
-    }
-
-    /**
-     * @param CarCatalog $carCatalog
-     * @param array $carData
-     * @return CarCatalog
-     */
-    private function setTheRightYear(CarCatalog $carCatalog, array $carData): CarCatalog
-    {
-        $parameters = (array)$carCatalog->getParameters();
-
-        foreach ($parameters as $parameter) {
-            if ('year' === $parameter['key']){
-                foreach ($parameter['values'] as $item) {
-                    if ($carData['year'] === $item['value']) {
-                        $carCatalog->setYearId($item['idx']);
-                        break;
-                    }
-                }
-            }
-        }
-
-        return $carCatalog;
     }
 
     /**

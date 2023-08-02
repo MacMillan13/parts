@@ -19,7 +19,7 @@ class CarCatalogUrlHelper
                 if (strlen($parametersCriteria) === 0) {
                     $parametersCriteria = '&parameter=' . $oneParam;
                 } else {
-                    $parametersCriteria .= '%' . $oneParam;
+                    $parametersCriteria .= ',' . $oneParam;
                 }
             }
         }
