@@ -64,7 +64,7 @@ class PartSchemaDataQuery extends AbstractDataQuery
                 $this->dm->persist($partSchema);
 
                 //TODO cron jobs or queue for savings parts.
-                $this->partSaverService->savePartFromSchema($partSchema, $responseArray, $this->dm);
+                $this->partSaverService->savePartFromSchema($partSchema, $responseArray);
 
                 $this->dm->flush();
 

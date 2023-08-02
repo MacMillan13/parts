@@ -7,6 +7,7 @@ namespace BitBag\OpenMarketplace\App\Controller;
 use BitBag\OpenMarketplace\App\DataQuery\PartsCatalog\CarVinDataQuery as PartsCatalogCarVinDataQuery;
 use BitBag\OpenMarketplace\App\DataQuery\Sophio\CarVinDataQuery as SophioCarVinDataQuery;
 use BitBag\OpenMarketplace\App\Service\Sophio\CarVinDecoderService;
+use Doctrine\ODM\MongoDB\DocumentManager;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpClient\Exception\ClientException;
@@ -56,7 +57,7 @@ class CarVinSearchController extends AbstractController
                 }
             }
 
-            return $this->json(['data' => $auto->getAutoData(), 'exactMatch' => true], Response::HTTP_OK);
+            return $this->json(['exactMatch' => $auto->getExactMatch(), 'data' => $auto->getAutoData()], Response::HTTP_OK);
 
         } catch (ClientException $exception) {
 

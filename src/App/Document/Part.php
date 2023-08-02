@@ -57,10 +57,10 @@ class Part
     }
 
     /**
-     * @param string $notice
+     * @param string|null $notice
      * @return $this
      */
-    public function setNotice(string $notice): Part
+    public function setNotice(?string $notice): Part
     {
         $this->notice = $notice;
 

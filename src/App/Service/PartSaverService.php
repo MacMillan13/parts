@@ -12,20 +12,28 @@ use MongoId;
 
 class PartSaverService
 {
-    public function __construct(private ArrayHelper $arrayHelper)
+    public function __construct(private ArrayHelper $arrayHelper, private DocumentManager $documentManager)
     {
     }
 
-    public function savePartFromSchema(PartSchema $partSchema, array $responseArray, DocumentManager $documentManager)
+    /**
+     * @param PartSchema $partSchema
+     * @param array $responseArray
+     * @return void
+     * @throws \MongoException
+     */
+    public function savePartFromSchema(PartSchema $partSchema, array $responseArray): void
     {
-        $partRep = $documentManager->getRepository(Part::class);
+        $partRep = $this->documentManager->getRepository(Part::class);
 
         foreach ($responseArray['partGroups'] as $partGroups) {
 
             $parts = $this->arrayHelper->arrayUniqueByKey($partGroups['parts'], 'number');
 
             foreach ($parts as $part) {
-                $partValue = $partRep->findOneBy(['partNumber' => $part['number']]);
+                $partNumber = trim($part['number']);
+
+                $partValue = $partRep->findOneBy(['partNumber' => $partNumber]);
 
                 if (empty($partValue)) {
                     $newPart = new Part();
@@ -38,12 +46,13 @@ class PartSaverService
                         ->setDateTime();
 
                     foreach ($parts as $crossPart) {
-                        if ($part['number'] !== $crossPart['number'] && $part['positionNumber'] == $crossPart['positionNumber']) {
-                            $newPart->setCross($crossPart['number']);
+                        $crossPartNumber = trim($crossPart['number']);
+                        if ($partNumber !== $crossPartNumber && $part['positionNumber'] == $crossPart['positionNumber']) {
+                            $newPart->setCross($crossPartNumber);
                         }
                     }
 
-                    $documentManager->persist($newPart);
+                    $this->documentManager->persist($newPart);
                 }
             }
         }

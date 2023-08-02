@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace BitBag\OpenMarketplace\App\Document;
 
+use BitBag\OpenMarketplace\App\DocumentRepository\CarVinRepository;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use MongoId;
 
-#[MongoDB\Document]
+#[MongoDB\Document(repositoryClass: CarVinRepository::class)]
 class CarVin
 {
     #[MongoDB\Id]
@@ -76,9 +78,10 @@ class CarVin
     }
 
     /**
-     * @param mixed $catalogId
+     * @param MongoId $catalogId
+     * @return CarVin
      */
-    public function setCatalogId($catalogId): CarVin
+    public function setCatalogId(MongoId $catalogId): CarVin
     {
         $this->catalogId = $catalogId;
 
@@ -101,5 +104,21 @@ class CarVin
         $this->exactMatch = $exactMatch;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVinCode()
+    {
+        return $this->vinCode;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDateTime()
+    {
+        return $this->dateTime;
     }
 }

@@ -12,6 +12,7 @@ use BitBag\OpenMarketplace\App\Document\CarVin;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\MongoDBException;
 use Exception;
+use MongoId;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
@@ -58,13 +59,12 @@ class CarVinDecoderService
      * @param CarCatalog $carCatalog
      * @param string $vinCode
      * @return void
-     * @throws MongoDBException
-     * @throws \MongoException
+     * @throws MongoDBException|\MongoException
      */
     private function saveCarVin(CarCatalog $carCatalog, string $vinCode): void
     {
         $carVin = new CarVin();
-        $carVin->setCatalogId(new \MongoId($carCatalog->getId()))
+        $carVin->setCatalogId(new MongoId($carCatalog->getId()))
             ->setVinCode($vinCode)
             ->setExactMatch(false)
             ->setDateTime();

@@ -26,7 +26,7 @@ class CarVinDataQuery extends AbstractDataQuery
      */
     public function query(string $vinCode): ?CarVin
     {
-        $auto = $this->dm->getRepository(CarVin::class)->findOneBy(['vinCode' => $vinCode]);
+        $auto = $this->dm->getRepository(CarVin::class)->getVinDataWithCatalog($vinCode);
 
         if (empty($auto)) {
 
@@ -38,20 +38,34 @@ class CarVinDataQuery extends AbstractDataQuery
 
             if (!empty($responseArray = $response->toArray())) {
                 $autoData = (object)$responseArray[0];
-                $auto = new CarVin();
-                $auto->setAutoData($autoData)
+                $carVin = new CarVin();
+                $carVin->setAutoData($autoData)
                     ->setDateTime()
                     ->setExactMatch(true)
                     ->setVinCode($vinCode);
 
-                $this->dm->persist($auto);
+                $this->dm->persist($carVin);
                 $this->dm->flush();
-            } else {
 
+                return $carVin;
+            } else {
                 return null;
             }
         }
 
-        return $auto;
+        if (!empty($auto['catalog'])) {
+            $autoData = $auto['catalog'];
+        } else if (!empty($auto['autoData'])) {
+            $autoData = $auto['autoData'];
+        } else {
+            $autoData = [];
+        }
+
+        $carVin = new CarVin();
+        $carVin->setExactMatch($auto['exactMatch'])
+            ->setVinCode($auto['vinCode'])
+            ->setAutoData((object)$autoData);
+
+        return $carVin;
     }
 }
