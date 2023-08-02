@@ -6,6 +6,7 @@ namespace BitBag\OpenMarketplace\App\Controller;
 
 use BitBag\OpenMarketplace\App\DataQuery\PartsCatalog\CarVinDataQuery as PartsCatalogCarVinDataQuery;
 use BitBag\OpenMarketplace\App\DataQuery\Sophio\CarVinDataQuery as SophioCarVinDataQuery;
+use BitBag\OpenMarketplace\App\Document\CarVin;
 use BitBag\OpenMarketplace\App\Service\Sophio\CarVinDecoderService;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Exception;
@@ -35,20 +36,28 @@ class CarVinSearchController extends AbstractController
      */
     #[Route(path: "search/vin/{vinCode}", name: "search_by_vin", methods: ["GET"])]
     public function searchByVinCode(PartsCatalogCarVinDataQuery $partsCatalogVinDataQuery, SophioCarVinDataQuery $sophioVinDataQuery,
-                                    CarVinDecoderService $carVinDecoderService, string $vinCode): Response
+                                    CarVinDecoderService $carVinDecoderService, DocumentManager $documentManager, string $vinCode): Response
     {
         try {
 
             $auto = $partsCatalogVinDataQuery->query($vinCode);
 
-            if (empty($auto)) {
+            $isEmptyAutoData = (!empty($auto) && empty((array)$auto->getAutoData()));
+
+            if (empty($auto) || $isEmptyAutoData) {
 
                 $carData = $sophioVinDataQuery->query($vinCode);
 
                 if (!empty($carData)) {
 
-                    $autoData = $carVinDecoderService->decoder($carData);
+                    //if CarVin exist but with no data
+                    if ($isEmptyAutoData) {
+                        $carVin = $documentManager->getRepository(CarVin::class)->findOneBy(['vinCode' => $vinCode]);
+                    } else {
+                        $carVin = new CarVin();
+                    }
 
+                    $autoData = $carVinDecoderService->decoder($carVin, $carData);
                     return $this->json(['data' => $autoData, 'exactMatch' => false], Response::HTTP_OK);
 
                 } else {

@@ -52,6 +52,15 @@ class CarCatalog
     protected $dateTime;
 
     /**
+     * @param object|null $id
+     * @return void
+     */
+    public function setId(?object $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
      * @param object $parameters
      * @return $this
      */

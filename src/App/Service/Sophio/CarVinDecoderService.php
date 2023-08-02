@@ -40,7 +40,7 @@ class CarVinDecoderService
      * @throws TransportExceptionInterface
      * @throws Exception
      */
-    public function decoder(array $carData): CarCatalog
+    public function decoder(CarVin $carVin, array $carData): CarCatalog
     {
         $brand = strtolower($carData['make']);
 
@@ -50,47 +50,36 @@ class CarVinDecoderService
 
         $carCatalog = $this->getCatalogWithTheRightModel($carModel, $brand);
 
-        foreach ($carCatalog->getParameters() as $parameter) {
-            $carCatalog = $this->setValues($carCatalog, $parameter, $carData);
-        }
+        //TODO years have the same id everywhere, we can optimize this request by adding to previous.
+        $carCatalog = $this->setYear($carCatalog, (array)$carCatalog->getParameters(), $carData);
 
         $carCatalog = $this->carCatalogDataQuery->query($carCatalog);
 
-        $this->saveCarVin($carCatalog, $carData['vin']);
+        $carCatalog = $this->setValues($carCatalog, (array)$carCatalog->getParameters());
+
+        $carCatalog = $this->carCatalogDataQuery->query($carCatalog);
+
+        $this->saveCarVin($carVin, $carCatalog, $carData['vin']);
 
         return $carCatalog;
     }
 
     /**
      * @param CarCatalog $carCatalog
-     * @param array $parameter
+     * @param array $parameters
      * @param array $carData
      * @return CarCatalog
      */
-    private function setValues(CarCatalog $carCatalog, array $parameter, array $carData): CarCatalog
+    private function setYear(CarCatalog $carCatalog, array $parameters, array $carData): CarCatalog
     {
-        switch ($parameter['key']) {
-            case 'year':
+        foreach ($parameters as $parameter) {
+            if ($parameter['key'] == 'year') {
                 foreach ($parameter['values'] as $item) {
                     if ($carData['year'] === $item['value']) {
                         $carCatalog->setYearId($item['idx']);
                     }
                 }
-                break;
-            case 'sales_region':
-                foreach ($parameter['values'] as $item) {
-                    if (self::DEFAULT_REGION === $item['value']) {
-                        $carCatalog->setRegionId($item['idx']);
-                    }
-                }
-                break;
-            case 'steering':
-                foreach ($parameter['values'] as $item) {
-                    if (self::DEFAULT_STEERING === $item['value']) {
-                        $carCatalog->setSteeringId($item['idx']);
-                    }
-                }
-                break;
+            }
         }
 
         return $carCatalog;
@@ -98,13 +87,43 @@ class CarVinDecoderService
 
     /**
      * @param CarCatalog $carCatalog
+     * @param array $parameters
+     * @return CarCatalog
+     */
+    private function setValues(CarCatalog $carCatalog, array $parameters): CarCatalog
+    {
+        foreach ($parameters as $parameter) {
+            switch ($parameter['key']) {
+                case 'sales_region':
+                    foreach ($parameter['values'] as $item) {
+                        if (self::DEFAULT_REGION === $item['value']) {
+                            $carCatalog->setRegionId($item['idx']);
+                        }
+                    }
+                    break;
+                case 'steering':
+                    foreach ($parameter['values'] as $item) {
+                        if (self::DEFAULT_STEERING === $item['value']) {
+                            $carCatalog->setSteeringId($item['idx']);
+                        }
+                    }
+                    break;
+            }
+        }
+
+        return $carCatalog;
+    }
+
+    /**
+     * @param CarVin $carVin
+     * @param CarCatalog $carCatalog
      * @param string $vinCode
      * @return void
-     * @throws MongoDBException|\MongoException
+     * @throws MongoDBException
+     * @throws \MongoException
      */
-    private function saveCarVin(CarCatalog $carCatalog, string $vinCode): void
+    private function saveCarVin(CarVin $carVin, CarCatalog $carCatalog, string $vinCode): void
     {
-        $carVin = new CarVin();
         $carVin->setCatalogId(new MongoId($carCatalog->getId()))
             ->setVinCode($vinCode)
             ->setExactMatch(false)

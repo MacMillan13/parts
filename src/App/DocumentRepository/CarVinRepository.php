@@ -25,7 +25,7 @@ class CarVinRepository extends DocumentRepository
                 ->localField('catalogId')
                 ->foreignField('_id')
                 ->alias('catalog')
-            ->unwind('$catalog');;
+            ->limit(1);
 
         $dataArray = $builder->getAggregation()->getIterator()->toArray();
 

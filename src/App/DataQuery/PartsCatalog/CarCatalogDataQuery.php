@@ -41,32 +41,71 @@ class CarCatalogDataQuery extends AbstractDataQuery
      */
     public function query(CarCatalog $carCatalog): CarCatalog
     {
+        $searchParams = [];
+
+        if (!empty($catalogId = $carCatalog->getCatalogId())) {
+            $searchParams['catalogId'] = $catalogId;
+        }
+
+        if (!empty($modelId = $carCatalog->getModelId())) {
+            $searchParams['modelId'] = $modelId;
+        }
+
+        if (!empty($yearId = $carCatalog->getYearId())) {
+            $searchParams['yearId'] = $yearId;
+        }
+
+        if (!empty($regionId = $carCatalog->getRegionId())) {
+            $searchParams['regionId'] = $regionId;
+        }
+
+        if (!empty($steeringId = $carCatalog->getSteeringId())) {
+            $searchParams['steeringId'] = $steeringId;
+        }
+
+        if (!empty($seriesId = $carCatalog->getSeriesId())) {
+            $searchParams['seriesId'] = $seriesId;
+        }
+
+        if (!empty($bodyTypeId = $carCatalog->getBodyTypeId())) {
+            $searchParams['bodyTypeId'] = $bodyTypeId;
+        }
+
+        if (!empty($transmissionId = $carCatalog->getTransmissionTypeId())) {
+            $searchParams['transmissionTypeId'] = $transmissionId;
+        }
+
+        if (!empty($exactModelId = $carCatalog->getExactModelId())) {
+            $searchParams['exactModelId'] = $exactModelId;
+        }
+
+        if (!empty($engineId = $carCatalog->getEngineId())) {
+            $searchParams['engineId'] = $engineId;
+        }
+
         $carCatalogSearch = $this->dm->getRepository(CarCatalog::class)
-            ->findOneBy(['catalogId' => $carCatalog->getCatalogId(), 'modelId' => $carCatalog->getModelId(), 'yearId' => $carCatalog->getYearId(),
-                'regionId' => $carCatalog->getRegionId(), 'steeringId' => $carCatalog->getSteeringId(), 'seriesId' => $carCatalog->getSeriesId(),
-                'bodyTypeId' => $carCatalog->getBodyTypeId(), 'transmissionTypeId' => $carCatalog->getTransmissionTypeId(),
-                'exactModelId' => $carCatalog->getExactModelId(), 'engineId' => $carCatalog->getEngineId()]);
+            ->findOneBy($searchParams);
 
         if (empty($carCatalogSearch)) {
 
-            $parametersCriteria = $this->catalogParametersUrlHelper->buildParametersUrl([$carCatalog->getYearId(), $carCatalog->getRegionId(),
-                $carCatalog->getSteeringId(), $carCatalog->getSeriesId(), $carCatalog->getBodyTypeId(), $carCatalog->getTransmissionTypeId(),
-                $carCatalog->getExactModelId(), $carCatalog->getEngineId()]);
+            $parametersCriteria = $this->catalogParametersUrlHelper->buildParametersUrl([$yearId, $regionId,
+                $steeringId, $seriesId, $bodyTypeId, $transmissionId, $exactModelId, $engineId]);
 
             $response = $this->client->request(
                 'GET',
-                $_ENV['PART_CATALOG_API'] . 'catalogs/' . $carCatalog->getCatalogId() . '/cars-parameters/?modelId=' . $carCatalog->getModelId() . $parametersCriteria,
+                $_ENV['PART_CATALOG_API'] . 'catalogs/' . $catalogId . '/cars-parameters/?modelId=' . $modelId . $parametersCriteria,
                 $this->getHeaders()
             );
 
             if (!empty($responseArray = $response->toArray())) {
                 $parameters = (object)$responseArray;
+
                 $carCatalog->setParameters($parameters)
                     ->setDateTime();
 
                 $carListResponse = $this->client->request(
                     'GET',
-                    $_ENV['PART_CATALOG_API'] . 'catalogs/' . $carCatalog->getCatalogId() . '/cars2/?modelId=' . $carCatalog->getModelId() . $parametersCriteria,
+                    $_ENV['PART_CATALOG_API'] . 'catalogs/' . $catalogId . '/cars2/?modelId=' . $modelId . $parametersCriteria,
                     $this->getHeaders()
                 );
 
@@ -77,12 +116,11 @@ class CarCatalogDataQuery extends AbstractDataQuery
                     //TODO cron jobs or queue for savings cars.
                 }
 
-                $this->dm->persist($carCatalog);
+                $notIdentifiedCarCatalog = clone $carCatalog;
+
+                $this->dm->persist($notIdentifiedCarCatalog);
+
                 $this->dm->flush();
-
-            } else {
-
-                throw new Exception('The data does not exist');
             }
 
             return $carCatalog;
