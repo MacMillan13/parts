@@ -27,28 +27,22 @@ class CarModelDataQuery extends AbstractDataQuery
      */
     public function query(string $catalogId): CarModel
     {
-        $carModel = $this->dm->getRepository(CarModel::class)->findOneBy(['catalogId' => $catalogId]);
+        $response = $this->client->request(
+            'GET',
+            $_ENV['PART_CATALOG_API'] . 'catalogs/' . $catalogId . '/models',
+            $this->getHeaders()
+        );
 
-        if (empty($carModel)) {
-            $response = $this->client->request(
-                'GET',
-                $_ENV['PART_CATALOG_API'] . 'catalogs/' . $catalogId . '/models',
-                $this->getHeaders()
-            );
+        if (!empty($responseArray = $response->toArray())) {
+            $carModelData = (object)$responseArray;
+            $carModel = new CarModel();
+            $carModel->setModels($carModelData)
+                ->setCatalogId($catalogId)
+                ->setDateTime();
 
-            if (!empty($responseArray = $response->toArray())) {
-                $carModelData = (object)$responseArray;
-                $carModel = new CarModel();
-                $carModel->setModels($carModelData)
-                    ->setCatalogId($catalogId)
-                    ->setDateTime();
+            $this->dm->persist($carModel);
+            $this->dm->flush();
 
-                $this->dm->persist($carModel);
-                $this->dm->flush();
-
-            } else {
-                throw new Exception('The Part does not exist');
-            }
         }
 
         return $carModel;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BitBag\OpenMarketplace\App\DataQuery\PartsCatalog;
 
-use BitBag\OpenMarketplace\App\Document\PartCatalog;
+use BitBag\OpenMarketplace\App\Document\PartCatalogGroup;
 use Doctrine\ODM\MongoDB\MongoDBException;
 use Exception;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
@@ -13,12 +13,13 @@ use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
-class PartCatalogDataQuery extends AbstractDataQuery
+class PartCatalogGroupDataQuery extends AbstractDataQuery
 {
     /**
      * @param string $catalogId
      * @param string $carId
-     * @return PartCatalog
+     * @param string $groupId
+     * @return PartCatalogGroup
      * @throws MongoDBException
      * @throws ClientExceptionInterface
      * @throws DecodingExceptionInterface
@@ -26,28 +27,29 @@ class PartCatalogDataQuery extends AbstractDataQuery
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
      */
-    public function query(string $catalogId, string $carId): PartCatalog
+    public function query(string $catalogId, string $carId, string $groupId): PartCatalogGroup
     {
         $response = $this->client->request(
             'GET',
-            $_ENV['PART_CATALOG_API'] . 'catalogs/' . $catalogId . '/groups2/?carId=' . $carId,
+            $_ENV['PART_CATALOG_API'] . 'catalogs/' . $catalogId . '/groups2/?carId=' . $carId . '&groupId=' . $groupId,
             $this->getHeaders()
         );
 
         if (!empty($responseArray = $response->toArray())) {
             $catalogData = (object)$responseArray;
-            $partCatalog = new PartCatalog();
-            $partCatalog->setCatalogData($catalogData)
+            $partCatalogGroup = new PartCatalogGroup();
+            $partCatalogGroup->setCatalogData($catalogData)
                 ->setCatalogId($catalogId)
+                ->setCarId($carId)
                 ->setDateTime()
-                ->setCarId($carId);
+                ->setGroupId($groupId);
 
-            $this->dm->persist($partCatalog);
+            $this->dm->persist($partCatalogGroup);
             $this->dm->flush();
         } else {
-            throw new Exception('The data does not exist');
+            throw new Exception('The Part Catalog Group does not exist');
         }
 
-        return $partCatalog;
+        return $partCatalogGroup;
     }
 }

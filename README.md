@@ -3,6 +3,10 @@ For docker
 Changed PHP_VERSION to 8.2 and ALPINE_VERSION to 3.17
 Updated auto-scripts added "cache:clear --no-warmup": "symfony-cmd" in composer.json
 
+node 14.17.10
+mongodb
+php
+mysql
 
 <p align="center">
     <a href="https://bitbag.io/" target="_blank">
