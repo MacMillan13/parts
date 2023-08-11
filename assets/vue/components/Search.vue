@@ -6,121 +6,22 @@
         <button>Search</button>
       </div>
       <div>
-        <div v-if="step == 1 && (autoList !== null || selectedAuto !== null)">
-          <table class="table">
-            <thead>
-            <tr>
-              <th scope="col">Brand</th>
-              <th scope="col">Model designation</th>
-              <th scope="col">Year</th>
-              <th scope="col">Region</th>
-              <th scope="col">Steering</th>
-              <th scope="col">Transmission type</th>
-              <th scope="col">Sunroof</th>
-              <th scope="col">Navigation</th>
-              <th scope="col">Electronic Stability Control (VSA)</th>
-              <th scope="col">Door count</th>
-              <th scope="col">ABS</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-if="autoList !== null" v-for="auto in autoList" @click="getCatalog(auto)">
-              <td>{{ auto.brand }}</td>
-              <td>{{ auto.name }}</td>
-              <td>{{ auto.year }}</td>
-              <td>{{ auto.sales_region }}</td>
-              <td>{{ auto.steering }}</td>
-              <td>{{ auto.trans_type }}</td>
-              <td>{{ auto.sunroof }}</td>
-              <td>{{ auto.navigation }}</td>
-              <td>{{ auto.vsa }}</td>
-              <td>{{ auto.door_count }}</td>
-              <td>{{ auto.abs }}</td>
-            </tr>
-            <tr v-if="selectedAuto !== null">
-              <td>{{ selectedAuto.brand }}</td>
-              <td>{{ selectedAuto.name }}</td>
-              <td>{{ selectedAuto.year }}</td>
-              <td>{{ selectedAuto.sales_region }}</td>
-              <td>{{ selectedAuto.steering }}</td>
-              <td>{{ selectedAuto.trans_type }}</td>
-              <td>{{ selectedAuto.sunroof }}</td>
-              <td>{{ selectedAuto.navigation }}</td>
-              <td>{{ selectedAuto.vsa }}</td>
-              <td>{{ selectedAuto.door_count }}</td>
-              <td>{{ selectedAuto.abs }}</td>
-            </tr>
-            </tbody>
-          </table>
+        <div v-if="step === 1 && (autoList !== null || selectedAuto !== null)">
+          <AutoList :autoList="autoList" :selectedAuto="selectedAuto" :getCatalog="getCatalog" />
         </div>
-        <div v-if="step == 2 && autoCatalog !== null">
+        <div v-if="step === 2 && autoCatalog !== null">
           <ul>
             <li v-for="catalog in autoCatalog" @click="getCatalogGroup(catalog)">
               {{ catalog.name }}
             </li>
           </ul>
         </div>
-        <div v-if="step == 3 && autoCatalogGroup !== null">
-          <div class="container">
-            <div class="row">
-              <div class="col-sm-3">
-                <ul>
-                  <li v-for="catalog in autoCatalog" @click="getCatalogGroup(catalog)">
-                    {{ catalog.name }}
-                  </li>
-                </ul>
-              </div>
-              <div class="row col-sm-9">
-                <div v-for="partGroup in autoCatalogGroup" @click="getPartGroup(partGroup)"
-                     class="catalog-group-block col-sm-4 thumbnail">
-                  <div>
-                    <img :src="partGroup.img" alt="Part's group" class="embed-responsive-item">
-                  </div>
-                  {{ partGroup.name }}
-                </div>
-              </div>
-            </div>
-          </div>
+        <div v-if="step === 3 && autoCatalogGroup !== null">
+          <AutoCatalogGroup :autoCatalog="autoCatalog" :autoCatalogGroup="autoCatalogGroup"
+                            :getCatalogGroup="getCatalogGroup" :getPartGroup="getPartGroup" />
         </div>
-        <div v-if="step == 4 && partSchema !== null">
-          <div class="container">
-            <div class="row">
-              <div class="col-sm-5">
-                <ul class="part-group-ul">
-                  <li v-for="(partGroup, keyPartGroup) in partSchema.unitedPartGroups ">
-                    <div class="part-block-position-number">
-                      <span>{{ keyPartGroup }}</span>
-                    </div>
-                    <div v-for="(partBlock, keyPartBlock) in partGroup">
-                      <div>
-                        <span>{{ keyPartBlock }}</span>
-                      </div>
-                      <div v-for="(partItem, keyPartItem) in partBlock">
-                        <div>
-                          <span>{{ keyPartItem }}</span>
-                        </div>
-                        <div v-for="part in partItem">
-                          <div>
-                            <span>{{ part.code }}</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-              <div class="col-sm-7">
-                <div id="part-image-block">
-                  <img id="part-image" :src="partSchema.img" alt="schema">
-                  <ul id="part-image-ul">
-                    <li v-for="position in partSchemaPositions">
-                      {{position.number }}
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div v-if="step === 4 && partSchema !== null">
+          <PartSchema :partSchema="partSchema" :partSchemaPositions="partSchemaPositions" />
         </div>
         <div>
         </div>
@@ -130,14 +31,19 @@
 <script>
 
 import { ref } from 'vue'
+import AutoList from "./search/AutoList";
+import AutoCatalogGroup from "./search/AutoCatalogGroup";
+import PartSchema from "./search/PartSchema";
 
 export default {
   name: "search",
+  components: { AutoList, AutoCatalogGroup, PartSchema },
   setup() {
-    const step = ref(0)
+    const defaultDataApi = 'https://localhost:8000/api/v3/'
     const vinCodeLength = 17
+
+    const step = ref(0)
     const autoList = ref(null)
-    const defaultDataApi = ref('https://localhost:8000/api/v3/')
     const autoCatalog = ref(null)
     const autoCatalogGroup = ref(null)
     const selectedAuto = ref(null)
@@ -210,7 +116,7 @@ export default {
     }
 
     const getDataByVin = async(vinCode) => {
-      const response = await fetch(defaultDataApi.value + 'search/vin/' + vinCode, getRequestOptions('GET'));
+      const response = await fetch(defaultDataApi + 'search/vin/' + vinCode, getRequestOptions('GET'));
       const responseJson = await response.json();
 
       if (false === responseJson.exactMatch) {
@@ -231,7 +137,7 @@ export default {
       //TODO uncomment when will have API.
       // const response = await fetch(this.defaultDataApi + 'part/catalog/' + auto.catalogId + '/' + auto.id,
       //   getRequestOptions('GET'));
-      const response = await fetch(defaultDataApi.value + 'part/catalog/skoda/c9c4f4d0fe26e3af5aa36af8c197b096',
+      const response = await fetch(defaultDataApi + 'part/catalog/skoda/c9c4f4d0fe26e3af5aa36af8c197b096',
           getRequestOptions('GET'));
       const responseJson = await response.json();
       autoCatalog.value = responseJson.data;
@@ -245,7 +151,7 @@ export default {
       //TODO uncomment when will have API.
       // const response = await fetch(this.defaultDataApi + 'part/catalog/' + auto.catalogId + '/' + auto.id + '/' + catalog.id,
       //   getRequestOptions('GET'));
-      const response = await fetch(defaultDataApi.value + 'part/catalog/skoda/c9c4f4d0fe26e3af5aa36af8c197b096/MfCfmoAw',
+      const response = await fetch(defaultDataApi + 'part/catalog/skoda/c9c4f4d0fe26e3af5aa36af8c197b096/MfCfmoAw',
           getRequestOptions('GET'));
       const responseJson = await response.json();
       autoCatalogGroup.value = responseJson.data;
@@ -256,7 +162,7 @@ export default {
       // const response = await fetch(this.defaultDataApi + 'search/part/schema/' + this.selectedAuto.catalogId + '/'
       //   + this.selectedAuto.id + '/' + partGroup.id,
       //   this.getRequestOptions('GET'));
-      const response = await fetch(defaultDataApi.value + 'search/part/schema/skoda/c9c4f4d0fe26e3af5aa36af8c197b096/MCPwn5qAMTAwOTXwn5qBNDYwMTAwOTgw8J-agjYxMjUzMfCflLA2MDc6MTAwOTU4MDU0NjAxMDA5ODDwn5CSNjA38J-QiTEwMDk1ODA1NDYwMTAwOTgw',
+      const response = await fetch(defaultDataApi + 'search/part/schema/skoda/c9c4f4d0fe26e3af5aa36af8c197b096/MCPwn5qAMTAwOTXwn5qBNDYwMTAwOTgw8J-agjYxMjUzMfCflLA2MDc6MTAwOTU4MDU0NjAxMDA5ODDwn5CSNjA38J-QiTEwMDk1ODA1NDYwMTAwOTgw',
           getRequestOptions('GET'));
       const responseJson = await response.json();
       partSchema.value = responseJson.data;
