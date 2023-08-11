@@ -8,6 +8,19 @@ const syliusBundles = path.resolve(__dirname, 'vendor/sylius/sylius/src/Sylius/B
 const uiBundleScripts = path.resolve(syliusBundles, 'UiBundle/Resources/private/js/');
 const uiBundleResources = path.resolve(syliusBundles, 'UiBundle/Resources/private/');
 
+Encore
+  .setOutputPath('public/build/vue/')
+  .setPublicPath('/build/vue')
+  .cleanupOutputBeforeBuild()
+  .enableSourceMaps(!Encore.isProduction())
+  .addEntry('vue-entry', './assets/vue/entry.js')
+  .enableVueLoader();
+
+const vueConfig = Encore.getWebpackConfig();
+vueConfig.name = 'vue';
+
+Encore.reset();
+
 // Shop config
 Encore
   .setOutputPath('public/build/shop/')
@@ -53,4 +66,4 @@ adminConfig.resolve.alias['sylius/bundle'] = syliusBundles;
 adminConfig.externals = Object.assign({}, adminConfig.externals, { window: 'window', document: 'document' });
 adminConfig.name = 'admin';
 
-module.exports = [shopConfig, adminConfig, bitbagCmsShop, bitbagCmsAdmin, bitbagWishlistShop, bitbagWishlistAdmin];
+module.exports = [shopConfig, adminConfig, bitbagCmsShop, bitbagCmsAdmin, bitbagWishlistShop, bitbagWishlistAdmin, vueConfig];
