@@ -9,7 +9,7 @@
 
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     {% block metatags %}
     {% endblock %}
 
@@ -128,9 +128,10 @@
 </div>
 
 {% block javascripts %}
-    {% include '@SyliusUi/_javascripts.html.twig' with {'path': 'assets/shop/js/app.js'} %}
+{#    {% include '@SyliusUi/_javascripts.html.twig' with {'path': 'assets/shop/js/app.js'} %}#}
     {{ sylius_template_event('sylius.shop.layout.javascripts') }}
     {{ sonata_block_render_event('sylius.shop.layout.javascripts') }}
+    {{ encore_entry_script_tags('vue-entry', null, 'vue') }}
 {% endblock %}
 
 {% include '@SyliusUi/Modal/_confirmation.html.twig' %}
