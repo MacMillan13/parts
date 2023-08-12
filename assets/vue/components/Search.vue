@@ -160,6 +160,8 @@ export default {
       autoCatalogGroup.value = responseJson.data;
 
       const url = new URL(location);
+
+      url.searchParams.delete('group');
       url.searchParams.set('brand', 'skoda');
       url.searchParams.set('auto', 'c9c4f4d0fe26e3af5aa36af8c197b096');
       url.searchParams.set('catalog', 'MfCfmoAw');
@@ -180,9 +182,12 @@ export default {
       unitUnits(partSchema);
 
       const url = new URL(location);
+
+      url.searchParams.delete('catalog');
       url.searchParams.set('brand', 'skoda');
       url.searchParams.set('auto', 'c9c4f4d0fe26e3af5aa36af8c197b096');
       url.searchParams.set('group', 'MCPwn5qAMTAwOTXwn5qBNDYwMTAwOTgw8J-agjYxMjUzMfCflLA2MDc6MTAwOTU4MDU0NjAxMDA5ODDwn5CSNjA38J-QiTEwMDk1ODA1NDYwMTAwOTgw');
+
       history.pushState({}, "", url);
 
       step.value = 4;
@@ -234,7 +239,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 h2, span, p {
   font-size: 16px;
 }
@@ -253,57 +258,5 @@ video,
 iframe {
   max-inline-size: 100%;
   block-size: auto;
-}
-
-.part-group-ul li {
-}
-
-.part-group-ul {
-  height: 70vh;
-  overflow-x: hidden;
-  overflow-y: auto;
-  text-align: justify;
-}
-
-.part-block-ul li:first-child {
-  border-top: 0.5px solid rgba(0, 64, 96, 0.48);
-}
-
-.part-block-ul li {
-  display: flex;
-  border-bottom: 0.5px solid rgba(0, 64, 96, 0.48);
-}
-
-.part-block-position-number {
-  margin-right: 15px;
-}
-
-.group-title {
-  text-transform: uppercase;
-}
-
-#part-image-block {
-  display: flex;
-  justify-content: center;
-}
-
-#part-image {
-  max-width: 100%;
-  max-height: 70vh;
-  width: 100%;
-}
-
-.catalog-group-block {
-  display: flex;
-  flex-direction: column;
-}
-
-#part-image-ul {
-  position: absolute;
-  top: 0;
-  left: 0;
-  margin: 0;
-  padding: 0;
-  list-style: none;
 }
 </style>

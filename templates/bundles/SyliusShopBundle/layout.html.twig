@@ -73,6 +73,7 @@
 
         {{ sonata_block_render_event('sylius.shop.layout.stylesheets') }}
         {{ sylius_template_event('sylius.shop.layout.stylesheets') }}
+        {{ encore_entry_link_tags('vue-entry', null, 'vue') }}
     {% endblock %}
 
     {{ sonata_block_render_event('sylius.shop.layout.head') }}

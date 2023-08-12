@@ -54,4 +54,38 @@ export default {
 }
 </script>
 <style scoped>
+
+  .part-group-ul li {
+  }
+
+  .part-group-ul {
+    height: 70vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    text-align: justify;
+  }
+
+  .part-block-position-number {
+    margin-right: 15px;
+  }
+
+  #part-image-block {
+    display: flex;
+    justify-content: center;
+  }
+
+  #part-image {
+    max-width: 100%;
+    max-height: 70vh;
+    width: 100%;
+  }
+
+  #part-image-ul {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
 </style>
