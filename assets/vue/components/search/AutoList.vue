@@ -48,22 +48,28 @@
   </div>
 </template>
 <script>
+import {computed} from 'vue';
+import {useStore} from 'vuex';
 export default {
   name: "AutoList",
-  props: {
-    autoList: {
-      type: Array,
-      required: true
-    },
-    selectedAuto: {
-      type: [Array, null],
-      required: false
-    },
-    getCatalog: {
-      type: Function,
-      required: true
-    },
-  },
+  setup() {
+    const store = useStore()
+
+    const selectedAuto = computed(() => store.state.search.selectedAuto);
+    const autoList = computed(() => store.state.search.autoList);
+    const getCatalog = async (auto) => {
+      await store.dispatch('search/getCatalog', {
+        auto: auto,
+        toSet: true
+      })
+    }
+
+    return {
+      selectedAuto,
+      autoList,
+      getCatalog
+    }
+  }
 }
 </script>
 <style scoped>

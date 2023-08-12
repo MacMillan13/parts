@@ -39,18 +39,21 @@
   </div>
 </template>
 <script>
+
+import { useStore } from 'vuex'
+import { computed} from 'vue';
 export default {
   name: "PartSchema",
-  props: {
-    partSchema: {
-      type: Object,
-      required: true
-    },
-    partSchemaPositions: {
-      type: Object,
-      required: true
-    },
-  },
+  setup() {
+    const store = useStore()
+    const partSchema = computed(() => store.state.search.partSchema)
+    const partSchemaPositions = computed(() => store.state.search.partSchemaPositions)
+
+    return {
+      partSchema,
+      partSchemaPositions
+    }
+  }
 }
 </script>
 <style scoped>

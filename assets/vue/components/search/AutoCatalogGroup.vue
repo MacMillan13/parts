@@ -21,26 +21,30 @@
   </div>
 </template>
 <script>
+import { useStore } from 'vuex'
+import { computed} from 'vue';
 export default {
   name: "AutoCatalogGroup",
-  props: {
-    autoCatalog: {
-      type: Array,
-      required: true
-    },
-    autoCatalogGroup: {
-      type: Array,
-      required: true
-    },
-    getCatalogGroup: {
-      type: Function,
-      required: true
-    },
-    getPartGroup: {
-      type: Function,
-      required: true
-    },
-  },
+  setup() {
+    const store = useStore()
+    const autoCatalog = computed(() => store.state.search.autoCatalog)
+    const autoCatalogGroup = computed(() => store.state.search.autoCatalogGroup)
+
+    const getCatalogGroup = (catalog) => {
+      store.dispatch('search/getCatalogGroup', catalog)
+    }
+
+    const getPartGroup = (partGroup) => {
+      store.dispatch('search/getPartGroup', partGroup)
+    }
+
+    return {
+      autoCatalog,
+      autoCatalogGroup,
+      getCatalogGroup,
+      getPartGroup
+    }
+  }
 }
 </script>
 <style scoped>
