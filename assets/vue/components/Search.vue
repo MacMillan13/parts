@@ -53,10 +53,13 @@ export default {
     const currentAuto = ref(null)
 
     const checkUrl = () => {
-      const brand = getParameterFromUrl('brand');
-      const catalog = getParameterFromUrl('catalog');
-      const auto = getParameterFromUrl('auto');
-      const group = getParameterFromUrl('group');
+
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      const brand = urlParams.get('brand');
+      const catalog = urlParams.get('catalog');
+      const auto = urlParams.get('auto');
+      const group = urlParams.get('group');
 
       currentAuto.value = {
         catalogId: brand,
@@ -90,12 +93,6 @@ export default {
 
         getPartGroup(groupParam);
       }
-    }
-
-    const getParameterFromUrl = (value) => {
-      const queryString = window.location.search;
-      const urlParams = new URLSearchParams(queryString);
-      return urlParams.get(value);
     }
 
     const getRequestOptions = (method) => {
@@ -142,7 +139,13 @@ export default {
       const responseJson = await response.json();
       autoCatalog.value = responseJson.data;
       selectedAuto.value = auto;
+
       if (setStep) {
+        const url = new URL(location.origin);
+        url.searchParams.set('brand', 'skoda');
+        url.searchParams.set('auto', 'c9c4f4d0fe26e3af5aa36af8c197b096');
+        history.pushState({}, "", url);
+
         step.value = 2;
       }
     }
@@ -155,6 +158,13 @@ export default {
           getRequestOptions('GET'));
       const responseJson = await response.json();
       autoCatalogGroup.value = responseJson.data;
+
+      const url = new URL(location);
+      url.searchParams.set('brand', 'skoda');
+      url.searchParams.set('auto', 'c9c4f4d0fe26e3af5aa36af8c197b096');
+      url.searchParams.set('catalog', 'MfCfmoAw');
+      history.pushState({}, "", url);
+
       step.value = 3;
     }
 
@@ -168,6 +178,13 @@ export default {
       partSchema.value = responseJson.data;
       partSchemaPositions.value = partSchema.positions;
       unitUnits(partSchema);
+
+      const url = new URL(location);
+      url.searchParams.set('brand', 'skoda');
+      url.searchParams.set('auto', 'c9c4f4d0fe26e3af5aa36af8c197b096');
+      url.searchParams.set('group', 'MCPwn5qAMTAwOTXwn5qBNDYwMTAwOTgw8J-agjYxMjUzMfCflLA2MDc6MTAwOTU4MDU0NjAxMDA5ODDwn5CSNjA38J-QiTEwMDk1ODA1NDYwMTAwOTgw');
+      history.pushState({}, "", url);
+
       step.value = 4;
     }
 
