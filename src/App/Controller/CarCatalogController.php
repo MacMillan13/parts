@@ -28,6 +28,14 @@ class CarCatalogController extends AbstractController
             $transmissionTypeId = $request->get('transmissionType');
             $exactModelId = $request->get('exactModel');
             $engineId = $request->get('engine');
+            $sunroof = $request->get('sunroof');
+            $navigation = $request->get('navigation');
+            $vsa = $request->get('vsa');
+            $doorCount = $request->get('doorCount');
+            $abs = $request->get('abs');
+            $modification = $request->get('modification');
+            $productPeriod = $request->get('productPeriod');
+            $engineCapacity = $request->get('engineCapacity');
 
             $carCatalogParameters = new CarCatalog();
 
@@ -40,6 +48,14 @@ class CarCatalogController extends AbstractController
                 ->setBodyTypeId($bodyTypeId)
                 ->setTransmissionTypeId($transmissionTypeId)
                 ->setExactModelId($exactModelId)
+                ->setSunroof($sunroof)
+                ->setNavigation($navigation)
+                ->setVsa($vsa)
+                ->setDoorCount($doorCount)
+                ->setModification($modification)
+                ->setProductPeriod($productPeriod)
+                ->setEngineCapacity($engineCapacity)
+                ->setAbs($abs)
                 ->setEngineId($engineId);
 
             $carCatalogParameters = $carCatalogDataQuery->query($carCatalogParameters);

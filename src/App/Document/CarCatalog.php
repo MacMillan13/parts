@@ -51,6 +51,33 @@ class CarCatalog
     #[MongoDB\Field(type: 'date')]
     protected $dateTime;
 
+    #[MongoDB\Field(type: 'string')]
+    protected $sunroof;
+
+    #[MongoDB\Field(type: 'string')]
+    protected $navigation;
+
+    #[MongoDB\Field(type: 'string')]
+    protected $vsa;
+
+    #[MongoDB\Field(type: 'string')]
+    protected $doorCount;
+
+    #[MongoDB\Field(type: 'string')]
+    protected $abs;
+
+    #[MongoDB\Field(type: 'string')]
+    protected $modification;
+
+    #[MongoDB\Field(type: 'string')]
+    protected $productPeriod;
+
+    #[MongoDB\Field(type: 'string')]
+    protected $engineCapacity;
+
+    #[MongoDB\Field(type: 'string')]
+    protected $fuelType;
+
     /**
      * @param object|null $id
      * @return void
@@ -58,6 +85,168 @@ class CarCatalog
     public function setId(?object $id): void
     {
         $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSunroof()
+    {
+        return $this->sunroof;
+    }
+
+    /**
+     * @param mixed $sunroof
+     */
+    public function setSunroof($sunroof): CarCatalog
+    {
+        $this->sunroof = $sunroof;
+
+        return $sunroof;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNavigation()
+    {
+        return $this->navigation;
+    }
+
+    /**
+     * @param mixed $navigation
+     */
+    public function setNavigation($navigation): CarCatalog
+    {
+        $this->navigation = $navigation;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVsa()
+    {
+        return $this->vsa;
+    }
+
+    /**
+     * @param mixed $vsa
+     */
+    public function setVsa($vsa): CarCatalog
+    {
+        $this->vsa = $vsa;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDoorCount()
+    {
+        return $this->doorCount;
+    }
+
+    /**
+     * @param mixed $doorCount
+     */
+    public function setDoorCount($doorCount): CarCatalog
+    {
+        $this->doorCount = $doorCount;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAbs()
+    {
+        return $this->abs;
+    }
+
+    /**
+     * @param mixed $abs
+     */
+    public function setAbs($abs): CarCatalog
+    {
+        $this->abs = $abs;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getModification()
+    {
+        return $this->modification;
+    }
+
+    /**
+     * @param mixed $modification
+     */
+    public function setModification($modification): CarCatalog
+    {
+        $this->modification = $modification;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProductPeriod()
+    {
+        return $this->productPeriod;
+    }
+
+    /**
+     * @param mixed $productPeriod
+     */
+    public function setProductPeriod($productPeriod): CarCatalog
+    {
+        $this->productPeriod = $productPeriod;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEngineCapacity()
+    {
+        return $this->engineCapacity;
+    }
+
+    /**
+     * @param mixed $engineCapacity
+     */
+    public function setEngineCapacity($engineCapacity): CarCatalog
+    {
+        $this->engineCapacity = $engineCapacity;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFuelType()
+    {
+        return $this->fuelType;
+    }
+
+    /**
+     * @param mixed $fuelType
+     */
+    public function setFuelType($fuelType): CarCatalog
+    {
+        $this->fuelType = $fuelType;
+
+        return $this;
     }
 
     /**
