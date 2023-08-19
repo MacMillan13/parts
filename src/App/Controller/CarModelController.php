@@ -22,8 +22,6 @@ class CarModelController extends RestAbstractController
 
             if (empty($carModel)) {
                 $carModel = $carModelDataQuery->query($catalogId);
-            } else {
-                throw new \Exception('The Part does not exist');
             }
 
             return $this->json(['data' => $carModel->getModels()], Response::HTTP_OK);

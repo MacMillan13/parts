@@ -24,18 +24,30 @@ class CarCatalogController extends AbstractController
             $regionId = $request->get('region');
             $steeringId = $request->get('steering');
             $seriesId = $request->get('series');
-            $bodyTypeId = $request->get('bodyType');
-            $transmissionTypeId = $request->get('transmissionType');
+            $bodyTypeId = $request->get('body_type');
+            $transmissionTypeId = $request->get('trans_type');
             $exactModelId = $request->get('exactModel');
             $engineId = $request->get('engine');
             $sunroof = $request->get('sunroof');
             $navigation = $request->get('navigation');
             $vsa = $request->get('vsa');
-            $doorCount = $request->get('doorCount');
+            $doorCount = $request->get('door_count');
             $abs = $request->get('abs');
             $modification = $request->get('modification');
-            $productPeriod = $request->get('productPeriod');
-            $engineCapacity = $request->get('engineCapacity');
+            $productPeriod = $request->get('product_period');
+            $engineCapacity = $request->get('engine_capacity');
+            $carName = $request->get('car_name');
+            $specSeries = $request->get('spec_series');
+            $fuelType = $request->get('fuel_type');
+            $bodyCode = $request->get('body_code');
+            $transmission = $request->get('transmission');
+            $grade = $request->get('grade');
+            $classification = $request->get('classification');
+            $autoParameters = $request->get('parameters');
+            $specModelDate = $request->get('spec_model_date');
+            $specVinPart = $request->get('spec_vin_part');
+            $specModification = $request->get('spec_modification');
+            $specCatalog = $request->get('spec_catalog');
 
             $carCatalogParameters = new CarCatalog();
 
@@ -51,11 +63,23 @@ class CarCatalogController extends AbstractController
                 ->setSunroof($sunroof)
                 ->setNavigation($navigation)
                 ->setVsa($vsa)
+                ->setSpecModelDate($specModelDate)
+                ->setSpecVinPart($specVinPart)
+                ->setSpecModification($specModification)
+                ->setSpecCatalog($specCatalog)
                 ->setDoorCount($doorCount)
                 ->setModification($modification)
                 ->setProductPeriod($productPeriod)
                 ->setEngineCapacity($engineCapacity)
                 ->setAbs($abs)
+                ->setCarName($carName)
+                ->setSpecSeries($specSeries)
+                ->setFuelType($fuelType)
+                ->setBodyCode($bodyCode)
+                ->setTransmission($transmission)
+                ->setGrade($grade)
+                ->setClassification($classification)
+                ->setAutoParameters($autoParameters)
                 ->setEngineId($engineId);
 
             $carCatalogParameters = $carCatalogDataQuery->query($carCatalogParameters);

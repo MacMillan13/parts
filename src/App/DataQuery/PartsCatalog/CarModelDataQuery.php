@@ -6,7 +6,6 @@ namespace BitBag\OpenMarketplace\App\DataQuery\PartsCatalog;
 
 use BitBag\OpenMarketplace\App\Document\CarModel;
 use Doctrine\ODM\MongoDB\MongoDBException;
-use Exception;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;

@@ -78,6 +78,39 @@ class CarCatalog
     #[MongoDB\Field(type: 'string')]
     protected $fuelType;
 
+    #[MongoDB\Field(type: 'string')]
+    protected $carName;
+
+    #[MongoDB\Field(type: 'string')]
+    protected $specSeries;
+
+    #[MongoDB\Field(type: 'string')]
+    protected $bodyCode;
+
+    #[MongoDB\Field(type: 'string')]
+    protected $transmission;
+
+    #[MongoDB\Field(type: 'string')]
+    protected $grade;
+
+    #[MongoDB\Field(type: 'string')]
+    protected $classification;
+
+    #[MongoDB\Field(type: 'string')]
+    protected $autoParameters;
+
+    #[MongoDB\Field(type: 'string')]
+    protected $specModelDate;
+
+    #[MongoDB\Field(type: 'string')]
+    protected $specVinPart;
+
+    #[MongoDB\Field(type: 'string')]
+    protected $specModification;
+
+    #[MongoDB\Field(type: 'string')]
+    protected $specCatalog;
+
     /**
      * @param object|null $id
      * @return void
@@ -85,6 +118,204 @@ class CarCatalog
     public function setId(?object $id): void
     {
         $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCarName()
+    {
+        return $this->carName;
+    }
+
+    /**
+     * @param mixed $carName
+     */
+    public function setCarName($carName): CarCatalog
+    {
+        $this->carName = $carName;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSpecSeries()
+    {
+        return $this->specSeries;
+    }
+
+    /**
+     * @param mixed $specSeries
+     */
+    public function setSpecSeries($specSeries): CarCatalog
+    {
+        $this->specSeries = $specSeries;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBodyCode()
+    {
+        return $this->bodyCode;
+    }
+
+    /**
+     * @param mixed $bodyCode
+     */
+    public function setBodyCode($bodyCode): CarCatalog
+    {
+        $this->bodyCode = $bodyCode;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTransmission()
+    {
+        return $this->transmission;
+    }
+
+    /**
+     * @param mixed $transmission
+     */
+    public function setTransmission($transmission): CarCatalog
+    {
+        $this->transmission = $transmission;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGrade()
+    {
+        return $this->grade;
+    }
+
+    /**
+     * @param mixed $grade
+     */
+    public function setGrade($grade): CarCatalog
+    {
+        $this->grade = $grade;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getClassification()
+    {
+        return $this->classification;
+    }
+
+    /**
+     * @param mixed $classification
+     */
+    public function setClassification($classification): CarCatalog
+    {
+        $this->classification = $classification;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAutoParameters()
+    {
+        return $this->autoParameters;
+    }
+
+    /**
+     * @param mixed $autoParameters
+     */
+    public function setAutoParameters($autoParameters): CarCatalog
+    {
+        $this->autoParameters = $autoParameters;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSpecModelDate()
+    {
+        return $this->specModelDate;
+    }
+
+    /**
+     * @param mixed $specModelDate
+     */
+    public function setSpecModelDate($specModelDate): CarCatalog
+    {
+        $this->specModelDate = $specModelDate;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSpecVinPart()
+    {
+        return $this->specVinPart;
+    }
+
+    /**
+     * @param mixed $specVinPart
+     */
+    public function setSpecVinPart($specVinPart): CarCatalog
+    {
+        $this->specVinPart = $specVinPart;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSpecModification()
+    {
+        return $this->specModification;
+    }
+
+    /**
+     * @param mixed $specModification
+     */
+    public function setSpecModification($specModification): CarCatalog
+    {
+        $this->specModification = $specModification;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSpecCatalog()
+    {
+        return $this->specCatalog;
+    }
+
+    /**
+     * @param mixed $specCatalog
+     */
+    public function setSpecCatalog($specCatalog): CarCatalog
+    {
+        $this->specCatalog = $specCatalog;
+
+        return $this;
     }
 
     /**
@@ -102,7 +333,7 @@ class CarCatalog
     {
         $this->sunroof = $sunroof;
 
-        return $sunroof;
+        return $this;
     }
 
     /**
