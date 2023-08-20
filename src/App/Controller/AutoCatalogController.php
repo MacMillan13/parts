@@ -13,9 +13,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route(path: "/api/v3/")]
-class CarCatalogController extends AbstractController
+class AutoCatalogController extends AbstractController
 {
-    #[Route(path: "car/catalog/{catalogId}/{modelId}", name: "get_catalog_car_parameters", methods: ["GET"])]
+    #[Route(path: "auto/catalog/{catalogId}/{modelId}", name: "get_catalog_car_parameters", methods: ["GET"])]
     public function getCarCatalogParameters(Request $request, CarCatalogDataQuery $carCatalogDataQuery,
                                             string  $catalogId, string $modelId): Response
     {
@@ -84,7 +84,8 @@ class CarCatalogController extends AbstractController
 
             $carCatalogParameters = $carCatalogDataQuery->query($carCatalogParameters);
 
-            return $this->json(['data' => $carCatalogParameters->getParameters()], Response::HTTP_OK);
+            return $this->json(['data' => ['parameters' => $carCatalogParameters->getParameters(),
+                'autoList' => $carCatalogParameters->getCarList()]], Response::HTTP_OK);
 
         } catch (ClientException $exception) {
 

@@ -10,7 +10,7 @@ import {ref} from 'vue';
 import {useStore} from 'vuex';
 
 export default {
-  name: "FindCar",
+  name: "FindAuto",
   setup() {
     const search = ref('');
     const store = useStore()

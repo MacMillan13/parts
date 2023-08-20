@@ -12,9 +12,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 #[Route(path: "/api/v3/")]
-class CarModelController extends RestAbstractController
+class AutoModelController extends RestAbstractController
 {
-    #[Route(path: "car/model/{catalogId}", name: "get_car_models", methods: ["GET"])]
+    #[Route(path: "auto/model/{catalogId}", name: "get_car_models", methods: ["GET"])]
     public function search(CarModelDataQuery $carModelDataQuery, string $catalogId): Response
     {
         try {

@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route(path: "/api/v3/")]
-class CarBrandController extends AbstractController
+class AutoBrandController extends AbstractController
 {
     /**
      * @param DocumentManager $dm
@@ -20,7 +20,7 @@ class CarBrandController extends AbstractController
     {
     }
 
-    #[Route(path: "car/brand", name: "get_catalog_car", methods: ["GET"])]
+    #[Route(path: "auto/brand", name: "get_catalog_car", methods: ["GET"])]
     public function getCarCatalog(): Response
     {
         try {
