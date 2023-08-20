@@ -43,140 +43,83 @@ class CarCatalogDataQuery extends AbstractDataQuery
     {
         $searchParams = [];
 
-        if (!empty($catalogId = $carCatalog->getCatalogId())) {
-            $searchParams['catalogId'] = $catalogId;
-        }
+        $searchParams['catalogId'] = $carCatalog->getCatalogId();
 
-        if (!empty($modelId = $carCatalog->getModelId())) {
-            $searchParams['modelId'] = $modelId;
-        }
+        $searchParams['modelId'] = $carCatalog->getModelId();
 
-        if (!empty($yearId = $carCatalog->getYearId())) {
-            $searchParams['yearId'] = $yearId;
-        }
+        $searchParams['yearId'] = $carCatalog->getYearId();
 
-        if (!empty($regionId = $carCatalog->getRegionId())) {
-            $searchParams['regionId'] = $regionId;
-        }
+        $searchParams['regionId'] = $carCatalog->getRegionId();
 
-        if (!empty($steeringId = $carCatalog->getSteeringId())) {
-            $searchParams['steeringId'] = $steeringId;
-        }
+        $searchParams['steeringId'] = $carCatalog->getSteeringId();
 
-        if (!empty($seriesId = $carCatalog->getSeriesId())) {
-            $searchParams['seriesId'] = $seriesId;
-        }
+        $searchParams['seriesId'] = $carCatalog->getSeriesId();
 
-        if (!empty($bodyTypeId = $carCatalog->getBodyTypeId())) {
-            $searchParams['bodyTypeId'] = $bodyTypeId;
-        }
+        $searchParams['bodyTypeId'] = $carCatalog->getBodyTypeId();
 
-        if (!empty($transmissionId = $carCatalog->getTransmissionTypeId())) {
-            $searchParams['transmissionTypeId'] = $transmissionId;
-        }
+        $searchParams['transmissionTypeId'] = $carCatalog->getTransmissionTypeId();
 
-        if (!empty($exactModelId = $carCatalog->getExactModelId())) {
-            $searchParams['exactModelId'] = $exactModelId;
-        }
+        $searchParams['exactModelId'] = $carCatalog->getExactModelId();
 
-        if (!empty($engineId = $carCatalog->getEngineId())) {
-            $searchParams['engineId'] = $engineId;
-        }
+        $searchParams['engineId'] = $carCatalog->getEngineId();
 
-        if (!empty($sunroof = $carCatalog->getSunroof())) {
-            $searchParams['sunroof'] = $sunroof;
-        }
+        $searchParams['sunroof'] = $carCatalog->getSunroof();
 
-        if (!empty($navigation = $carCatalog->getNavigation())) {
-            $searchParams['navigation'] = $navigation;
-        }
+        $searchParams['navigation'] = $carCatalog->getNavigation();
 
-        if (!empty($vsa = $carCatalog->getVsa())) {
-            $searchParams['vsa'] = $vsa;
-        }
+        $searchParams['vsa'] = $carCatalog->getVsa();
 
-        if (!empty($doorCount = $carCatalog->getDoorCount())) {
-            $searchParams['doorCount'] = $doorCount;
-        }
+        $searchParams['doorCount'] = $carCatalog->getDoorCount();
 
-        if (!empty($abs = $carCatalog->getAbs())) {
-            $searchParams['abs'] = $abs;
-        }
+        $searchParams['abs'] = $carCatalog->getAbs();
 
-        if (!empty($modification = $carCatalog->getModification())) {
-            $searchParams['modification'] = $modification;
-        }
+        $searchParams['modification'] = $carCatalog->getModification();
 
-        if (!empty($productPeriod = $carCatalog->getProductPeriod())) {
-            $searchParams['productPeriod'] = $productPeriod;
-        }
+        $searchParams['productPeriod'] = $carCatalog->getProductPeriod();
 
-        if (!empty($engineCapacity = $carCatalog->getEngineCapacity())) {
-            $searchParams['engineCapacity'] = $engineCapacity;
-        }
+        $searchParams['engineCapacity'] = $carCatalog->getEngineCapacity();
 
-        if (!empty($specModelDate = $carCatalog->getSpecModelDate())) {
-            $searchParams['specModelDate'] = $specModelDate;
-        }
+        $searchParams['specModelDate'] = $carCatalog->getSpecModelDate();
 
-        if (!empty($specVinPart = $carCatalog->getSpecVinPart())) {
-            $searchParams['specVinPart'] = $specVinPart;
-        }
+        $searchParams['specVinPart'] = $carCatalog->getSpecVinPart();
 
-        if (!empty($specModification = $carCatalog->getSpecModification())) {
-            $searchParams['specModification'] = $specModification;
-        }
+        $searchParams['specModification'] = $carCatalog->getSpecModification();
 
-        if (!empty($specCatalog = $carCatalog->getSpecCatalog())) {
-            $searchParams['specCatalog'] = $specCatalog;
-        }
+        $searchParams['specCatalog'] = $carCatalog->getSpecCatalog();
 
-        if (!empty($carName = $carCatalog->getCarName())) {
-            $searchParams['carName'] = $carName;
-        }
+        $searchParams['carName'] = $carCatalog->getCarName();
 
-        if (!empty($specSeries = $carCatalog->getSpecSeries())) {
-            $searchParams['specSeries'] = $specSeries;
-        }
+        $searchParams['specSeries'] = $carCatalog->getSpecSeries();
 
-        if (!empty($fuelType = $carCatalog->getFuelType())) {
-            $searchParams['fuelType'] = $fuelType;
-        }
+        $searchParams['fuelType'] = $carCatalog->getFuelType();
 
-        if (!empty($bodyCode = $carCatalog->getBodyCode())) {
-            $searchParams['bodyCode'] = $bodyCode;
-        }
+        $searchParams['bodyCode'] = $carCatalog->getBodyCode();
 
-        if (!empty($transmission = $carCatalog->getTransmission())) {
-            $searchParams['transmission'] = $transmission;
-        }
+        $searchParams['transmission'] = $carCatalog->getTransmission();
 
-        if (!empty($grade = $carCatalog->getGrade())) {
-            $searchParams['grade'] = $grade;
-        }
+        $searchParams['grade'] = $carCatalog->getGrade();
 
-        if (!empty($classification = $carCatalog->getClassification())) {
-            $searchParams['classification'] = $classification;
-        }
+        $searchParams['classification'] = $carCatalog->getClassification();
 
-        if (!empty($autoParameters = $carCatalog->getAutoParameters())) {
-            $searchParams['autoParameters'] = $autoParameters;
-        }
+        $searchParams['autoParameters'] = $carCatalog->getAutoParameters();
 
         $carCatalogSearch = $this->dm->getRepository(CarCatalog::class)
             ->findOneBy($searchParams);
 
         if (empty($carCatalogSearch)) {
 
-            $parametersCriteria = $this->catalogParametersUrlHelper->buildParametersUrl([$yearId, $regionId,
-                $steeringId, $seriesId, $bodyTypeId, $transmissionId, $exactModelId, $engineId, $sunroof,
-                $navigation, $vsa, $doorCount, $abs, $modification, $productPeriod, $engineCapacity,
-                $specModelDate, $specVinPart, $specModification, $specCatalog, $carName, $specSeries,
-                $fuelType, $bodyCode, $transmission, $grade, $classification, $autoParameters]);
+            $parametersCriteria = $this->catalogParametersUrlHelper->buildParametersUrl([$carCatalog->getYearId(),
+                $carCatalog->getRegionId(), $carCatalog->getSteeringId(), $carCatalog->getSeriesId(), $carCatalog->getBodyTypeId(),
+                $carCatalog->getTransmissionTypeId(), $carCatalog->getExactModelId(), $carCatalog->getEngineId(), $carCatalog->getSunroof(),
+                $carCatalog->getNavigation(), $carCatalog->getVsa(), $carCatalog->getDoorCount(), $carCatalog->getAbs(),
+                $carCatalog->getModification(), $carCatalog->getProductPeriod(), $carCatalog->getEngineCapacity(), $carCatalog->getSpecModelDate(),
+                $carCatalog->getSpecVinPart(), $carCatalog->getSpecModification(), $carCatalog->getSpecCatalog(), $carCatalog->getCarName(),
+                $carCatalog->getSpecSeries(), $carCatalog->getFuelType(), $carCatalog->getBodyCode(), $carCatalog->getTransmission(),
+                $carCatalog->getGrade(), $carCatalog->getClassification(), $carCatalog->getAutoParameters()]);
 
             $response = $this->client->request(
                 'GET',
-                $_ENV['PART_CATALOG_API'] . 'catalogs/' . $catalogId . '/cars-parameters/?modelId=' . $modelId . $parametersCriteria,
+                $_ENV['PART_CATALOG_API'] . 'catalogs/' . $carCatalog->getCatalogId() . '/cars-parameters/?modelId=' . $carCatalog->getModelId() . $parametersCriteria,
                 $this->getHeaders()
             );
 
@@ -188,7 +131,7 @@ class CarCatalogDataQuery extends AbstractDataQuery
 
                 $carListResponse = $this->client->request(
                     'GET',
-                    $_ENV['PART_CATALOG_API'] . 'catalogs/' . $catalogId . '/cars2/?modelId=' . $modelId . $parametersCriteria,
+                    $_ENV['PART_CATALOG_API'] . 'catalogs/' . $carCatalog->getCatalogId() . '/cars2/?modelId=' . $carCatalog->getModelId() . $parametersCriteria,
                     $this->getHeaders()
                 );
 
