@@ -27,6 +27,7 @@ class CarVinSearchController extends AbstractController
      * @param PartsCatalogCarVinDataQuery $partsCatalogVinDataQuery
      * @param SophioCarVinDataQuery $sophioVinDataQuery
      * @param CarVinDecoderService $carVinDecoderService
+     * @param DocumentManager $documentManager
      * @param string $vinCode
      * @return Response
      * @throws ClientExceptionInterface
