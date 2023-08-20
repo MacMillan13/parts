@@ -6,6 +6,8 @@ export const state = () => ({
   autoCatalog: null,
   selectedAuto: null,
   autoBrands: null,
+  autoModel: null,
+  autoFilter: null,
   partSchema: null,
   partSchemaPositions: null,
   autoCatalogGroup: null
@@ -14,12 +16,29 @@ export const state = () => ({
 export const getters = {
 }
 
+const updateAutoListStructure = (autoList) => {
+
+  autoList.forEach(element => {
+    element.parameters.forEach(parameter => {
+      element[parameter.key] = parameter.value;
+    });
+  });
+
+  return autoList;
+}
+
 export const mutations = {
   setStep: (state, step) => {
     state.step = step
   },
   setAutoBrands: (state, autoBrands) => {
     state.autoBrands = autoBrands
+  },
+  setAutoModel: (state, autoModel) => {
+    state.autoModel = autoModel
+  },
+  setAutoFilter: (state, autoFilter) => {
+    state.autoFilter = autoFilter
   },
   setAutoList: (state, autoList) => {
     state.autoList = autoList
@@ -49,12 +68,8 @@ export const actions = {
 
     if (false === responseJson.exactMatch) {
 
-      const autoList = responseJson.data[0].carList
-      autoList.forEach(element => {
-        element.parameters.forEach(parameter => {
-          element[parameter.key] = parameter.value;
-        });
-      });
+      const autoList = updateAutoListStructure(responseJson.data[0].carList)
+
       commit("setAutoList", autoList)
 
     } else if (true === responseJson.exactMatch) {
@@ -77,7 +92,7 @@ export const actions = {
     const responseJson = await response.json();
     const autoCatalog = responseJson.data;
     commit("setAutoCatalog", autoCatalog)
-    commit("setSelectedAuto", params.auto)
+    commit("setSelectedAuto", params.carId)
 
     if (params.toSet) {
       const url = new URL(location.origin);
@@ -89,10 +104,38 @@ export const actions = {
     }
   },
 
-  async getCarBrands({ commit }) {
-    const response = await fetch(defaultDataApi + 'car/brand', getRequestOptions('GET'));
+  async getAutoBrands({ commit }) {
+    const response = await fetch(defaultDataApi + 'auto/brand', getRequestOptions('GET'));
     const responseJson = await response.json();
     commit('setAutoBrands', responseJson.data)
+  },
+
+  async getAutoModels({ commit }, autoModel) {
+    const response = await fetch(defaultDataApi + 'auto/model/' + autoModel, getRequestOptions('GET'));
+    const responseJson = await response.json();
+    commit('setAutoModel', responseJson.data)
+  },
+
+  async getAutoCatalog({ commit }, params) {
+    let url = defaultDataApi + 'auto/catalog/' + params.catalogId + '/' + params.carId
+    if (undefined !== params.query) {
+      url += params.query
+    }
+    const response = await fetch(url, getRequestOptions('GET'));
+    const responseJson = await response.json();
+    const data = responseJson.data;
+    let dataWithExistedValue = []
+    data.parameters.forEach(value => {
+      if (value.values.length > 1) {
+        dataWithExistedValue.push(value)
+      }
+    })
+    console.log(data.autoList)
+    const autoList = updateAutoListStructure(data.autoList)
+
+    commit('setAutoFilter', dataWithExistedValue)
+    console.log(autoList)
+    commit('setAutoList', autoList)
   },
 
   async getCatalogGroup({ commit }, catalog) {

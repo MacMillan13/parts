@@ -1,10 +1,10 @@
 <template>
   <div class="container">
     <div>
-      <FindCar />
+      <FindAuto />
     </div>
-    <div v-if="autoList === null && selectedAuto === null">
-      <AutoBrand />
+    <div v-if="step === 0">
+      <AutoFilter />
     </div>
     <div>
       <div v-if="step === 1 && (autoList !== null || selectedAuto !== null)">
@@ -31,8 +31,8 @@ import { ref, computed} from 'vue';
 import AutoList from './search/AutoList';
 import AutoCatalogGroup from './search/AutoCatalogGroup';
 import PartSchema from './search/PartSchema';
-import FindCar from './search/FindCar';
-import AutoBrand from './search/AutoBrand';
+import FindAuto from './search/FindAuto';
+import AutoFilter from './search/AutoFilter.vue';
 import AutoCatalog from './search/AutoCatalog';
 
 export default {
@@ -42,8 +42,8 @@ export default {
     AutoCatalog,
     AutoCatalogGroup,
     PartSchema,
-    FindCar,
-    AutoBrand
+    FindAuto,
+    AutoFilter
   },
   setup() {
     const store = useStore()
@@ -77,7 +77,7 @@ export default {
         };
 
         store.dispatch('search/getCatalog', {
-          auto: catalogParam,
+          carId: catalogParam,
           toSet: true
         })
       }
@@ -89,7 +89,7 @@ export default {
         };
 
         store.dispatch('search/getCatalog', {
-          auto: catalogParam,
+          carId: catalogParam,
           toSet: false
         })
 

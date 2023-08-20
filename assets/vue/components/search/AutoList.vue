@@ -50,6 +50,7 @@
 <script>
 import {computed} from 'vue';
 import {useStore} from 'vuex';
+
 export default {
   name: "AutoList",
   setup() {
@@ -59,7 +60,7 @@ export default {
     const autoList = computed(() => store.state.search.autoList);
     const getCatalog = async (auto) => {
       await store.dispatch('search/getCatalog', {
-        auto: auto,
+        carId: auto,
         toSet: true
       })
     }
