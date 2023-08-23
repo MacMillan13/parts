@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BitBag\OpenMarketplace\App\Controller;
+namespace BitBag\OpenMarketplace\App\Controller\Rest;
 
 use BitBag\OpenMarketplace\App\DataQuery\PartsCatalog\CarVinDataQuery as PartsCatalogCarVinDataQuery;
 use BitBag\OpenMarketplace\App\DataQuery\Sophio\CarVinDataQuery as SophioCarVinDataQuery;

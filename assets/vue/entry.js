@@ -1,8 +1,8 @@
 import {createApp} from 'vue';
-import Example from './components/Example.vue';
-import Search from './components/Search.vue';
+import router from './router/router';
 import { createStore } from 'vuex';
 import { search } from './store/search'
+import App from "./App.vue";
 
 const store = createStore({
   modules: {
@@ -10,12 +10,8 @@ const store = createStore({
   }
 })
 
-const app = createApp({
-  components: {
-    Example,
-    Search
-  }
-});
+const app = createApp(App);
 
 app.use(store);
+app.use(router);
 app.mount("#app");
