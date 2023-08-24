@@ -7,6 +7,11 @@ export default createRouter({
   history: createWebHistory(),
   routes: [
     {
+      name: 'Search',
+      path: '/',
+      component: Search
+    },
+    {
       name: 'Models',
       path: '/:catalogId',
       component: AutoModels
@@ -15,11 +20,6 @@ export default createRouter({
       name: 'Model',
       path: '/:catalogId/:model',
       component: Example
-    },
-    {
-      name: 'Search',
-      path: '/',
-      component: Search
     },
   ]
 })

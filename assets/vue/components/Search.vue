@@ -1,21 +1,35 @@
 <template>
   <div class="container">
+    <FindAuto />
+    <AutoBrands v-if="step === 0" />
+    <AutoList v-if="step === 1 && (autoList !== null || selectedAuto !== null)" />
   </div>
 </template>
 <script>
 
 import FindAuto from "./search/FindAuto.vue";
-import AutoFilter from "./search/AutoFilter.vue";
+import AutoBrands from "./search/AutoBrands.vue";
+import AutoList from './search/AutoList';
+import { computed } from 'vue';
+import { useStore } from 'vuex'
 
 export default {
   name: 'Search',
   components: {
     FindAuto,
-    AutoFilter
+    AutoBrands,
+    AutoList
   },
   setup() {
+    const store = useStore()
+    const step = computed(() => store.state.search.step);
+    const autoList = computed(() => store.state.search.autoList);
+    const selectedAuto = computed(() => store.state.search.autoList)
 
     return {
+      step,
+      autoList,
+      selectedAuto
     };
   }
 };
