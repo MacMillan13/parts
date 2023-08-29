@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace BitBag\OpenMarketplace\App\Document;
 
-use BitBag\OpenMarketplace\App\DocumentRepository\AutoVinRepository;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
-#[MongoDB\Document(repositoryClass: AutoVinRepository::class)]
 class AutoCatalog
 {
     #[MongoDB\Id]

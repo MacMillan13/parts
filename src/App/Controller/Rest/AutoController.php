@@ -21,7 +21,6 @@ class AutoController extends AbstractController
     public function findAuto(string $catalogId, string $modelName, string $modification): Response
     {
         try {
-
             $autoRep = $this->documentManager->getRepository(Auto::class);
             $auto = $autoRep->findOneBy(['catalogId' => $catalogId, 'modelName' => $modelName, 'code' => $modification]);
 
