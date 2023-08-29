@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace BitBag\OpenMarketplace\App\DocumentRepository;
 
-use BitBag\OpenMarketplace\App\Document\CarVin;
+use BitBag\OpenMarketplace\App\Document\AutoVin;
 use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
 
-class CarVinRepository extends DocumentRepository
+class AutoVinRepository extends DocumentRepository
 {
     /**
      * @param string $vinCode
@@ -16,7 +16,7 @@ class CarVinRepository extends DocumentRepository
      */
     public function getVinDataWithCatalog(string $vinCode): ?array
     {
-        $builder = $this->dm->createAggregationBuilder(CarVin::class);
+        $builder = $this->dm->createAggregationBuilder(AutoVin::class);
         $builder
             ->match()
                 ->field('vinCode')

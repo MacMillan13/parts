@@ -7,7 +7,7 @@ namespace BitBag\OpenMarketplace\App\Document;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 #[MongoDB\Document]
-class CarModel
+class AutoModel
 {
     #[MongoDB\Id]
     protected $id;
@@ -40,7 +40,7 @@ class CarModel
     /**
      * @param mixed $catalogId
      */
-    public function setCatalogId($catalogId): CarModel
+    public function setCatalogId($catalogId): AutoModel
     {
         $this->catalogId = $catalogId;
 
@@ -58,7 +58,7 @@ class CarModel
     /**
      * @param mixed $models
      */
-    public function setModels($models): CarModel
+    public function setModels($models): AutoModel
     {
         $this->models = $models;
 
@@ -74,9 +74,9 @@ class CarModel
     }
 
     /**
-     * @return CarModel
+     * @return AutoModel
      */
-    public function setDateTime(): CarModel
+    public function setDateTime(): AutoModel
     {
         $this->dateTime = new \DateTime();;
 

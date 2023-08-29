@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace BitBag\OpenMarketplace\App\Controller\Rest;
 
-use BitBag\OpenMarketplace\App\DataQuery\PartsCatalog\CarCatalogDataQuery;
-use BitBag\OpenMarketplace\App\Document\CarCatalog;
+use BitBag\OpenMarketplace\App\DataQuery\PartsCatalog\AutoCatalogDataQuery;
+use BitBag\OpenMarketplace\App\Document\AutoCatalog;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AutoCatalogController extends AbstractController
 {
     #[Route(path: "auto/catalog/{catalogId}/{modelId}", name: "get_catalog_car_parameters", methods: ["GET"])]
-    public function getCarCatalogParameters(Request $request, CarCatalogDataQuery $carCatalogDataQuery,
+    public function getCarCatalogParameters(Request $request, AutoCatalogDataQuery $carCatalogDataQuery,
                                             string  $catalogId, string $modelId): Response
     {
         try {
@@ -49,7 +49,7 @@ class AutoCatalogController extends AbstractController
             $specModification = $request->get('spec_modification');
             $specCatalog = $request->get('spec_catalog');
 
-            $carCatalogParameters = new CarCatalog();
+            $carCatalogParameters = new AutoCatalog();
 
             $carCatalogParameters->setCatalogId($catalogId)
                 ->setModelId($modelId)
@@ -68,7 +68,7 @@ class AutoCatalogController extends AbstractController
                 ->setSpecModification($specModification)
                 ->setSpecCatalog($specCatalog)
                 ->setDoorCount($doorCount)
-                ->setModification($modification)
+                ->setModificationId($modification)
                 ->setProductPeriod($productPeriod)
                 ->setEngineCapacity($engineCapacity)
                 ->setAbs($abs)

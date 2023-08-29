@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace BitBag\OpenMarketplace\App\Service\Sophio;
 
-use BitBag\OpenMarketplace\App\DataQuery\PartsCatalog\CarCatalogDataQuery;
-use BitBag\OpenMarketplace\App\DataQuery\PartsCatalog\CarModelDataQuery;
-use BitBag\OpenMarketplace\App\Document\CarCatalog;
-use BitBag\OpenMarketplace\App\Document\CarModel;
-use BitBag\OpenMarketplace\App\Document\CarVin;
+use BitBag\OpenMarketplace\App\DataQuery\PartsCatalog\AutoCatalogDataQuery;
+use BitBag\OpenMarketplace\App\DataQuery\PartsCatalog\AutoModelDataQuery;
+use BitBag\OpenMarketplace\App\Document\AutoCatalog;
+use BitBag\OpenMarketplace\App\Document\AutoModel;
+use BitBag\OpenMarketplace\App\Document\AutoVin;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\MongoDBException;
 use Exception;
@@ -24,14 +24,14 @@ class CarVinDecoderService
     const DEFAULT_REGION = 'USA';
     const DEFAULT_STEERING = 'Left hand';
 
-    public function __construct(private CarModelDataQuery $carModelDataQuery, private CarCatalogDataQuery $carCatalogDataQuery,
-        private DocumentManager $documentManager)
+    public function __construct(private AutoModelDataQuery $carModelDataQuery, private AutoCatalogDataQuery $carCatalogDataQuery,
+                                private DocumentManager    $documentManager)
     {
     }
 
     /**
      * @param array $carData
-     * @return CarCatalog
+     * @return AutoCatalog
      * @throws MongoDBException
      * @throws ClientExceptionInterface
      * @throws DecodingExceptionInterface
@@ -40,7 +40,7 @@ class CarVinDecoderService
      * @throws TransportExceptionInterface
      * @throws Exception
      */
-    public function decoder(CarVin $carVin, array $carData): CarCatalog
+    public function decoder(AutoVin $carVin, array $carData): AutoCatalog
     {
         $brand = strtolower($carData['make']);
 
@@ -65,12 +65,12 @@ class CarVinDecoderService
     }
 
     /**
-     * @param CarCatalog $carCatalog
+     * @param AutoCatalog $carCatalog
      * @param array $parameters
      * @param array $carData
-     * @return CarCatalog
+     * @return AutoCatalog
      */
-    private function setYear(CarCatalog $carCatalog, array $parameters, array $carData): CarCatalog
+    private function setYear(AutoCatalog $carCatalog, array $parameters, array $carData): AutoCatalog
     {
         foreach ($parameters as $parameter) {
             if ($parameter['key'] == 'year') {
@@ -86,11 +86,11 @@ class CarVinDecoderService
     }
 
     /**
-     * @param CarCatalog $carCatalog
+     * @param AutoCatalog $carCatalog
      * @param array $parameters
-     * @return CarCatalog
+     * @return AutoCatalog
      */
-    private function setValues(CarCatalog $carCatalog, array $parameters): CarCatalog
+    private function setValues(AutoCatalog $carCatalog, array $parameters): AutoCatalog
     {
         foreach ($parameters as $parameter) {
             switch ($parameter['key']) {
@@ -115,14 +115,14 @@ class CarVinDecoderService
     }
 
     /**
-     * @param CarVin $carVin
-     * @param CarCatalog $carCatalog
+     * @param AutoVin $carVin
+     * @param AutoCatalog $carCatalog
      * @param string $vinCode
      * @return void
      * @throws MongoDBException
      * @throws \MongoException
      */
-    private function saveCarVin(CarVin $carVin, CarCatalog $carCatalog, string $vinCode): void
+    private function saveCarVin(AutoVin $carVin, AutoCatalog $carCatalog, string $vinCode): void
     {
         $carVin->setCatalogId(new MongoId($carCatalog->getId()))
             ->setVinCode($vinCode)
@@ -138,7 +138,7 @@ class CarVinDecoderService
     /**
      * @param array $carModel
      * @param string $brand
-     * @return CarCatalog
+     * @return AutoCatalog
      * @throws ClientExceptionInterface
      * @throws DecodingExceptionInterface
      * @throws MongoDBException
@@ -146,9 +146,9 @@ class CarVinDecoderService
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
      */
-    private function getCatalogWithTheRightModel(array $carModel, string $brand): CarCatalog
+    private function getCatalogWithTheRightModel(array $carModel, string $brand): AutoCatalog
     {
-        $carCatalog = new CarCatalog();
+        $carCatalog = new AutoCatalog();
         $carCatalog->setModelId($carModel['id']);
         $carCatalog->setCatalogId($brand);
 
@@ -156,12 +156,12 @@ class CarVinDecoderService
     }
 
     /**
-     * @param CarModel $carModelList
+     * @param AutoModel $carModelList
      * @param string $modelFromResponse
      * @return array
      * @throws Exception
      */
-    private function getCarModer(CarModel $carModelList, string $modelFromResponse): array
+    private function getCarModer(AutoModel $carModelList, string $modelFromResponse): array
     {
         foreach ($carModelList->getModels() as $model) {
             if (strtolower($model['name']) === strtolower($modelFromResponse)) {

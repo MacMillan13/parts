@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace BitBag\OpenMarketplace\App\Document;
 
-use BitBag\OpenMarketplace\App\DocumentRepository\CarVinRepository;
+use BitBag\OpenMarketplace\App\DocumentRepository\AutoVinRepository;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use MongoId;
 
-#[MongoDB\Document(repositoryClass: CarVinRepository::class)]
-class CarVin
+#[MongoDB\Document(repositoryClass: AutoVinRepository::class)]
+class AutoVin
 {
     #[MongoDB\Id]
     protected $id;
@@ -33,7 +33,7 @@ class CarVin
      * @param object $autoData
      * @return $this
      */
-    public function setAutoData(object $autoData): CarVin
+    public function setAutoData(object $autoData): AutoVin
     {
         $this->autoData = $autoData;
 
@@ -44,7 +44,7 @@ class CarVin
      * @param string $vinCode
      * @return $this
      */
-    public function setVinCode(string $vinCode): CarVin
+    public function setVinCode(string $vinCode): AutoVin
     {
         $this->vinCode = $vinCode;
 
@@ -52,9 +52,9 @@ class CarVin
     }
 
     /**
-     * @return CarVin
+     * @return AutoVin
      */
-    public function setDateTime(): CarVin
+    public function setDateTime(): AutoVin
     {
         $this->dateTime = new \DateTime();
 
@@ -79,9 +79,9 @@ class CarVin
 
     /**
      * @param MongoId $catalogId
-     * @return CarVin
+     * @return AutoVin
      */
-    public function setCatalogId(MongoId $catalogId): CarVin
+    public function setCatalogId(MongoId $catalogId): AutoVin
     {
         $this->catalogId = $catalogId;
 
@@ -99,7 +99,7 @@ class CarVin
     /**
      * @param mixed $exactMatch
      */
-    public function setExactMatch($exactMatch): CarVin
+    public function setExactMatch($exactMatch): AutoVin
     {
         $this->exactMatch = $exactMatch;
 

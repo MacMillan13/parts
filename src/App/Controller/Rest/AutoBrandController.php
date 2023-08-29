@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BitBag\OpenMarketplace\App\Controller\Rest;
 
-use BitBag\OpenMarketplace\App\Document\CarBrand;
+use BitBag\OpenMarketplace\App\Document\AutoBrand;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,7 +24,7 @@ class AutoBrandController extends AbstractController
     public function getCarCatalog(): Response
     {
         try {
-            $carCatalog = $this->dm->getRepository(CarBrand::class)->findAll();
+            $carCatalog = $this->dm->getRepository(AutoBrand::class)->findAll();
 
             return $this->json(['data' => $carCatalog], Response::HTTP_OK);
 

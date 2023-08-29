@@ -7,7 +7,7 @@ namespace BitBag\OpenMarketplace\App\Document;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 #[MongoDB\Document]
-class CarBrand
+class AutoBrand
 {
     #[MongoDB\Id]
     protected $id;
@@ -79,7 +79,7 @@ class CarBrand
         return $this->dateTime;
     }
 
-    public function setDateTime(): CarBrand
+    public function setDateTime(): AutoBrand
     {
         $this->dateTime = new \DateTime();
 

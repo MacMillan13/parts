@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BitBag\OpenMarketplace\App\DataQuery\PartsCatalog;
 
-use BitBag\OpenMarketplace\App\Document\CarVin;
+use BitBag\OpenMarketplace\App\Document\AutoVin;
 use Doctrine\ODM\MongoDB\MongoDBException;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
@@ -12,11 +12,11 @@ use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
-class CarVinDataQuery extends AbstractDataQuery
+class AutoVinDataQuery extends AbstractDataQuery
 {
     /**
      * @param string $vinCode
-     * @return CarVin|null
+     * @return AutoVin|null
      * @throws ClientExceptionInterface
      * @throws DecodingExceptionInterface
      * @throws MongoDBException
@@ -24,9 +24,9 @@ class CarVinDataQuery extends AbstractDataQuery
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
      */
-    public function query(string $vinCode): ?CarVin
+    public function query(string $vinCode): ?AutoVin
     {
-        $auto = $this->dm->getRepository(CarVin::class)->getVinDataWithCatalog($vinCode);
+        $auto = $this->dm->getRepository(AutoVin::class)->getVinDataWithCatalog($vinCode);
 
         if (empty($auto)) {
 
@@ -38,7 +38,7 @@ class CarVinDataQuery extends AbstractDataQuery
 
             if (!empty($responseArray = $response->toArray())) {
                 $autoData = (object)$responseArray[0];
-                $carVin = new CarVin();
+                $carVin = new AutoVin();
                 $carVin->setAutoData($autoData)
                     ->setDateTime()
                     ->setExactMatch(true)
@@ -61,7 +61,7 @@ class CarVinDataQuery extends AbstractDataQuery
             $autoData = [];
         }
 
-        $carVin = new CarVin();
+        $carVin = new AutoVin();
         $carVin->setExactMatch($auto['exactMatch'])
             ->setVinCode($auto['vinCode'])
             ->setAutoData((object)$autoData);

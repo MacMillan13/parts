@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace BitBag\OpenMarketplace\App\Controller\Rest;
 
-use BitBag\OpenMarketplace\App\DataQuery\PartsCatalog\CarModelDataQuery;
-use BitBag\OpenMarketplace\App\Document\CarModel;
+use BitBag\OpenMarketplace\App\DataQuery\PartsCatalog\AutoModelDataQuery;
+use BitBag\OpenMarketplace\App\Document\AutoModel;
 use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,10 +15,10 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 class AutoModelController extends RestAbstractController
 {
     #[Route(path: "auto/model/{catalogId}", name: "get_car_models", methods: ["GET"])]
-    public function search(CarModelDataQuery $carModelDataQuery, string $catalogId): Response
+    public function search(AutoModelDataQuery $carModelDataQuery, string $catalogId): Response
     {
         try {
-            $carModel = $this->dm->getRepository(CarModel::class)->findOneBy(['catalogId' => $catalogId]);
+            $carModel = $this->dm->getRepository(AutoModel::class)->findOneBy(['catalogId' => $catalogId]);
 
             if (empty($carModel)) {
                 $carModel = $carModelDataQuery->query($catalogId);

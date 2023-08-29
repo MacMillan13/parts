@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace BitBag\OpenMarketplace\App\Controller\Rest;
 
-use BitBag\OpenMarketplace\App\DataQuery\PartsCatalog\CarVinDataQuery as PartsCatalogCarVinDataQuery;
+use BitBag\OpenMarketplace\App\DataQuery\PartsCatalog\AutoVinDataQuery as PartsCatalogCarVinDataQuery;
 use BitBag\OpenMarketplace\App\DataQuery\Sophio\CarVinDataQuery as SophioCarVinDataQuery;
-use BitBag\OpenMarketplace\App\Document\CarVin;
+use BitBag\OpenMarketplace\App\Document\AutoVin;
 use BitBag\OpenMarketplace\App\Service\Sophio\CarVinDecoderService;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Exception;
@@ -53,9 +53,9 @@ class CarVinSearchController extends AbstractController
 
                     //if CarVin exist but with no data
                     if ($isEmptyAutoData) {
-                        $carVin = $documentManager->getRepository(CarVin::class)->findOneBy(['vinCode' => $vinCode]);
+                        $carVin = $documentManager->getRepository(AutoVin::class)->findOneBy(['vinCode' => $vinCode]);
                     } else {
-                        $carVin = new CarVin();
+                        $carVin = new AutoVin();
                     }
 
                     $autoData = $carVinDecoderService->decoder($carVin, $carData);

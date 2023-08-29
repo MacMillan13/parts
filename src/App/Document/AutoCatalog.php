@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace BitBag\OpenMarketplace\App\Document;
 
+use BitBag\OpenMarketplace\App\DocumentRepository\AutoVinRepository;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
-#[MongoDB\Document]
-class CarCatalog
+#[MongoDB\Document(repositoryClass: AutoVinRepository::class)]
+class AutoCatalog
 {
     #[MongoDB\Id]
     protected $id;
@@ -67,7 +68,7 @@ class CarCatalog
     protected $abs;
 
     #[MongoDB\Field(type: 'string')]
-    protected $modification;
+    protected $modificationId;
 
     #[MongoDB\Field(type: 'string')]
     protected $productPeriod;
@@ -111,6 +112,12 @@ class CarCatalog
     #[MongoDB\Field(type: 'string')]
     protected $specCatalog;
 
+    #[MongoDB\Field(type: 'string')]
+    protected $year;
+
+    #[MongoDB\Field(type: 'string')]
+    protected $model;
+
     /**
      * @param object|null $id
      * @return void
@@ -118,6 +125,60 @@ class CarCatalog
     public function setId(?object $id): void
     {
         $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getYear()
+    {
+        return $this->year;
+    }
+
+    /**
+     * @param mixed $year
+     */
+    public function setYear($year): AutoCatalog
+    {
+        $this->year = $year;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getModel()
+    {
+        return $this->model;
+    }
+
+    /**
+     * @param mixed $model
+     */
+    public function setModel($model): AutoCatalog
+    {
+        $this->model = $model;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getModif()
+    {
+        return $this->modif;
+    }
+
+    /**
+     * @param mixed $modif
+     */
+    public function setModif($modif): AutoCatalog
+    {
+        $this->modif = $modif;
+
+        return $this;
     }
 
     /**
@@ -131,7 +192,7 @@ class CarCatalog
     /**
      * @param mixed $carName
      */
-    public function setCarName($carName): CarCatalog
+    public function setCarName($carName): AutoCatalog
     {
         $this->carName = $carName;
 
@@ -149,7 +210,7 @@ class CarCatalog
     /**
      * @param mixed $specSeries
      */
-    public function setSpecSeries($specSeries): CarCatalog
+    public function setSpecSeries($specSeries): AutoCatalog
     {
         $this->specSeries = $specSeries;
 
@@ -167,7 +228,7 @@ class CarCatalog
     /**
      * @param mixed $bodyCode
      */
-    public function setBodyCode($bodyCode): CarCatalog
+    public function setBodyCode($bodyCode): AutoCatalog
     {
         $this->bodyCode = $bodyCode;
 
@@ -185,7 +246,7 @@ class CarCatalog
     /**
      * @param mixed $transmission
      */
-    public function setTransmission($transmission): CarCatalog
+    public function setTransmission($transmission): AutoCatalog
     {
         $this->transmission = $transmission;
 
@@ -203,7 +264,7 @@ class CarCatalog
     /**
      * @param mixed $grade
      */
-    public function setGrade($grade): CarCatalog
+    public function setGrade($grade): AutoCatalog
     {
         $this->grade = $grade;
 
@@ -221,7 +282,7 @@ class CarCatalog
     /**
      * @param mixed $classification
      */
-    public function setClassification($classification): CarCatalog
+    public function setClassification($classification): AutoCatalog
     {
         $this->classification = $classification;
 
@@ -239,7 +300,7 @@ class CarCatalog
     /**
      * @param mixed $autoParameters
      */
-    public function setAutoParameters($autoParameters): CarCatalog
+    public function setAutoParameters($autoParameters): AutoCatalog
     {
         $this->autoParameters = $autoParameters;
 
@@ -257,7 +318,7 @@ class CarCatalog
     /**
      * @param mixed $specModelDate
      */
-    public function setSpecModelDate($specModelDate): CarCatalog
+    public function setSpecModelDate($specModelDate): AutoCatalog
     {
         $this->specModelDate = $specModelDate;
 
@@ -275,7 +336,7 @@ class CarCatalog
     /**
      * @param mixed $specVinPart
      */
-    public function setSpecVinPart($specVinPart): CarCatalog
+    public function setSpecVinPart($specVinPart): AutoCatalog
     {
         $this->specVinPart = $specVinPart;
 
@@ -293,7 +354,7 @@ class CarCatalog
     /**
      * @param mixed $specModification
      */
-    public function setSpecModification($specModification): CarCatalog
+    public function setSpecModification($specModification): AutoCatalog
     {
         $this->specModification = $specModification;
 
@@ -311,7 +372,7 @@ class CarCatalog
     /**
      * @param mixed $specCatalog
      */
-    public function setSpecCatalog($specCatalog): CarCatalog
+    public function setSpecCatalog($specCatalog): AutoCatalog
     {
         $this->specCatalog = $specCatalog;
 
@@ -329,7 +390,7 @@ class CarCatalog
     /**
      * @param mixed $sunroof
      */
-    public function setSunroof($sunroof): CarCatalog
+    public function setSunroof($sunroof): AutoCatalog
     {
         $this->sunroof = $sunroof;
 
@@ -347,7 +408,7 @@ class CarCatalog
     /**
      * @param mixed $navigation
      */
-    public function setNavigation($navigation): CarCatalog
+    public function setNavigation($navigation): AutoCatalog
     {
         $this->navigation = $navigation;
 
@@ -365,7 +426,7 @@ class CarCatalog
     /**
      * @param mixed $vsa
      */
-    public function setVsa($vsa): CarCatalog
+    public function setVsa($vsa): AutoCatalog
     {
         $this->vsa = $vsa;
 
@@ -383,7 +444,7 @@ class CarCatalog
     /**
      * @param mixed $doorCount
      */
-    public function setDoorCount($doorCount): CarCatalog
+    public function setDoorCount($doorCount): AutoCatalog
     {
         $this->doorCount = $doorCount;
 
@@ -401,7 +462,7 @@ class CarCatalog
     /**
      * @param mixed $abs
      */
-    public function setAbs($abs): CarCatalog
+    public function setAbs($abs): AutoCatalog
     {
         $this->abs = $abs;
 
@@ -411,17 +472,17 @@ class CarCatalog
     /**
      * @return mixed
      */
-    public function getModification()
+    public function getModificationId()
     {
-        return $this->modification;
+        return $this->modificationId;
     }
 
     /**
-     * @param mixed $modification
+     * @param mixed $modificationId
      */
-    public function setModification($modification): CarCatalog
+    public function setModificationId($modificationId): AutoCatalog
     {
-        $this->modification = $modification;
+        $this->modificationId = $modificationId;
 
         return $this;
     }
@@ -437,7 +498,7 @@ class CarCatalog
     /**
      * @param mixed $productPeriod
      */
-    public function setProductPeriod($productPeriod): CarCatalog
+    public function setProductPeriod($productPeriod): AutoCatalog
     {
         $this->productPeriod = $productPeriod;
 
@@ -455,7 +516,7 @@ class CarCatalog
     /**
      * @param mixed $engineCapacity
      */
-    public function setEngineCapacity($engineCapacity): CarCatalog
+    public function setEngineCapacity($engineCapacity): AutoCatalog
     {
         $this->engineCapacity = $engineCapacity;
 
@@ -473,7 +534,7 @@ class CarCatalog
     /**
      * @param mixed $fuelType
      */
-    public function setFuelType($fuelType): CarCatalog
+    public function setFuelType($fuelType): AutoCatalog
     {
         $this->fuelType = $fuelType;
 
@@ -484,7 +545,7 @@ class CarCatalog
      * @param object $parameters
      * @return $this
      */
-    public function setParameters(object $parameters): CarCatalog
+    public function setParameters(object $parameters): AutoCatalog
     {
         $this->parameters = $parameters;
 
@@ -495,7 +556,7 @@ class CarCatalog
      * @param string $modelId
      * @return $this
      */
-    public function setModelId(string $modelId): CarCatalog
+    public function setModelId(string $modelId): AutoCatalog
     {
         $this->modelId = $modelId;
 
@@ -506,7 +567,7 @@ class CarCatalog
      * @param string $catalogId
      * @return $this
      */
-    public function setCatalogId(string $catalogId): CarCatalog
+    public function setCatalogId(string $catalogId): AutoCatalog
     {
         $this->catalogId = $catalogId;
 
@@ -516,7 +577,7 @@ class CarCatalog
     /**
      * @return $this
      */
-    public function setDateTime(): CarCatalog
+    public function setDateTime(): AutoCatalog
     {
         $this->dateTime = new \DateTime();
 
@@ -550,7 +611,7 @@ class CarCatalog
     /**
      * @param mixed $yearId
      */
-    public function setYearId(?string $yearId): CarCatalog
+    public function setYearId(?string $yearId): AutoCatalog
     {
         $this->yearId = $yearId;
 
@@ -568,7 +629,7 @@ class CarCatalog
     /**
      * @param mixed $regionId
      */
-    public function setRegionId(?string $regionId): CarCatalog
+    public function setRegionId(?string $regionId): AutoCatalog
     {
         $this->regionId = $regionId;
 
@@ -586,7 +647,7 @@ class CarCatalog
     /**
      * @param mixed $steeringId
      */
-    public function setSteeringId(?string $steeringId): CarCatalog
+    public function setSteeringId(?string $steeringId): AutoCatalog
     {
         $this->steeringId = $steeringId;
 
@@ -604,7 +665,7 @@ class CarCatalog
     /**
      * @param mixed $seriesId
      */
-    public function setSeriesId(?string $seriesId): CarCatalog
+    public function setSeriesId(?string $seriesId): AutoCatalog
     {
         $this->seriesId = $seriesId;
 
@@ -622,7 +683,7 @@ class CarCatalog
     /**
      * @param mixed $bodyTypeId
      */
-    public function setBodyTypeId(?string $bodyTypeId): CarCatalog
+    public function setBodyTypeId(?string $bodyTypeId): AutoCatalog
     {
         $this->bodyTypeId = $bodyTypeId;
 
@@ -640,7 +701,7 @@ class CarCatalog
     /**
      * @param mixed $transmissionTypeId
      */
-    public function setTransmissionTypeId(?string $transmissionTypeId): CarCatalog
+    public function setTransmissionTypeId(?string $transmissionTypeId): AutoCatalog
     {
         $this->transmissionTypeId = $transmissionTypeId;
 
@@ -658,7 +719,7 @@ class CarCatalog
     /**
      * @param mixed $exactModelId
      */
-    public function setExactModelId(?string $exactModelId): CarCatalog
+    public function setExactModelId(?string $exactModelId): AutoCatalog
     {
         $this->exactModelId = $exactModelId;
 
@@ -676,7 +737,7 @@ class CarCatalog
     /**
      * @param mixed $engineId
      */
-    public function setEngineId(?string $engineId): CarCatalog
+    public function setEngineId(?string $engineId): AutoCatalog
     {
         $this->engineId = $engineId;
 
@@ -693,9 +754,9 @@ class CarCatalog
 
     /**
      * @param $carList
-     * @return CarCatalog
+     * @return AutoCatalog
      */
-    public function setCarList($carList): CarCatalog
+    public function setCarList($carList): AutoCatalog
     {
         $this->carList = $carList;
 
@@ -725,5 +786,4 @@ class CarCatalog
     {
         return $this->dateTime;
     }
-
 }

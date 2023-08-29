@@ -7,7 +7,7 @@ namespace BitBag\OpenMarketplace\App\Document;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 #[MongoDB\Document]
-class Car
+class Auto
 {
     #[MongoDB\Id]
     protected $id;
@@ -42,6 +42,9 @@ class Car
     #[MongoDB\Field(type: 'string')]
     protected $vin;
 
+    #[MongoDB\Field(type: 'string')]
+    protected $code;
+
     #[MongoDB\Field(type: 'raw')]
     protected $parameters;
 
@@ -67,7 +70,7 @@ class Car
     /**
      * @param mixed $brand
      */
-    public function setBrand($brand): Car
+    public function setBrand($brand): Auto
     {
         $this->brand = $brand;
 
@@ -85,7 +88,7 @@ class Car
     /**
      * @param mixed $catalogId
      */
-    public function setCatalogId($catalogId): Car
+    public function setCatalogId($catalogId): Auto
     {
         $this->catalogId = $catalogId;
 
@@ -103,7 +106,7 @@ class Car
     /**
      * @param mixed $criteria
      */
-    public function setCriteria($criteria): Car
+    public function setCriteria($criteria): Auto
     {
         $this->criteria = $criteria;
 
@@ -121,7 +124,7 @@ class Car
     /**
      * @param mixed $description
      */
-    public function setDescription($description): Car
+    public function setDescription($description): Auto
     {
         $this->description = $description;
 
@@ -139,7 +142,7 @@ class Car
     /**
      * @param mixed $frame
      */
-    public function setFrame($frame): Car
+    public function setFrame($frame): Auto
     {
         $this->frame = $frame;
 
@@ -157,7 +160,7 @@ class Car
     /**
      * @param mixed $foreignId
      */
-    public function setForeignId($foreignId): Car
+    public function setForeignId($foreignId): Auto
     {
         $this->foreignId = $foreignId;
 
@@ -175,7 +178,7 @@ class Car
     /**
      * @param mixed $modelId
      */
-    public function setModelId($modelId): Car
+    public function setModelId($modelId): Auto
     {
         $this->modelId = $modelId;
 
@@ -193,7 +196,7 @@ class Car
     /**
      * @param mixed $modelName
      */
-    public function setModelName($modelName): Car
+    public function setModelName($modelName): Auto
     {
         $this->modelName = $modelName;
 
@@ -211,7 +214,7 @@ class Car
     /**
      * @param mixed $name
      */
-    public function setName($name): Car
+    public function setName($name): Auto
     {
         $this->name = $name;
 
@@ -229,7 +232,7 @@ class Car
     /**
      * @param mixed $vin
      */
-    public function setVin($vin): Car
+    public function setVin($vin): Auto
     {
         $this->vin = $vin;
 
@@ -247,9 +250,45 @@ class Car
     /**
      * @param mixed $parameters
      */
-    public function setParameters($parameters): Car
+    public function setParameters($parameters): Auto
     {
         $this->parameters = $parameters;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCode()
+    {
+        return $this->code;
+    }
+
+    /**
+     * @param mixed $code
+     */
+    public function setCode($code): Auto
+    {
+        $this->code = $code;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDateTime()
+    {
+        return $this->dateTime;
+    }
+
+    /**
+     * @return Auto
+     */
+    public function setDateTime(): Auto
+    {
+        $this->dateTime = new \DateTime();
 
         return $this;
     }
