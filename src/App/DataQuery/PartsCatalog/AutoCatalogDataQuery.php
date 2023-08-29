@@ -9,7 +9,6 @@ use BitBag\OpenMarketplace\App\Document\AutoCatalog;
 use BitBag\OpenMarketplace\App\Helper\CarCatalogUrlHelper;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\MongoDBException;
-use Exception;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
@@ -155,7 +154,7 @@ class AutoCatalogDataQuery extends AbstractDataQuery
                         }
 ;
                         $trimmedName = trim($auto['name']);
-                        $code = str_replace(' ', '_', $trimmedName);
+                        $code = str_replace(' ', '_', strtolower($trimmedName));
 
                         $newAuto = new Auto();
                         $newAuto->setCatalogId($auto['catalogId'])
@@ -166,7 +165,7 @@ class AutoCatalogDataQuery extends AbstractDataQuery
                             ->setDescription($auto['description'])
                             ->setForeignId($auto['id'])
                             ->setModelId($auto['modelId'])
-                            ->setModelName($auto['modelName'])
+                            ->setModelName(strtolower($auto['modelName']))
                             ->setVin($auto['vin'])
                             ->setParameters($auto['parameters'])
                             ->setCode($code)
