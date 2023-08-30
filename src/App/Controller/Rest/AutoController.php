@@ -17,15 +17,15 @@ class AutoController extends AbstractController
     {
     }
 
-    #[Route(path: "{catalogId}/{modelName}/{modification}", name: "get_catalog_car_parameters", methods: ["GET"])]
-    public function findAuto(string $catalogId, string $modelName, string $modification): Response
+    #[Route(path: "auto/search/{catalogId}/{modelName}/{modification}", name: "get_catalog_car_one_parameters", methods: ["GET"])]
+    public function findAutoTwo(string $catalogId, string $modelName, string $modification): Response
     {
         try {
             $autoRep = $this->documentManager->getRepository(Auto::class);
             $auto = $autoRep->findOneBy(['catalogId' => $catalogId, 'modelName' => $modelName, 'code' => $modification]);
 
             if (empty($auto)) {
-                throw new \Exception("Sorry. We can't find the car.");
+                throw new \Exception("Sorry. We can't find the auto.");
             }
 
             return $this->json(['data' => $auto], Response::HTTP_OK);
