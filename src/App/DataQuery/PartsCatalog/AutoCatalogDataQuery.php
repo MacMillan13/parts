@@ -47,6 +47,8 @@ class AutoCatalogDataQuery extends AbstractDataQuery
 
         $searchParams['modelId'] = $autoCatalog->getModelId();
 
+        $searchParams['model'] = $autoCatalog->getModel();
+
         $searchParams['yearId'] = $autoCatalog->getYearId();
 
         $searchParams['regionId'] = $autoCatalog->getRegionId();
@@ -108,7 +110,7 @@ class AutoCatalogDataQuery extends AbstractDataQuery
 
         if (empty($autoCatalogSearch)) {
 
-            $parametersCriteria = $this->catalogParametersUrlHelper->buildParametersUrl([$autoCatalog->getYearId(),
+            $parametersCriteria = $this->catalogParametersUrlHelper->buildParametersUrl([$autoCatalog->getYearId(), $autoCatalog->getModel(),
                 $autoCatalog->getRegionId(), $autoCatalog->getSteeringId(), $autoCatalog->getSeriesId(), $autoCatalog->getBodyTypeId(),
                 $autoCatalog->getTransmissionTypeId(), $autoCatalog->getExactModelId(), $autoCatalog->getEngineId(), $autoCatalog->getSunroof(),
                 $autoCatalog->getNavigation(), $autoCatalog->getVsa(), $autoCatalog->getDoorCount(), $autoCatalog->getAbs(),
@@ -141,7 +143,7 @@ class AutoCatalogDataQuery extends AbstractDataQuery
                             $autoCatalog->setYear($parameter['value']);
                         }
                         if ($parameter['key'] === 'modelId' && !empty($autoCatalog->getModelId())) {
-                            $autoCatalog->setModel($parameter['value']);
+                            $autoCatalog->setModel(strtolower($parameter['value']));
                         }
                     }
 

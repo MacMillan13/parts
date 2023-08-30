@@ -6,7 +6,7 @@ namespace BitBag\OpenMarketplace\App\Service;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 
-class CarSaverService
+class AutoSaverService
 {
     public function __construct(DocumentManager $dm)
     {}

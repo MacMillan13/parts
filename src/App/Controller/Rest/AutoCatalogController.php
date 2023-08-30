@@ -6,6 +6,7 @@ namespace BitBag\OpenMarketplace\App\Controller\Rest;
 
 use BitBag\OpenMarketplace\App\DataQuery\PartsCatalog\AutoCatalogDataQuery;
 use BitBag\OpenMarketplace\App\Document\AutoCatalog;
+use BitBag\OpenMarketplace\App\Service\AutoModelService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,8 +16,31 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: "/api/v3/")]
 class AutoCatalogController extends AbstractController
 {
+    #[Route(path: "auto/criteria/{catalogId}/{modelName}", name: "get_catalog_car_one_parameters", methods: ["GET"])]
+    public function findAutoByModel(AutoCatalogDataQuery $autoCatalogDataQuery, AutoModelService $autoModelService,
+                                string $catalogId, string $modelName): Response
+    {
+        try {
+            $modelId = $autoModelService->getAutoModelId($catalogId, $modelName);
+
+            $autoCatalog = new AutoCatalog();
+            $autoCatalog->setCatalogId($catalogId);
+            $autoCatalog->setModel($modelName);
+            $autoCatalog->setModelId($modelId);
+
+            $autoCatalog = $autoCatalogDataQuery->query($autoCatalog);
+
+            return $this->json(['data' => ['parameters' => $autoCatalog->getParameters(),
+                'autoList' => $autoCatalog->getCarList()]], Response::HTTP_OK);
+
+        } catch (\Exception $exception) {
+
+            return $this->json(['error' => $exception->getMessage()], Response::HTTP_BAD_REQUEST);
+        }
+    }
+
     #[Route(path: "auto/catalog/{catalogId}/{modelId}", name: "get_catalog_car_parameters", methods: ["GET"])]
-    public function getCarCatalogParameters(Request $request, AutoCatalogDataQuery $carCatalogDataQuery,
+    public function getAutoCatalogParameters(Request $request, AutoCatalogDataQuery $autoCatalogDataQuery,
                                             string  $catalogId, string $modelId): Response
     {
         try {
@@ -49,9 +73,9 @@ class AutoCatalogController extends AbstractController
             $specModification = $request->get('spec_modification');
             $specCatalog = $request->get('spec_catalog');
 
-            $carCatalogParameters = new AutoCatalog();
+            $autoCatalog = new AutoCatalog();
 
-            $carCatalogParameters->setCatalogId($catalogId)
+            $autoCatalog->setCatalogId($catalogId)
                 ->setModelId($modelId)
                 ->setYearId($yearId)
                 ->setRegionId($regionId)
@@ -82,10 +106,10 @@ class AutoCatalogController extends AbstractController
                 ->setAutoParameters($autoParameters)
                 ->setEngineId($engineId);
 
-            $carCatalogParameters = $carCatalogDataQuery->query($carCatalogParameters);
+            $autoCatalog = $autoCatalogDataQuery->query($autoCatalog);
 
-            return $this->json(['data' => ['parameters' => $carCatalogParameters->getParameters(),
-                'autoList' => $carCatalogParameters->getCarList()]], Response::HTTP_OK);
+            return $this->json(['data' => ['parameters' => $autoCatalog->getParameters(),
+                'autoList' => $autoCatalog->getCarList()]], Response::HTTP_OK);
 
         } catch (ClientException $exception) {
 
