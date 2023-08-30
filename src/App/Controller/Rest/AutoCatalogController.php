@@ -16,8 +16,8 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: "/api/v3/")]
 class AutoCatalogController extends AbstractController
 {
-    #[Route(path: "auto/criteria/{catalogId}/{modelName}", name: "get_catalog_car_one_parameters", methods: ["GET"])]
-    public function findAutoByModel(AutoCatalogDataQuery $autoCatalogDataQuery, AutoModelService $autoModelService,
+    #[Route(path: "auto/criteria/{catalogId}/{modelName}", name: "get_catalog_by_model", methods: ["GET"])]
+    public function getAutoCatalogByModel(AutoCatalogDataQuery $autoCatalogDataQuery, AutoModelService $autoModelService,
                                 string $catalogId, string $modelName): Response
     {
         try {

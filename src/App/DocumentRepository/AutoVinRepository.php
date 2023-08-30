@@ -21,7 +21,7 @@ class AutoVinRepository extends DocumentRepository
             ->match()
                 ->field('vinCode')
                 ->equals($vinCode)
-            ->lookup('CarCatalog')
+            ->lookup('AutoCatalog')
                 ->localField('catalogId')
                 ->foreignField('_id')
                 ->alias('catalog')

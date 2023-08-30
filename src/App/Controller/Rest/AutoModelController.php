@@ -14,7 +14,7 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 #[Route(path: "/api/v3/")]
 class AutoModelController extends RestAbstractController
 {
-    #[Route(path: "auto/model/{catalogId}", name: "get_car_models", methods: ["GET"])]
+    #[Route(path: "auto/model/{catalogId}", name: "get_auto_models", methods: ["GET"])]
     public function search(AutoModelDataQuery $carModelDataQuery, string $catalogId): Response
     {
         try {

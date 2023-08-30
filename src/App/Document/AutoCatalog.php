@@ -6,6 +6,7 @@ namespace BitBag\OpenMarketplace\App\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
+#[MongoDB\Document]
 class AutoCatalog
 {
     #[MongoDB\Id]

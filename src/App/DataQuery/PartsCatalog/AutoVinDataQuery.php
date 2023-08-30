@@ -38,16 +38,16 @@ class AutoVinDataQuery extends AbstractDataQuery
 
             if (!empty($responseArray = $response->toArray())) {
                 $autoData = (object)$responseArray[0];
-                $carVin = new AutoVin();
-                $carVin->setAutoData($autoData)
+                $autoVin = new AutoVin();
+                $autoVin->setAutoData($autoData)
                     ->setDateTime()
                     ->setExactMatch(true)
                     ->setVinCode($vinCode);
 
-                $this->dm->persist($carVin);
+                $this->dm->persist($autoVin);
                 $this->dm->flush();
 
-                return $carVin;
+                return $autoVin;
             } else {
                 return null;
             }
@@ -61,11 +61,11 @@ class AutoVinDataQuery extends AbstractDataQuery
             $autoData = [];
         }
 
-        $carVin = new AutoVin();
-        $carVin->setExactMatch($auto['exactMatch'])
+        $autoVin = new AutoVin();
+        $autoVin->setExactMatch($auto['exactMatch'])
             ->setVinCode($auto['vinCode'])
             ->setAutoData((object)$autoData);
 
-        return $carVin;
+        return $autoVin;
     }
 }

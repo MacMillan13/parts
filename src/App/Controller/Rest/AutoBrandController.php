@@ -20,13 +20,13 @@ class AutoBrandController extends AbstractController
     {
     }
 
-    #[Route(path: "auto/brand", name: "get_catalog_car", methods: ["GET"])]
-    public function getCarCatalog(): Response
+    #[Route(path: "auto/brand", name: "get_auto_brands", methods: ["GET"])]
+    public function getAutoBrands(): Response
     {
         try {
-            $carCatalog = $this->dm->getRepository(AutoBrand::class)->findAll();
+            $autoBrands = $this->dm->getRepository(AutoBrand::class)->findAll();
 
-            return $this->json(['data' => $carCatalog], Response::HTTP_OK);
+            return $this->json(['data' => $autoBrands], Response::HTTP_OK);
 
         } catch (\Exception $exception) {
 

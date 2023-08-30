@@ -21,7 +21,7 @@ use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 #[Route(path: "/api/v3/")]
-class CarVinSearchController extends AbstractController
+class AutoVinSearchController extends AbstractController
 {
     /**
      * @param PartsCatalogCarVinDataQuery $partsCatalogVinDataQuery

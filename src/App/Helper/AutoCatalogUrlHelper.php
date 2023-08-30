@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BitBag\OpenMarketplace\App\Helper;
 
-class CarCatalogUrlHelper
+class AutoCatalogUrlHelper
 {
     /**
      * @param array $parametersArray

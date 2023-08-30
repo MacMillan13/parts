@@ -24,7 +24,7 @@ class CarVinDecoderService
     const DEFAULT_REGION = 'USA';
     const DEFAULT_STEERING = 'Left hand';
 
-    public function __construct(private AutoModelDataQuery $carModelDataQuery, private AutoCatalogDataQuery $carCatalogDataQuery,
+    public function __construct(private AutoModelDataQuery $carModelDataQuery, private AutoCatalogDataQuery $autoCatalogDataQuery,
                                 private DocumentManager    $documentManager)
     {
     }
@@ -48,83 +48,83 @@ class CarVinDecoderService
 
         $carModel = $this->getCarModer($carModelList, $carData['model']);
 
-        $carCatalog = $this->getCatalogWithTheRightModel($carModel, $brand);
+        $autoCatalog = $this->getCatalogWithTheRightModel($carModel, $brand);
 
         //TODO years have the same id everywhere, we can optimize this request by adding to previous.
-        $carCatalog = $this->setYear($carCatalog, (array)$carCatalog->getParameters(), $carData);
+        $autoCatalog = $this->setYear($autoCatalog, (array)$autoCatalog->getParameters(), $carData);
 
-        $carCatalog = $this->carCatalogDataQuery->query($carCatalog);
+        $autoCatalog = $this->autoCatalogDataQuery->query($autoCatalog);
 
-        $carCatalog = $this->setValues($carCatalog, (array)$carCatalog->getParameters());
+        $autoCatalog = $this->setValues($autoCatalog, (array)$autoCatalog->getParameters());
 
-        $carCatalog = $this->carCatalogDataQuery->query($carCatalog);
+        $autoCatalog = $this->autoCatalogDataQuery->query($autoCatalog);
 
-        $this->saveCarVin($carVin, $carCatalog, $carData['vin']);
+        $this->saveCarVin($carVin, $autoCatalog, $carData['vin']);
 
-        return $carCatalog;
+        return $autoCatalog;
     }
 
     /**
-     * @param AutoCatalog $carCatalog
+     * @param AutoCatalog $autoCatalog
      * @param array $parameters
      * @param array $carData
      * @return AutoCatalog
      */
-    private function setYear(AutoCatalog $carCatalog, array $parameters, array $carData): AutoCatalog
+    private function setYear(AutoCatalog $autoCatalog, array $parameters, array $carData): AutoCatalog
     {
         foreach ($parameters as $parameter) {
             if ($parameter['key'] == 'year') {
                 foreach ($parameter['values'] as $item) {
                     if ($carData['year'] === $item['value']) {
-                        $carCatalog->setYearId($item['idx']);
+                        $autoCatalog->setYearId($item['idx']);
                     }
                 }
             }
         }
 
-        return $carCatalog;
+        return $autoCatalog;
     }
 
     /**
-     * @param AutoCatalog $carCatalog
+     * @param AutoCatalog $autoCatalog
      * @param array $parameters
      * @return AutoCatalog
      */
-    private function setValues(AutoCatalog $carCatalog, array $parameters): AutoCatalog
+    private function setValues(AutoCatalog $autoCatalog, array $parameters): AutoCatalog
     {
         foreach ($parameters as $parameter) {
             switch ($parameter['key']) {
                 case 'sales_region':
                     foreach ($parameter['values'] as $item) {
                         if (self::DEFAULT_REGION === $item['value']) {
-                            $carCatalog->setRegionId($item['idx']);
+                            $autoCatalog->setRegionId($item['idx']);
                         }
                     }
                     break;
                 case 'steering':
                     foreach ($parameter['values'] as $item) {
                         if (self::DEFAULT_STEERING === $item['value']) {
-                            $carCatalog->setSteeringId($item['idx']);
+                            $autoCatalog->setSteeringId($item['idx']);
                         }
                     }
                     break;
             }
         }
 
-        return $carCatalog;
+        return $autoCatalog;
     }
 
     /**
      * @param AutoVin $carVin
-     * @param AutoCatalog $carCatalog
+     * @param AutoCatalog $autoCatalog
      * @param string $vinCode
      * @return void
      * @throws MongoDBException
      * @throws \MongoException
      */
-    private function saveCarVin(AutoVin $carVin, AutoCatalog $carCatalog, string $vinCode): void
+    private function saveCarVin(AutoVin $carVin, AutoCatalog $autoCatalog, string $vinCode): void
     {
-        $carVin->setCatalogId(new MongoId($carCatalog->getId()))
+        $carVin->setCatalogId(new MongoId($autoCatalog->getId()))
             ->setVinCode($vinCode)
             ->setExactMatch(false)
             ->setDateTime();
@@ -148,11 +148,11 @@ class CarVinDecoderService
      */
     private function getCatalogWithTheRightModel(array $carModel, string $brand): AutoCatalog
     {
-        $carCatalog = new AutoCatalog();
-        $carCatalog->setModelId($carModel['id']);
-        $carCatalog->setCatalogId($brand);
+        $autoCatalog = new AutoCatalog();
+        $autoCatalog->setModelId($carModel['id']);
+        $autoCatalog->setCatalogId($brand);
 
-        return $this->carCatalogDataQuery->query($carCatalog);
+        return $this->autoCatalogDataQuery->query($autoCatalog);
     }
 
     /**

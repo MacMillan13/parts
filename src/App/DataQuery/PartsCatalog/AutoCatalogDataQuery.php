@@ -6,7 +6,7 @@ namespace BitBag\OpenMarketplace\App\DataQuery\PartsCatalog;
 
 use BitBag\OpenMarketplace\App\Document\Auto;
 use BitBag\OpenMarketplace\App\Document\AutoCatalog;
-use BitBag\OpenMarketplace\App\Helper\CarCatalogUrlHelper;
+use BitBag\OpenMarketplace\App\Helper\AutoCatalogUrlHelper;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\MongoDBException;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
@@ -21,10 +21,10 @@ class AutoCatalogDataQuery extends AbstractDataQuery
     /**
      * @param HttpClientInterface $client
      * @param DocumentManager $dm
-     * @param CarCatalogUrlHelper $catalogParametersUrlHelper
+     * @param AutoCatalogUrlHelper $catalogParametersUrlHelper
      */
-    public function __construct(HttpClientInterface         $client, DocumentManager $dm,
-                                private CarCatalogUrlHelper $catalogParametersUrlHelper)
+    public function __construct(HttpClientInterface          $client, DocumentManager $dm,
+                                private AutoCatalogUrlHelper $catalogParametersUrlHelper)
     {
         parent::__construct($client, $dm);
     }
@@ -182,9 +182,9 @@ class AutoCatalogDataQuery extends AbstractDataQuery
                     //TODO cron jobs or queue for savings cars.
                 }
 
-                $notIdentifiedCarCatalog = clone $autoCatalog;
+                $notIdentifiedAutoCatalog = clone $autoCatalog;
 
-                $this->dm->persist($notIdentifiedCarCatalog);
+                $this->dm->persist($notIdentifiedAutoCatalog);
 
                 $this->dm->flush();
             }
