@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace BitBag\OpenMarketplace\App\Controller\Rest;
 
 use BitBag\OpenMarketplace\App\DataQuery\PartsCatalog\AutoCatalogDataQuery;
+use BitBag\OpenMarketplace\App\Document\Auto;
 use BitBag\OpenMarketplace\App\Document\AutoCatalog;
 use BitBag\OpenMarketplace\App\Service\AutoModelService;
+use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,7 +18,79 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: "/api/v3/")]
 class AutoCatalogController extends AbstractController
 {
-    #[Route(path: "auto/criteria/{catalogId}/{modelName}", name: "get_catalog_by_model", methods: ["GET"])]
+    #[Route(path: "auto/catalog-year/{catalogId}/{modelName}/{year}", name: "get_catalog_by_year", methods: ["GET"])]
+    public function findAutoByYear(AutoCatalogDataQuery $autoCatalogDataQuery, AutoModelService $autoModelService,
+                                string $catalogId, string $modelName, string $year): Response
+    {
+        try {
+            $modelId = $autoModelService->getAutoModelId($catalogId, $modelName);
+            $autoCatalog = new AutoCatalog();
+            $autoCatalog->setCatalogId($catalogId);
+            $autoCatalog->setModelId($modelId);
+
+            $autoCatalogData = $autoCatalogDataQuery->query($autoCatalog);
+
+            $parameters = $autoCatalogData->getParameters();
+            //TODO узнать везде ли совпадают года по айди и тогда можно обойти один запрос
+            foreach ($parameters as $param) {
+                if ('year' === $param['key']) {
+                    foreach ($param['values'] as $yearArray) {
+                        if ($year === $yearArray['value']) {
+                            $autoCatalog->setYearId($yearArray['idx']);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            $autoCatalog = $autoCatalogDataQuery->query($autoCatalog);
+
+            return $this->json(['data' => ['parameters' => $autoCatalog->getParameters(),
+                'autoList' => $autoCatalog->getCarList()]], Response::HTTP_OK);
+
+        } catch (\Exception $exception) {
+
+            return $this->json(['error' => $exception->getMessage()], Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    #[Route(path: "auto/catalog-modification/{catalogId}/{modelName}/{year}/{modification}", name: "get_catalog_by_modification", methods: ["GET"])]
+    public function findAutoByModification(DocumentManager $documentManager, AutoCatalogDataQuery $autoCatalogDataQuery, AutoModelService $autoModelService,
+                                string $catalogId, string $modelName, string $modification): Response
+    {
+        try {
+            $autoRep = $documentManager->getRepository(Auto::class);
+
+            $auto = $autoRep->findOneBy(['catalogId' => $catalogId, 'modelName' => $modelName, 'code' => $modification]);
+
+            if (empty($auto)) {
+
+                $modelId = $autoModelService->getAutoModelId($catalogId, $modelName);
+
+                $autoCatalog = new AutoCatalog();
+                $autoCatalog->setCatalogId($catalogId);
+                $autoCatalog->setModelId($modelId);
+
+                $autoCatalog = $autoCatalogDataQuery->query($autoCatalog);
+                $autoList = $autoCatalog->getCarList();
+
+                foreach ($autoList as $oneAuto) {
+                    $code = str_replace(' ', '_', strtolower($oneAuto['name']));
+                    if ($code === $modification) {
+                        $auto = $oneAuto;
+                    }
+                }
+            }
+
+            return $this->json(['data' => $auto], Response::HTTP_OK);
+
+        } catch (\Exception $exception) {
+
+            return $this->json(['error' => $exception->getMessage()], Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    #[Route(path: "auto/catalog-model/{catalogId}/{modelName}", name: "get_catalog_by_model", methods: ["GET"])]
     public function getAutoCatalogByModel(AutoCatalogDataQuery $autoCatalogDataQuery, AutoModelService $autoModelService,
                                 string $catalogId, string $modelName): Response
     {
@@ -25,7 +99,6 @@ class AutoCatalogController extends AbstractController
 
             $autoCatalog = new AutoCatalog();
             $autoCatalog->setCatalogId($catalogId);
-            $autoCatalog->setModel($modelName);
             $autoCatalog->setModelId($modelId);
 
             $autoCatalog = $autoCatalogDataQuery->query($autoCatalog);

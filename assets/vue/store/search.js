@@ -116,6 +116,18 @@ export const actions = {
     commit('setAutoModel', responseJson.data)
   },
 
+  async getAutoCatalogModel({ commit }, params) {
+    const response = await fetch(defaultDataApi + 'auto/catalog-model/' + params.brand + '/' + params.model, getRequestOptions('GET'));
+    const responseJson = await response.json();
+    const data = responseJson.data;
+
+    const autoList = updateAutoListStructure(data.autoList)
+    const updatedAutoFilter = autoFilterParametersUpdate(data.parameters)
+
+    commit('setAutoFilter', updatedAutoFilter)
+    commit('setAutoList', autoList)
+  },
+
   async getAutoCatalog({ commit }, params) {
     let url = defaultDataApi + 'auto/catalog/' + params.catalogId + '/' + params.carId
     if (undefined !== params.query) {
@@ -124,17 +136,11 @@ export const actions = {
     const response = await fetch(url, getRequestOptions('GET'));
     const responseJson = await response.json();
     const data = responseJson.data;
-    let dataWithExistedValue = []
-    data.parameters.forEach(value => {
-      if (value.values.length > 1) {
-        dataWithExistedValue.push(value)
-      }
-    })
-    console.log(data.autoList)
-    const autoList = updateAutoListStructure(data.autoList)
 
-    commit('setAutoFilter', dataWithExistedValue)
-    console.log(autoList)
+    const autoList = updateAutoListStructure(data.autoList)
+    const updatedAutoFilter = autoFilterParametersUpdate(data.parameters)
+
+    commit('setAutoFilter', updatedAutoFilter)
     commit('setAutoList', autoList)
   },
 
@@ -184,6 +190,18 @@ export const actions = {
 
     commit('setStep', 4)
   }
+}
+
+const autoFilterParametersUpdate = (parameters) => {
+  let dataWithExistedValue = []
+
+  parameters.forEach(value => {
+    if (value.values.length > 1) {
+      dataWithExistedValue.push(value)
+    }
+  })
+
+  return dataWithExistedValue
 }
 
 const getRequestOptions = (method) => {
