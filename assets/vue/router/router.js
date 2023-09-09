@@ -3,6 +3,7 @@ import AutoModels from "../components/search/AutoModels.vue";
 import Search from "../components/Search.vue";
 import Example from "../components/Example.vue";
 import AutoCatalogModel from "../components/search/AutoCatalogModel.vue";
+import AutoCatalogYear from "../components/search/AutoCatalogYear.vue";
 
 export default createRouter({
   history: createWebHistory(),
@@ -25,7 +26,7 @@ export default createRouter({
     {
       name: 'AutoYear',
       path: '/:brand/:model/:year',
-      component: AutoCatalogModel
+      component: AutoCatalogYear
     },
     {
       name: 'AutoModification',

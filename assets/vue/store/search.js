@@ -128,6 +128,18 @@ export const actions = {
     commit('setAutoList', autoList)
   },
 
+  async getAutoCatalogYear({ commit }, params) {
+    const response = await fetch(defaultDataApi + 'auto/catalog-year/' + params.brand + '/' + params.model + '/' + params.year, getRequestOptions('GET'));
+    const responseJson = await response.json();
+    const data = responseJson.data;
+
+    const autoList = updateAutoListStructure(data.autoList)
+    const updatedAutoFilter = autoFilterParametersUpdate(data.parameters)
+
+    commit('setAutoFilter', updatedAutoFilter)
+    commit('setAutoList', autoList)
+  },
+
   async getAutoCatalog({ commit }, params) {
     let url = defaultDataApi + 'auto/catalog/' + params.catalogId + '/' + params.carId
     if (undefined !== params.query) {
