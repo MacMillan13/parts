@@ -8,8 +8,8 @@
 <script>
 
 import FindAuto from "./search/FindAuto.vue";
-import AutoBrands from "./search/AutoBrands.vue";
-import AutoList from './search/AutoList';
+import AutoBrands from "./search/auto/AutoBrands.vue";
+import AutoList from './search/auto/AutoList.vue';
 import { computed } from 'vue';
 import { useStore } from 'vuex'
 

@@ -3,14 +3,14 @@ const defaultDataApi = 'https://localhost:8000/api/v3/';
 export const state = () => ({
   step: 0,
   autoList: null,
-  autoCatalog: null,
+  partCatalog: null,
   selectedAuto: null,
   autoBrands: null,
   autoModel: null,
   autoFilter: null,
   partSchema: null,
   partSchemaPositions: null,
-  autoCatalogGroup: null
+  partCatalogGroup: null
 })
 
 export const getters = {
@@ -43,14 +43,14 @@ export const mutations = {
   setAutoList: (state, autoList) => {
     state.autoList = autoList
   },
-  setAutoCatalog: (state, autoCatalog) => {
-    state.autoCatalog = autoCatalog
+  setPartCatalog: (state, partCatalog) => {
+    state.partCatalog = partCatalog
   },
   setSelectedAuto: (state, selectedAuto) => {
     state.selectedAuto = selectedAuto
   },
-  setAutoCatalogGroup: (state, autoCatalogGroup) => {
-    state.autoCatalogGroup = autoCatalogGroup
+  setPartCatalogGroup: (state, partCatalogGroup) => {
+    state.partCatalogGroup = partCatalogGroup
   },
   setPartSchema: (state, partSchema) => {
     state.partSchema = partSchema
@@ -90,8 +90,8 @@ export const actions = {
     const response = await fetch(defaultDataApi + 'part/catalog/skoda/c9c4f4d0fe26e3af5aa36af8c197b096',
         getRequestOptions('GET'));
     const responseJson = await response.json();
-    const autoCatalog = responseJson.data;
-    commit("setAutoCatalog", autoCatalog)
+    const partCatalog = responseJson.data;
+    commit("setPartCatalog", partCatalog)
     commit("setSelectedAuto", params.carId)
 
     if (params.toSet) {
@@ -140,6 +140,14 @@ export const actions = {
     commit('setAutoList', autoList)
   },
 
+  async getPartCatalog({ commit }, params) {
+    const response = await fetch(defaultDataApi + 'part/catalog-modification/' + params.brand + '/' + params.model + '/' + params.year + '/' + params.modification, getRequestOptions('GET'));
+    const responseJson = await response.json();
+    const data = responseJson.data;
+
+    commit('setPartCatalog', data.catalog)
+  },
+
   async getAutoCatalog({ commit }, params) {
     let url = defaultDataApi + 'auto/catalog/' + params.catalogId + '/' + params.carId
     if (undefined !== params.query) {
@@ -164,7 +172,7 @@ export const actions = {
         getRequestOptions('GET'));
     const responseJson = await response.json();
 
-    commit("setAutoCatalogGroup", responseJson.data)
+    commit("setPartCatalogGroup", responseJson.data)
 
     const url = new URL(location);
 

@@ -9,7 +9,7 @@
         </ul>
       </div>
       <div class="row col-sm-9">
-        <div v-for="partGroup in autoCatalogGroup" @click="getPartGroup(partGroup)"
+        <div v-for="partGroup in partCatalogGroup" @click="getPartGroup(partGroup)"
              class="catalog-group-block col-sm-4 thumbnail">
           <div>
             <img :src="partGroup.img" alt="Part's group" class="embed-responsive-item">
@@ -24,11 +24,11 @@
 import { useStore } from 'vuex'
 import { computed} from 'vue';
 export default {
-  name: "AutoCatalogGroup",
+  name: "PartCatalogGroup",
   setup() {
     const store = useStore()
     const autoCatalog = computed(() => store.state.search.autoCatalog)
-    const autoCatalogGroup = computed(() => store.state.search.autoCatalogGroup)
+    const partCatalogGroup = computed(() => store.state.search.autoCatalogGroup)
 
     const getCatalogGroup = (catalog) => {
       store.dispatch('search/getCatalogGroup', catalog)
@@ -40,7 +40,7 @@ export default {
 
     return {
       autoCatalog,
-      autoCatalogGroup,
+      partCatalogGroup,
       getCatalogGroup,
       getPartGroup
     }

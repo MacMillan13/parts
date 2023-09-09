@@ -26,7 +26,7 @@ abstract class AbstractDataQuery
             'headers' => [
                 'Accept' => 'application/json',
                 'Accept-Language' => 'en',
-                'Authorization' => 'OEM-API-08F0004D-C01F-4912-958E-CEF55A4306C9',
+                'Authorization' => $_ENV['PART_CATALOG_AUTHORIZATION_KEY'],
             ],
         ];
     }

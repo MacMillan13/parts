@@ -54,42 +54,6 @@ class AutoCatalogController extends AbstractController
         }
     }
 
-    #[Route(path: "auto/catalog-modification/{catalogId}/{modelName}/{year}/{modification}", name: "get_catalog_by_modification", methods: ["GET"])]
-    public function findAutoByModification(DocumentManager $documentManager, AutoCatalogDataQuery $autoCatalogDataQuery, AutoModelService $autoModelService,
-                                string $catalogId, string $modelName, string $modification): Response
-    {
-        try {
-            $autoRep = $documentManager->getRepository(Auto::class);
-
-            $auto = $autoRep->findOneBy(['catalogId' => $catalogId, 'modelName' => $modelName, 'code' => $modification]);
-
-            if (empty($auto)) {
-
-                $modelId = $autoModelService->getAutoModelId($catalogId, $modelName);
-
-                $autoCatalog = new AutoCatalog();
-                $autoCatalog->setCatalogId($catalogId);
-                $autoCatalog->setModelId($modelId);
-
-                $autoCatalog = $autoCatalogDataQuery->query($autoCatalog);
-                $autoList = $autoCatalog->getCarList();
-
-                foreach ($autoList as $oneAuto) {
-                    $code = str_replace(' ', '_', strtolower($oneAuto['name']));
-                    if ($code === $modification) {
-                        $auto = $oneAuto;
-                    }
-                }
-            }
-
-            return $this->json(['data' => $auto], Response::HTTP_OK);
-
-        } catch (\Exception $exception) {
-
-            return $this->json(['error' => $exception->getMessage()], Response::HTTP_BAD_REQUEST);
-        }
-    }
-
     #[Route(path: "auto/catalog-model/{catalogId}/{modelName}", name: "get_catalog_by_model", methods: ["GET"])]
     public function getAutoCatalogByModel(AutoCatalogDataQuery $autoCatalogDataQuery, AutoModelService $autoModelService,
                                 string $catalogId, string $modelName): Response

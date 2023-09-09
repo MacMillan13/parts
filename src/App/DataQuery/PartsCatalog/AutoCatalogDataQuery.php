@@ -169,6 +169,7 @@ class AutoCatalogDataQuery extends AbstractDataQuery
                             ->setVin($auto['vin'])
                             ->setParameters($auto['parameters'])
                             ->setCode($code)
+                            ->setYear($autoCatalog->getYear())
                             ->setDateTime();
 
                         $this->dm->persist($newAuto);

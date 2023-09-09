@@ -1,9 +1,10 @@
 import {createRouter, createWebHistory} from 'vue-router'
-import AutoModels from "../components/search/AutoModels.vue";
+import AutoModels from "../components/search/auto/AutoModels.vue";
 import Search from "../components/Search.vue";
 import Example from "../components/Example.vue";
-import AutoCatalogModel from "../components/search/AutoCatalogModel.vue";
-import AutoCatalogYear from "../components/search/AutoCatalogYear.vue";
+import AutoCatalogModel from "../components/search/auto/AutoCatalogModel.vue";
+import AutoCatalogYear from "../components/search/auto/AutoCatalogYear.vue";
+import PartCatalog from "../components/search/part/PartCatalog.vue";
 
 export default createRouter({
   history: createWebHistory(),
@@ -31,7 +32,7 @@ export default createRouter({
     {
       name: 'AutoModification',
       path: '/:brand/:model/:year/:modification',
-      component: Example
+      component: PartCatalog
     },
     {
       name: 'AutoPartCategory',

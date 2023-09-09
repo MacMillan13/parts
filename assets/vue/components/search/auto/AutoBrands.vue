@@ -8,7 +8,7 @@
 <script>
 import {computed } from 'vue';
 import {useStore} from 'vuex';
-import AutoList from './AutoList';
+import AutoList from './AutoList.vue';
 
 export default {
   name: "AutoBrands",

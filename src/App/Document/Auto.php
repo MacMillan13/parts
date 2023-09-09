@@ -45,6 +45,9 @@ class Auto
     #[MongoDB\Field(type: 'string')]
     protected $code;
 
+    #[MongoDB\Field(type: 'string')]
+    protected $year;
+
     #[MongoDB\Field(type: 'raw')]
     protected $parameters;
 
@@ -57,6 +60,24 @@ class Auto
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getYear()
+    {
+        return $this->year;
+    }
+
+    /**
+     * @param mixed $year
+     */
+    public function setYear($year): Auto
+    {
+        $this->year = $year;
+
+        return $this;
     }
 
     /**
