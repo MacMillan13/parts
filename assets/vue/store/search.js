@@ -1,5 +1,5 @@
 
-const defaultDataApi = 'https://localhost:8000/api/v3/';
+const defaultDataApi = 'http://localhost:8000/api/v3/';
 export const state = () => ({
   step: 0,
   autoList: null,
@@ -164,7 +164,13 @@ export const actions = {
     commit('setAutoList', autoList)
   },
 
-  async getCatalogGroup({ commit }, catalog) {
+  async getPartCatalogGroup({ commit }, params) {
+    const response = await fetch(defaultDataApi + 'part/catalog-group/'  + params.autoParams.brand + '/' + params.autoParams.model
+        + '/' + params.autoParams.year + '/' + params.autoParams.modification + '/' + params.catalog.name.toLowerCase(),
+        getRequestOptions('GET'));
+  },
+
+  async getCatalogGroup({ commit }, params) {
     //TODO uncomment when will have API.
     // const response = await fetch(this.defaultDataApi + 'part/catalog/' + auto.catalogId + '/' + auto.id + '/' + catalog.id,
     //   getRequestOptions('GET'));

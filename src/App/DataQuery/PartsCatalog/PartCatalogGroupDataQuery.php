@@ -27,7 +27,7 @@ class PartCatalogGroupDataQuery extends AbstractDataQuery
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
      */
-    public function query(string $catalogId, string $carId, string $groupId): PartCatalogGroup
+    public function query(string $catalogId, string $carId, string $groupId, string $groupName): PartCatalogGroup
     {
         $response = $this->client->request(
             'GET',
@@ -42,6 +42,7 @@ class PartCatalogGroupDataQuery extends AbstractDataQuery
                 ->setCatalogId($catalogId)
                 ->setCarId($carId)
                 ->setDateTime()
+                ->setGroup($groupName)
                 ->setGroupId($groupId);
 
             $this->dm->persist($partCatalogGroup);

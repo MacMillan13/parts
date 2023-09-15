@@ -33,8 +33,8 @@ export default {
 
     store.dispatch('search/getPartCatalog', autoParams)
 
-    const getCatalogGroup = () => {
-      store.dispatch('search/getCatalogGroup', {})
+    const getCatalogGroup = (catalog) => {
+      store.dispatch('search/getPartCatalogGroup', { catalog, autoParams })
     }
 
     return {

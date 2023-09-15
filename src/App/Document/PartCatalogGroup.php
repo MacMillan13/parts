@@ -22,10 +22,31 @@ class PartCatalogGroup
     protected $carId;
 
     #[MongoDB\Field(type: 'string')]
+    protected $group;
+
+    #[MongoDB\Field(type: 'string')]
     protected $groupId;
 
     #[MongoDB\Field(type: 'date')]
     protected $dateTime;
+
+    /**
+     * @return mixed
+     */
+    public function getGroup()
+    {
+        return $this->group;
+    }
+
+    /**
+     * @param mixed $group
+     */
+    public function setGroup($group): self
+    {
+        $this->group = $group;
+
+        return $this;
+    }
 
     /**
      * @param object $catalogData

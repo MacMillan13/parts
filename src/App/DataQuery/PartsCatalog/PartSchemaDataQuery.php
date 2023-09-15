@@ -39,6 +39,7 @@ class PartSchemaDataQuery extends AbstractDataQuery
      * @throws RedirectionExceptionInterface
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
+     * @throws \MongoException
      */
     public function query(string $catalogId, string $carId, string $groupId): PartSchema
     {
@@ -59,6 +60,7 @@ class PartSchemaDataQuery extends AbstractDataQuery
                     ->setCatalogId($catalogId)
                     ->setCarId($carId)
                     ->setDateTime()
+                    ->setGroup()
                     ->setGroupId($groupId);
 
                 $this->dm->persist($partSchema);

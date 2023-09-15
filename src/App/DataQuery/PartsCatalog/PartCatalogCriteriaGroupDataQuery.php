@@ -27,6 +27,7 @@ class PartCatalogCriteriaGroupDataQuery extends AbstractDataQuery
      * @throws RedirectionExceptionInterface
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
+     * @throws Exception
      */
     public function query(string $catalogId, string $carId, string $criteria, string $groupId): PartCatalogCriteriaGroup
     {
@@ -49,6 +50,7 @@ class PartCatalogCriteriaGroupDataQuery extends AbstractDataQuery
                     ->setCriteria($criteria)
                     ->setCarId($carId)
                     ->setDateTime()
+                    ->setGroup($groupId)
                     ->setGroupId($groupId);
 
                 $this->dm->persist($partCatalogGroup);
