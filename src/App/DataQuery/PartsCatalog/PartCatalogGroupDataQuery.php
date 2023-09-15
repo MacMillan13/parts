@@ -19,10 +19,11 @@ class PartCatalogGroupDataQuery extends AbstractDataQuery
      * @param string $catalogId
      * @param string $carId
      * @param string $groupId
+     * @param string $groupName
      * @return PartCatalogGroup
-     * @throws MongoDBException
      * @throws ClientExceptionInterface
      * @throws DecodingExceptionInterface
+     * @throws MongoDBException
      * @throws RedirectionExceptionInterface
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface

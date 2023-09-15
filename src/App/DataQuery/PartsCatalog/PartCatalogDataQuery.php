@@ -28,24 +28,29 @@ class PartCatalogDataQuery extends AbstractDataQuery
      */
     public function query(string $catalogId, string $carId): PartCatalog
     {
-        $response = $this->client->request(
-            'GET',
-            $_ENV['PART_CATALOG_API'] . 'catalogs/' . $catalogId . '/groups2/?carId=' . $carId,
-            $this->getHeaders()
-        );
+        $partCatalog = $this->dm->getRepository(PartCatalog::class)->findOneBy(['catalogId' => $catalogId, 'carId' => $carId]);
 
-        if (!empty($responseArray = $response->toArray())) {
-            $catalogData = (object)$responseArray;
-            $partCatalog = new PartCatalog();
-            $partCatalog->setCatalogData($catalogData)
-                ->setCatalogId($catalogId)
-                ->setDateTime()
-                ->setCarId($carId);
+        if (empty($partCatalog)) {
 
-            $this->dm->persist($partCatalog);
-            $this->dm->flush();
-        } else {
-            throw new Exception('The data does not exist');
+            $response = $this->client->request(
+                'GET',
+                $_ENV['PART_CATALOG_API'] . 'catalogs/' . $catalogId . '/groups2/?carId=' . $carId,
+                $this->getHeaders()
+            );
+
+            if (!empty($responseArray = $response->toArray())) {
+                $catalogData = (object)$responseArray;
+                $partCatalog = new PartCatalog();
+                $partCatalog->setCatalogData($catalogData)
+                    ->setCatalogId($catalogId)
+                    ->setDateTime()
+                    ->setCarId($carId);
+
+                $this->dm->persist($partCatalog);
+                $this->dm->flush();
+            } else {
+                throw new Exception('The data does not exist');
+            }
         }
 
         return $partCatalog;

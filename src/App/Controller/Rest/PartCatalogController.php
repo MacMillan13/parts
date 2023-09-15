@@ -24,11 +24,7 @@ class PartCatalogController extends RestAbstractController
         try {
             $auto = $autoService->getAutoByModification($catalogId, $modelName, $year, $modification);
 
-            $partCatalog = $this->dm->getRepository(PartCatalog::class)->findOneBy(['catalogId' => $catalogId, 'carId' => $auto->getForeignId()]);
-
-            if (empty($partCatalog)) {
-                $partCatalog = $partCatalogDataQuery->query($catalogId, $auto->getForeignId());
-            }
+            $partCatalog = $partCatalogDataQuery->query($catalogId, $auto->getForeignId());
 
             return $this->json(['data' => ['auto' => $auto, 'catalog' => $partCatalog->getCatalogData()]], Response::HTTP_OK);
 
@@ -49,11 +45,7 @@ class PartCatalogController extends RestAbstractController
 
             if (empty($partCatalogGroup)) {
 
-                $partCatalog = $this->dm->getRepository(PartCatalog::class)->findOneBy(['catalogId' => $catalogId, 'carId' => $auto->getForeignId()]);
-
-                if (empty($partCatalog)) {
-                    $partCatalog = $partCatalogDataQuery->query($catalogId, $auto->getForeignId());
-                }
+                $partCatalog = $partCatalogDataQuery->query($catalogId, $auto->getForeignId());
 
                 foreach ($partCatalog->getCatalogData() as $catalog) {
                     if (strtolower($catalog['name']) === $group) {
@@ -64,6 +56,47 @@ class PartCatalogController extends RestAbstractController
             }
 
             return $this->json(['data' => ['auto' => $auto, 'catalog' => $partCatalogGroup->getCatalogData()]], Response::HTTP_OK);
+
+        } catch (\Exception $exception) {
+
+            return $this->json(['error' => $exception->getMessage()], Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    #[Route(path: "part/catalog-group/{catalogId}/{modelName}/{year}/{modification}/{group}/{subgroup}", name: "get_part_catalog_by_subgroup", methods: ["GET"])]
+    public function findPartSubgroupCatalog(PartCatalogGroupDataQuery $partCatalogGroupDataQuery, AutoService $autoService, PartCatalogDataQuery $partCatalogDataQuery,
+                                         string $catalogId, string $modelName, string $year, string $modification, string $group, string $subgroup): Response
+    {
+        try {
+            $auto = $autoService->getAutoByModification($catalogId, $modelName, $year, $modification);
+
+            $partCatalogSubgroup = $this->dm->getRepository(PartCatalogGroup::class)->findOneBy(['catalogId' => $catalogId, 'carId' => $auto->getForeignId(), 'group' => $subgroup]);
+
+            if (empty($partCatalogSubgroup)) {
+
+                $partCatalogGroup = $this->dm->getRepository(PartCatalogGroup::class)->findOneBy(['catalogId' => $catalogId, 'carId' => $auto->getForeignId(), 'group' => $group]);
+
+                if (empty($partCatalogGroup)) {
+
+                    $partCatalog = $partCatalogDataQuery->query($catalogId, $auto->getForeignId());
+
+                    foreach ($partCatalog->getCatalogData() as $partGroup) {
+                        if (strtolower($partGroup['name']) === $group) {
+                            $partCatalogGroup = $partCatalogGroupDataQuery->query($catalogId, $auto->getForeignId(), $partGroup['id'], $group);
+                            break;
+                        }
+                    }
+                }
+
+                foreach ($partCatalogGroup->getCatalogData() as $partGroup) {
+                    if (strtolower($partGroup['name']) === $group) {
+                        $partCatalogSubgroup = $partCatalogGroupDataQuery->query($catalogId, $auto->getForeignId(), $partGroup['id'], $subgroup);
+                        break;
+                    }
+                }
+
+            }
+            return $this->json(['data' => ['auto' => $auto, 'catalog' => $partCatalogSubgroup->getCatalogData()]], Response::HTTP_OK);
 
         } catch (\Exception $exception) {
 
