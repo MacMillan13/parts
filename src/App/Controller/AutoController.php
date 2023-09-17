@@ -30,9 +30,15 @@ class AutoController extends AbstractController
     #[Route(path: "/bmw/{route}", name: "vue_bmw_models_page", requirements: ["route" => ".+"], methods: ["GET"])]
     public function vueAutoModelPage(Request $request): Response
     {
+        $requestUri = $request->getRequestUri();
+
+        $paths = explode('/', $requestUri);
+
+        $brand = $paths[1];
+
         return new Response($this->templatingEngine->render('@SyliusShop/Homepage/index.html.twig', [
-            'metaTitle' => 'Honda Auto Parts  - FindAutoParts.com',
-            'metaDescription' => 'Find Honda auto parts online. Browse different vendors. See auto parts prices. Get the best deal. FindAutoParts.com'
+            'metaTitle' => $brand . ' Auto Parts  - FindAutoParts.com',
+            'metaDescription' => 'Find ' . $brand , ' auto parts online. Browse different vendors. See auto parts prices. Get the best deal. FindAutoParts.com'
         ]));
     }
 }

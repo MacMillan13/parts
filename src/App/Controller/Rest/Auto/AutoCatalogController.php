@@ -2,13 +2,11 @@
 
 declare(strict_types=1);
 
-namespace BitBag\OpenMarketplace\App\Controller\Rest;
+namespace BitBag\OpenMarketplace\App\Controller\Rest\Auto;
 
 use BitBag\OpenMarketplace\App\DataQuery\PartsCatalog\AutoCatalogDataQuery;
-use BitBag\OpenMarketplace\App\Document\Auto;
 use BitBag\OpenMarketplace\App\Document\AutoCatalog;
 use BitBag\OpenMarketplace\App\Service\AutoModelService;
-use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Request;

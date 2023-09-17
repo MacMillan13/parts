@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace BitBag\OpenMarketplace\App\Controller\Rest;
+namespace BitBag\OpenMarketplace\App\Controller\Rest\Auto;
 
+use BitBag\OpenMarketplace\App\Controller\Rest\RestAbstractController;
 use BitBag\OpenMarketplace\App\DataQuery\PartsCatalog\AutoModelDataQuery;
 use BitBag\OpenMarketplace\App\Document\AutoModel;
 use Symfony\Component\HttpClient\Exception\ClientException;

@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace BitBag\OpenMarketplace\App\Controller\Rest;
+namespace BitBag\OpenMarketplace\App\Controller\Rest\Part;
 
+use BitBag\OpenMarketplace\App\Controller\Rest\RestAbstractController;
 use BitBag\OpenMarketplace\App\DataQuery\PartsCatalog\PartCatalogDataQuery;
 use BitBag\OpenMarketplace\App\DataQuery\PartsCatalog\PartCatalogGroupDataQuery;
 use BitBag\OpenMarketplace\App\Document\PartCatalog;

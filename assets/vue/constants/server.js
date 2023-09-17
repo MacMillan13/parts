@@ -1,0 +1,1 @@
+export const defaultDataApi = 'http://localhost:8000/api/v3/';

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BitBag\OpenMarketplace\App\Controller\Rest;
+namespace BitBag\OpenMarketplace\App\Controller\Rest\Auto;
 
 use BitBag\OpenMarketplace\App\Document\AutoBrand;
 use Doctrine\ODM\MongoDB\DocumentManager;

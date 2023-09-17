@@ -1,5 +1,4 @@
-
-const defaultDataApi = 'http://localhost:8000/api/v3/';
+import { defaultDataApi } from '../constants/server'
 export const state = () => ({
   step: 0,
   autoList: null,

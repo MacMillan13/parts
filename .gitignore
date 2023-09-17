@@ -38,3 +38,4 @@
 /.web-server-pid
 ###< symfony/web-server-bundle ###
 /public/log.txt
+/assets/vue/.env
