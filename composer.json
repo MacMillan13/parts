@@ -33,7 +33,8 @@
         "symfony/validator": "^5.4",
         "symfony/webpack-encore-bundle": "^1.15",
         "voku/portable-utf8": "^6.0",
-        "voku/simple_html_dom": "^4.8"
+        "voku/simple_html_dom": "^4.8",
+        "nategood/httpful": "*"
     },
     "require-dev": {
         "behat/behat": "^3.6.1",

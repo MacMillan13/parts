@@ -24,7 +24,7 @@ class ParserElement
 
     public function getPrice(): string
     {
-        return $this->text;
+        return $this->price;
     }
 
     public function getManufacture(): string
