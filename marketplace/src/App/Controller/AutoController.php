@@ -25,6 +25,12 @@ class AutoController extends AbstractController
         return new Response($this->templatingEngine->render('@SyliusShop/Homepage/index.html.twig'));
     }
 
+    #[Route(path: "/example", name: "vue_example_page", methods: ["GET"])]
+    public function vueExamplePage(): Response
+    {
+        return new Response($this->templatingEngine->render('@SyliusShop/Homepage/index.html.twig'));
+    }
+
     #[Route(path: "/toyota/{route}", name: "vue_toyota_models_page", requirements: ["route" => ".+"], methods: ["GET"])]
     #[Route(path: "/honda/{route}", name: "vue_honda_models_page", requirements: ["route" => ".+"], methods: ["GET"])]
     #[Route(path: "/bmw/{route}", name: "vue_bmw_models_page", requirements: ["route" => ".+"], methods: ["GET"])]

@@ -11,6 +11,11 @@ export default createRouter({
   history: createWebHistory(),
   routes: [
     {
+      name: 'Example',
+      path: '/example',
+      component: Example
+    },
+    {
       name: 'Search',
       path: '/',
       component: Search
