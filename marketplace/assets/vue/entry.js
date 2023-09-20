@@ -2,11 +2,13 @@ import {createApp} from 'vue';
 import router from './router/router';
 import { createStore } from 'vuex';
 import { search } from './store/search'
+import { parts } from './store/parts'
 import App from "./App.vue";
 
 const store = createStore({
   modules: {
-    search: search
+    search: search,
+    parts: parts,
   }
 })
 

@@ -8,7 +8,7 @@ use BitBag\OpenMarketplace\App\Entity\ParserElement;
 
 class PartsGeekParser extends AbstractParser
 {
-    public const URL = 'https://www.partsgeek.com/ss/?i=1&ssq=';
+    public const SEARCH_URL = 'https://www.partsgeek.com/ss/?i=1&ssq=';
     // Test code 11378662525
     /**
      * @param string $partId

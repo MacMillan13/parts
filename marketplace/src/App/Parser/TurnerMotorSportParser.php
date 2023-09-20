@@ -8,13 +8,21 @@ use BitBag\OpenMarketplace\App\Entity\ParserElement;
 
 class TurnerMotorSportParser extends AbstractParser
 {
-    public const URL = 'https://www.turnermotorsport.com/Search?No=0&Nrpp=50&Ntt=';
+    public const SEARCH_URL = 'https://www.turnermotorsport.com/Search?No=0&Nrpp=50&Ntt=';
     // 11128654272
     public function execute(string $partId): array
     {
         $partSearchUrl = $this->getUrl($partId);
 
         $html = $this->getDom($partSearchUrl);
+
+        $notFoundBlock = $html->findOne('.black-header-text')->innerhtml;
+
+        if (str_starts_with($notFoundBlock, 'No results')) {
+            return [
+                'elements' => []
+            ];
+        }
 
         foreach ($html->find('.product-item ') as $row) {
             $price = $row->findOne('.price')->innerhtml;

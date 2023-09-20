@@ -45,7 +45,7 @@ abstract class AbstractParser
 
     protected function getUrl(string $url)
     {
-       return static::URL . $url;
+       return static::SEARCH_URL . $url;
     }
 
     /**
