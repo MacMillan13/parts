@@ -5,17 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e678f032-9505-4a4f-8dd4-72f9c33ee725" name="Changes" comment="Parsers.">
-      <change afterPath="$PROJECT_DIR$/assets/vue/components/search/OffersList.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/vue/src/main.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/vue/store/parts.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/App/Parser/MoparPartsGiant.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/vue/entry.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/vue/entry.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App/Parser/AbstractParser.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/App/Parser/AbstractParser.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App/Parser/ECSTuningParser.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/App/Parser/ECSTuningParser.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App/Parser/PartsGeekParser.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/App/Parser/PartsGeekParser.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App/Parser/RockAutoParser.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/App/Parser/RockAutoParser.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App/Parser/TurnerMotorSportParser.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/App/Parser/TurnerMotorSportParser.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App/Service/StoreService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/App/Service/StoreService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,34 +21,7 @@
     <option name="RESET_MODE" value="KEEP" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/.gitignore" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/composer.json" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/config/packages/api_platform.yaml" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/config/packages/dev/maker.yaml" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/config/packages/doctrine.yaml" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/config/packages/webpack_encore.yaml" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/config/routes.yaml" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/config/routes/annotations.yaml" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/config/services.yaml" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/public/build/admin/entrypoints.json" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/public/index.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Api/Controller/Vendor/AcceptArchiveConversationAction.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/App/DataQuery/PartsCatalog/AutoCatalogDataQuery.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/App/DataQuery/PartsCatalog/AutoModelDataQuery.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/App/DataQuery/PartsCatalog/AutoVinDataQuery.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/App/DataQuery/PartsCatalog/PartCatalogCriteriaGroupDataQuery.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/App/Document/AutoCatalog.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/App/Helper/AutoCatalogUrlHelper.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/App/Service/PartSaverService.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/App/Service/Sophio/CarVinDecoderService.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Resources/config/api_resources/Order.xml" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Resources/config/doctrine/Conversation.Message.orm.xml" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Resources/config/services/api_controller.xml" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Resources/config/services/api_doctrine_extensions.xml" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/templates/Context/Vendor/ProductListing/create.html.twig" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/templates/bundles/SyliusShopBundle/layout.html.twig" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/vendor/sylius/sylius/src/Sylius/Component/Core/Model/Order.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/webpack.config.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/marketplace/.gitignore" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -370,6 +333,7 @@
       <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/marketplace" />
       <recent name="$PROJECT_DIR$/templates/Vue" />
       <recent name="$PROJECT_DIR$/templates/Vue/Components" />
       <recent name="$PROJECT_DIR$/src/Custom" />
@@ -414,7 +378,7 @@
       <workItem from="1693959390834" duration="19694000" />
       <workItem from="1694552428548" duration="810000" />
       <workItem from="1694566546683" duration="4602000" />
-      <workItem from="1694726934962" duration="34581000" />
+      <workItem from="1694726934962" duration="35374000" />
     </task>
     <task id="LOCAL-00013" summary="Rest for searching a part.">
       <created>1690744789599</created>
