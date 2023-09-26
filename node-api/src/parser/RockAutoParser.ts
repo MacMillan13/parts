@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
 import * as cheerio from 'cheerio';
-import { ParsedElement } from '../DTO/ParsedElement';
+import { ParsedElement } from '../dto/ParsedElement';
 
 @Injectable()
 export class RockAutoParser {

@@ -1,6 +1,6 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { AppService } from './app.service';
-import { RockAutoParser } from './Parser/RockAutoParser';
+import { RockAutoParser } from './parser/RockAutoParser';
 
 @Controller()
 export class AppController {

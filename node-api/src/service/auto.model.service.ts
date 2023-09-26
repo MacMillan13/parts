@@ -1,14 +1,19 @@
-import { DocumentManager } from 'doctrine-odm-mongodb';
-import { AutoModel } from '../Schema/AutoModel';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { AutoModel } from '../schema/auto.model.schema';
+import { Injectable } from '@nestjs/common';
 
-class AutoModelService {
-  constructor(private documentManager: DocumentManager) {}
+@Injectable()
+export class AutoModelService {
+  constructor(
+    @InjectModel(AutoModel.name) private AutoModel: Model<AutoModel>,
+  ) {}
 
   getAutoModelId(catalogId: string, modelName: string): string {
-    const autoModelRep = this.documentManager.getRepository(AutoModel);
-    const autoModel = autoModelRep.findOneBy({ catalogId });
+    const autoModel = this.AutoModel.findOne({ catalogId }).exec();
     const models = autoModel.getModels();
     let modelId: string | undefined;
+
     for (const model of models) {
       if (model.name.toLowerCase() === modelName) {
         modelId = model.id;
