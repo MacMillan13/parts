@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e678f032-9505-4a4f-8dd4-72f9c33ee725" name="Changes" comment="Commands.">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/marketplace/assets/vue/components/Example.vue" beforeDir="false" afterPath="$PROJECT_DIR$/marketplace/assets/vue/components/Example.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/marketplace/assets/vue/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/marketplace/assets/vue/src/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/marketplace/assets/vue/store/search.js" beforeDir="false" afterPath="$PROJECT_DIR$/marketplace/assets/vue/store/search.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/marketplace/src/App/Controller/Rest/Part/PartSearchController.php" beforeDir="false" afterPath="$PROJECT_DIR$/marketplace/src/App/Controller/Rest/Part/PartSearchController.php" afterDir="false" />
-    </list>
+    <list default="true" id="e678f032-9505-4a4f-8dd4-72f9c33ee725" name="Changes" comment="removed idea" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -22,6 +15,11 @@
     <execution />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="KEEP" />
   </component>
@@ -388,13 +386,6 @@
       <workItem from="1695593320029" duration="1035000" />
       <workItem from="1695656027182" duration="5856000" />
     </task>
-    <task id="LOCAL-00015" summary="Saving parts.">
-      <created>1690819997305</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1690819997305</updated>
-    </task>
     <task id="LOCAL-00016" summary="Set datetime for documents.">
       <created>1690821203381</created>
       <option name="number" value="00016" />
@@ -731,7 +722,14 @@
       <option name="project" value="LOCAL" />
       <updated>1695693770989</updated>
     </task>
-    <option name="localTasksCounter" value="64" />
+    <task id="LOCAL-00064" summary="removed idea">
+      <created>1695733314549</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1695733314549</updated>
+    </task>
+    <option name="localTasksCounter" value="65" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -749,7 +747,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="vue config." />
     <MESSAGE value="Refactored the search block." />
     <MESSAGE value="Setting parameters to URL." />
     <MESSAGE value="Setting parameters to URL.&#10;Adding vue css." />
@@ -774,6 +771,7 @@
     <MESSAGE value="Parsers." />
     <MESSAGE value="cleaning." />
     <MESSAGE value="Commands." />
-    <option name="LAST_COMMIT_MESSAGE" value="Commands." />
+    <MESSAGE value="removed idea" />
+    <option name="LAST_COMMIT_MESSAGE" value="removed idea" />
   </component>
 </project>
