@@ -1,0 +1,15 @@
+doctrine_mongodb:
+  connections:
+    default:
+      server: "%mongodb_server%"
+      options: {}
+  default_database: parts
+  document_managers:
+    default:
+      auto_mapping: true
+      mappings:
+        custom_mapping:
+          type: attribute
+          prefix: 'BitBag\OpenMarketplace\App\Document'
+          dir: '%kernel.project_dir%/src/App/Document'
+          is_bundle: false

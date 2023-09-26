@@ -1,0 +1,18 @@
+{% extends '@SyliusShop/layout.html.twig' %}
+
+{% block metatags %}
+    {% if metaTitle|default(null) %}
+        <meta name="title" content="{{ metaTitle }}">
+    {% endif %}
+    {% if metaDescription|default(null) %}
+        <meta name="description" content="{{ metaDescription }}">
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="homepage">
+        <div class="ui hidden divider"></div>
+
+        {{ sylius_template_event('sylius.shop.homepage') }}
+    </div>
+{% endblock %}

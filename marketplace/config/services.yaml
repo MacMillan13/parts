@@ -1,0 +1,21 @@
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: en_US
+    mongodb_server: "mongodb://localhost:27017"
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    BitBag\OpenMarketplace\App\:
+        resource: '../src/App/*'
+        exclude: '../src/App/{DependencyInjection,Document,Entity,Migrations,Tests,Kernel.php}'
+
+    BitBag\OpenMarketplace\App\Controller\:
+        resource: '../src/App/Controller'
+        tags: ['controller.service_arguments']
+
+    BitBag\OpenMarketplace\Controller\Custom\CustomHomepageController:
+        tags: ['controller.service_arguments']
