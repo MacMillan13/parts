@@ -8,6 +8,7 @@
     "semantic-ui-css": "^2.2.0",
     "slick-carousel": "^1.8.1",
     "vue": "^3.2.36",
+    "vue-plugin-load-script": "^2.1.1",
     "vue-router": "^4.0.13",
     "vuex": "^4.0.2"
   },
