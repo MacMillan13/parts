@@ -1,14 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
-import { ObjectId } from "mongodb";
+import { Document, HydratedDocument } from 'mongoose';
+import { ObjectId } from 'mongodb';
 
 export type AutoCatalogDocument = HydratedDocument<AutoVin>;
 
 @Schema()
-export class AutoVin {
-  @Prop({ type: ObjectId })
-  protected id: ObjectId;
-
+export class AutoVin extends Document {
   @Prop({ type: Object })
   protected autoData: object;
 

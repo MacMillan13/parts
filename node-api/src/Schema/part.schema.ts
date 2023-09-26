@@ -1,14 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ObjectId } from 'mongodb';
-import { HydratedDocument } from 'mongoose';
+import { Document, HydratedDocument } from 'mongoose';
 
 export type PartDocument = HydratedDocument<Part>;
 
 @Schema()
-export class Part {
-  @Prop({ type: ObjectId })
-  protected id: ObjectId;
-
+export class Part extends Document {
   @Prop()
   protected partNumber: string;
 

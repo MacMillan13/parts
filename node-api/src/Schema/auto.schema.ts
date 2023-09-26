@@ -1,14 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
-import { ObjectId } from "mongodb";
+import { Document, HydratedDocument } from 'mongoose';
 
 export type AutoDocument = HydratedDocument<Auto>;
 @Schema()
-export class Auto {
-
-  @Prop({ type: ObjectId })
-  protected id: ObjectId;
-
+export class Auto extends Document {
   @Prop()
   protected brand: string;
 
@@ -50,7 +45,6 @@ export class Auto {
 
   @Prop()
   protected dateTime: Date | null;
-
 }
 
 export const AutoSchema = SchemaFactory.createForClass(Auto);

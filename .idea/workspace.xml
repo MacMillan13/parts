@@ -4,7 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e678f032-9505-4a4f-8dd4-72f9c33ee725" name="Changes" comment="removed idea" />
+    <list default="true" id="e678f032-9505-4a4f-8dd4-72f9c33ee725" name="Changes" comment="Changed the name.">
+      <change afterPath="$PROJECT_DIR$/node-api/src/Schema/part.catalog.criteria.group.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node-api/src/Schema/part.catalog.criteria.schema.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node-api/src/Schema/part.catalog.group.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node-api/src/Schema/part.catalog.schema.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node-api/src/Schema/part.schema.schema.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node-api/src/Schema/auto.brand.schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node-api/src/Schema/auto.brand.schema.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node-api/src/Schema/auto.catalog.schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node-api/src/Schema/auto.catalog.schema.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node-api/src/Schema/auto.model.schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node-api/src/Schema/auto.model.schema.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node-api/src/Schema/auto.schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node-api/src/Schema/auto.schema.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node-api/src/Schema/auto.vin.schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node-api/src/Schema/auto.vin.schema.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node-api/src/Schema/part.schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node-api/src/Schema/part.schema.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/parser-api.sh" beforeDir="false" afterPath="$PROJECT_DIR$/node-api.sh" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,7 +31,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -386,20 +400,6 @@
       <workItem from="1695593320029" duration="1035000" />
       <workItem from="1695656027182" duration="5856000" />
     </task>
-    <task id="LOCAL-00016" summary="Set datetime for documents.">
-      <created>1690821203381</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1690821203381</updated>
-    </task>
-    <task id="LOCAL-00017" summary="Fixes showing data from documents.">
-      <created>1690823649949</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1690823649949</updated>
-    </task>
     <task id="LOCAL-00018" summary="Getters and setter">
       <created>1690827489697</created>
       <option name="number" value="00018" />
@@ -729,7 +729,21 @@
       <option name="project" value="LOCAL" />
       <updated>1695733314549</updated>
     </task>
-    <option name="localTasksCounter" value="65" />
+    <task id="LOCAL-00065" summary="Changed the name.">
+      <created>1695733580543</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1695733580543</updated>
+    </task>
+    <task id="LOCAL-00066" summary="Changed the name.">
+      <created>1695733675100</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1695733675100</updated>
+    </task>
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -747,7 +761,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Refactored the search block." />
     <MESSAGE value="Setting parameters to URL." />
     <MESSAGE value="Setting parameters to URL.&#10;Adding vue css." />
     <MESSAGE value="Refactored vue." />
@@ -772,6 +785,7 @@
     <MESSAGE value="cleaning." />
     <MESSAGE value="Commands." />
     <MESSAGE value="removed idea" />
-    <option name="LAST_COMMIT_MESSAGE" value="removed idea" />
+    <MESSAGE value="Changed the name." />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed the name." />
   </component>
 </project>
