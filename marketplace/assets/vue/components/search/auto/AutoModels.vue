@@ -1,5 +1,7 @@
 <template>
   <div class="row">
+    <FindAuto />
+
     <div v-for="model in models" class="auto-tab col-md-2 col-sm-4 col-6">
       <router-link :to="'/' + brand + '/' + model.name.toLowerCase()" >{{ model.name }}</router-link>
     </div>
@@ -9,8 +11,10 @@
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import {useStore} from 'vuex';
+import FindAuto from "../FindAuto.vue";
 export default {
   name: "AutoModels",
+  components: {FindAuto},
   setup() {
     const store = useStore()
 
@@ -33,5 +37,3 @@ export default {
   }
 }
 </script>
-<style scoped>
-</style>

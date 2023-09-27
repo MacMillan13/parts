@@ -9,26 +9,24 @@ imports:
 
 sylius_ui:
     events:
-        sylius.shop.homepage:
+        sylius.shop.custom.homepage:
             blocks:
                 parts_search:
                     template: "@SyliusShop/Homepage/_search.html.twig"
-                    priority: 70
-                banner:
-                    template: "@SyliusShop/Homepage/_banner.html.twig"
-                    priority: 60
-                latest_products:
-                    template: "@SyliusShop/Homepage/_latestProducts.html.twig"
-                    priority: 50
-                latest_products_carousel:
-                    template: "@SyliusShop/Homepage/_latestProductsCarousel.html.twig"
-                    priority: 40
-                newsletter:
-                    template: "@SyliusShop/Homepage/_newsletter.html.twig"
-                    priority: 30
-                products_grid:
-                    template: "@SyliusShop/Homepage/_productsGrid.html.twig"
                     priority: 20
                 about_us:
                     template: "@SyliusShop/Homepage/_aboutUs.html.twig"
                     priority: 10
+        sylius.shop.layout.footer:
+            blocks:
+                grid:
+                    template: "@SyliusShop/Layout/Footer/_grid.html.twig"
+                    priority: 20
+                content:
+                    template: "@SyliusShop/Layout/Footer/_content.html.twig"
+                    priority: 10
+                after_legacy:
+                    template: "@SyliusUi/Block/_legacySonataEvent.html.twig"
+                    priority: 5
+                    context:
+                        event: sylius.shop.layout.after_footer
