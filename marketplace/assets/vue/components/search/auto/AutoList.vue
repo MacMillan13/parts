@@ -47,38 +47,29 @@
     </table>
   </div>
 </template>
-<script>
+<script setup>
 import {computed} from 'vue';
 import {useStore} from 'vuex';
-import { useRoute } from 'vue-router'
+import {useRoute, useRouter} from 'vue-router'
 
-export default {
-  name: "AutoList",
-  setup() {
-    const store = useStore()
-    const route = useRoute()
+const store = useStore()
+const route = useRoute()
+const router = useRouter()
 
-    const selectedAuto = computed(() => store.state.search.selectedAuto);
-    const autoList = computed(() => store.state.search.autoList);
+const selectedAuto = computed(() => store.state.search.selectedAuto);
+const autoList = computed(() => store.state.search.autoList);
 
-    const brand = route.params.brand
-    const model = route.params.model
-    const year = route.params.year
-    const getCatalog = async (auto) => {
-      route.next('/' + brand + '/' + model + '/' + year + '/' + auto.nameCode);
-      await store.dispatch('search/getCatalog', {
-        carId: auto,
-        toSet: true
-      })
-    }
-
-    return {
-      selectedAuto,
-      autoList,
-      getCatalog
-    }
-  }
+const getCatalog = async (auto) => {
+  console.log(auto)
+  router.push('/' + auto.catalogId.toLowerCase() + '/' + auto.modelName.toLowerCase() + '/' + auto.year + '/' + auto.code)
 }
 </script>
 <style scoped>
+td, th {
+  padding: 18px 0.75rem;;
+}
+
+td {
+  cursor: pointer;
+}
 </style>

@@ -1,8 +1,7 @@
 <template>
-  <FindAuto/>
-
-  <div class="row">
-    <div v-if="null !== autoBrands" v-for="brand in autoBrands" class="auto-tab col-md-2 col-sm-4 col-6">
+  <Search />
+  <div class="row block-margin">
+    <div v-if="null !== autoBrands" v-for="brand in autoBrands" class="item-tab col-md-2 col-sm-4 col-6">
       <router-link :to="brand.carId">{{ brand.name }}</router-link>
     </div>
   </div>
@@ -11,7 +10,7 @@
 
 import {computed} from 'vue';
 import {useStore} from 'vuex';
-import FindAuto from "../FindAuto.vue";
+import Search from "../Search.vue";
 
 const store = useStore()
 const autoBrands = computed(() => store.state.search.autoBrands);

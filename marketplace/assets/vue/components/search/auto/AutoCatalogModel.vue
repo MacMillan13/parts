@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="block-margin">
     <AutoFilter />
     <AutoList />
   </div>

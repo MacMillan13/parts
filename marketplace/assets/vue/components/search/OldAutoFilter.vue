@@ -1,9 +1,9 @@
 <template>
   <div class="row">
-    <div v-if="0 === step && null !== autoBrands" v-for="brand in autoBrands" class="auto-tab col-md-2 col-sm-4 col-6">
+    <div v-if="0 === step && null !== autoBrands" v-for="brand in autoBrands" class="item-tab col-md-2 col-sm-4 col-6">
       <router-link :to="brand.carId">{{ brand.name }}</router-link>
     </div>
-    <div v-if="1 === step && null !== models" v-for="model in models" class="auto-tab col-md-2 col-sm-4 col-6">
+    <div v-if="1 === step && null !== models" v-for="model in models" class="item-tab col-md-2 col-sm-4 col-6">
       <span @click="getAutoCatalog(model)">{{ model.name }}</span>
     </div>
     <div v-if="2 === step && null !== autoFilter" class="row" style="width: 100%">

@@ -1,11 +1,11 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import AutoModels from "../components/search/auto/AutoModels.vue";
-import Search from "../components/Search.vue";
 import Example from "../components/Example.vue";
 import AutoCatalogModel from "../components/search/auto/AutoCatalogModel.vue";
 import AutoCatalogYear from "../components/search/auto/AutoCatalogYear.vue";
 import PartCatalog from "../components/search/part/PartCatalog.vue";
 import OffersList from "../components/search/OffersList.vue";
+import AutoBrands from "../components/search/auto/AutoBrands.vue";
 
 export default createRouter({
   history: createWebHistory(),
@@ -16,9 +16,9 @@ export default createRouter({
       component: Example
     },
     {
-      name: 'Search',
+      name: 'AutoBrands',
       path: '/',
-      component: Search
+      component: AutoBrands
     },
     {
       name: 'Models',
