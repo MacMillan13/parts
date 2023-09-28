@@ -39,6 +39,7 @@ class AutoService
      * @throws RedirectionExceptionInterface
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
+     * @throws \Exception
      */
     public function getAutoByModification(string $catalogId, string $modelName, string $year, string $modification): Auto
     {
@@ -64,6 +65,26 @@ class AutoService
             }
         }
 
-        return $auto;
+        if (empty($auto)) {
+            throw new \Exception('Cannot find an auto.');
+        }
+
+        $autoEntity = new Auto();
+
+        $autoEntity->setModelId($auto['modelId'])
+            ->setCatalogId($auto['catalogId'])
+            ->setCode($auto['code'])
+            ->setParameters($auto['parameters'])
+            ->setModelName($auto['modelName'])
+            ->setForeignId($auto['modelId'])
+            ->setDescription($auto['description'])
+            ->setFrame($auto['frame'])
+            ->setCriteria($auto['criteria'])
+            ->setBrand($auto['brand'])
+            ->setName($auto['name'])
+            ->setYear($year)
+            ->setVin($auto['vin']);
+
+        return $autoEntity;
     }
 }
