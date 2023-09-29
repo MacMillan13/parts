@@ -38,4 +38,12 @@
   .block-margin {
     margin: 24px 0;
   }
+
+  ul {
+    list-style-type: none;
+    font-size: 16px;
+    li {
+      padding: 8px 0;
+    }
+  }
 </style>

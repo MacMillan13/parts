@@ -169,7 +169,7 @@ export const actions = {
   },
 
   async getAutoCatalog({ commit }, params) {
-    let url = defaultDataApi + 'auto/catalog/' + params.catalogId + '/' + params.carId
+    let url = defaultDataApi + 'auto/catalog/' + params.brand + '/' + params.model
     if (undefined !== params.query) {
       url += params.query
     }

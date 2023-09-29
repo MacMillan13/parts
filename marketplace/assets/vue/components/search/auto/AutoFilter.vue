@@ -11,7 +11,7 @@
         </option>
       </select>
     </div>
-    <div class="auto-filter col-md-3 col-sm-4 col-12">
+    <div v-if="showSearchButton" class="auto-filter col-md-3 col-sm-4 col-12">
       <button @click="search" id="search-btn" class="btn btn-primary active">Search</button>
     </div>
   </div>
@@ -19,19 +19,30 @@
 
 <script setup>
 import {ref, computed, toRaw, watch } from 'vue';
+import { useRoute } from 'vue-router'
 import {useStore} from 'vuex';
 
 const store = useStore()
+const route = useRoute()
 
 const autoFilter = computed(() => store.state.search.autoFilter);
 const selectedParams = ref({});
+const showSearchButton = ref(false);
 
 let autoParams = {};
 
+
 watch(autoFilter, async () => {
+
   autoFilter.value.forEach(filter => {
     selectedParams.value[filter.key] = ''
   })
+
+  if (autoFilter.value.length > 0) {
+    showSearchButton.value = true
+  } else {
+    showSearchButton.value = false
+  }
 })
 
 const search = () => {
@@ -43,15 +54,19 @@ const search = () => {
 
     for (const key in selectedParamsArray) {
       const value = selectedParamsArray[key];
-      if ('All' !== value) {
+      if ('All' !== value && value.length > 0) {
         query += key + "=" + value + "&"
       }
     }
+
 
     query = query.slice(0, -1)
 
     autoParams['query'] = query
   }
+
+  autoParams.brand = route.params.brand
+  autoParams.model = route.params.model
 
   store.dispatch('search/getAutoCatalog', autoParams)
 }
