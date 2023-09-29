@@ -74,9 +74,9 @@ class AutoCatalogController extends AbstractController
         }
     }
 
-    #[Route(path: "auto/catalog/{catalogId}/{modelId}", name: "get_catalog_car_parameters", methods: ["GET"])]
+    #[Route(path: "auto/catalog/{catalogId}/{modelName}", name: "get_catalog_car_parameters", methods: ["GET"])]
     public function getAutoCatalogParameters(Request $request, AutoCatalogDataQuery $autoCatalogDataQuery,
-                                            string  $catalogId, string $modelId): Response
+                                            string  $catalogId, string $modelName): Response
     {
         try {
             $yearId = $request->get('year');
@@ -85,7 +85,6 @@ class AutoCatalogController extends AbstractController
             $seriesId = $request->get('series');
             $bodyTypeId = $request->get('body_type');
             $transmissionTypeId = $request->get('trans_type');
-            $exactModelId = $request->get('exactModel');
             $engineId = $request->get('engine');
             $sunroof = $request->get('sunroof');
             $navigation = $request->get('navigation');
@@ -111,14 +110,13 @@ class AutoCatalogController extends AbstractController
             $autoCatalog = new AutoCatalog();
 
             $autoCatalog->setCatalogId($catalogId)
-                ->setModelId($modelId)
                 ->setYearId($yearId)
                 ->setRegionId($regionId)
                 ->setSteeringId($steeringId)
                 ->setSeriesId($seriesId)
                 ->setBodyTypeId($bodyTypeId)
                 ->setTransmissionTypeId($transmissionTypeId)
-                ->setExactModelId($exactModelId)
+                ->setModelName($modelName)
                 ->setSunroof($sunroof)
                 ->setNavigation($navigation)
                 ->setVsa($vsa)

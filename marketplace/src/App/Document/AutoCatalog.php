@@ -37,7 +37,7 @@ class AutoCatalog
     protected $transmissionTypeId;
 
     #[MongoDB\Field(type: 'string')]
-    protected $exactModelId;
+    protected $modelName;
 
     #[MongoDB\Field(type: 'string')]
     protected $engineId;
@@ -710,17 +710,17 @@ class AutoCatalog
     /**
      * @return mixed
      */
-    public function getExactModelId()
+    public function getModelName()
     {
-        return $this->exactModelId;
+        return $this->modelName;
     }
 
     /**
-     * @param mixed $exactModelId
+     * @param mixed $modelName
      */
-    public function setExactModelId(?string $exactModelId): AutoCatalog
+    public function setModelName(?string $modelName): AutoCatalog
     {
-        $this->exactModelId = $exactModelId;
+        $this->modelName = $modelName;
 
         return $this;
     }

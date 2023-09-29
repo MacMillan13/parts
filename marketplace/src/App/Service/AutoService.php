@@ -60,31 +60,28 @@ class AutoService
 
             foreach ($autoList as $oneAuto) {
                 if (!empty($oneAuto['code']) && $oneAuto['code'] === $modification) {
-                    $auto = $oneAuto;
+                    $auto = new Auto();
+                    $auto->setModelId($oneAuto['modelId'])
+                        ->setCatalogId($oneAuto['catalogId'])
+                        ->setCode($oneAuto['code'])
+                        ->setParameters($oneAuto['parameters'])
+                        ->setModelName($oneAuto['modelName'])
+                        ->setForeignId($oneAuto['modelId'])
+                        ->setDescription($oneAuto['description'])
+                        ->setFrame($oneAuto['frame'])
+                        ->setCriteria($oneAuto['criteria'])
+                        ->setBrand($oneAuto['brand'])
+                        ->setName($oneAuto['name'])
+                        ->setYear($year)
+                        ->setVin($oneAuto['vin']);
                 }
             }
         }
 
         if (empty($auto)) {
-            throw new \Exception('Cannot find an auto.');
+            throw new \Exception('Cannot find the auto.');
         }
 
-        $autoEntity = new Auto();
-
-        $autoEntity->setModelId($auto['modelId'])
-            ->setCatalogId($auto['catalogId'])
-            ->setCode($auto['code'])
-            ->setParameters($auto['parameters'])
-            ->setModelName($auto['modelName'])
-            ->setForeignId($auto['modelId'])
-            ->setDescription($auto['description'])
-            ->setFrame($auto['frame'])
-            ->setCriteria($auto['criteria'])
-            ->setBrand($auto['brand'])
-            ->setName($auto['name'])
-            ->setYear($year)
-            ->setVin($auto['vin']);
-
-        return $autoEntity;
+        return $auto;
     }
 }

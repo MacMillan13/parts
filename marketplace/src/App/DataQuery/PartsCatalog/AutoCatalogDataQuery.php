@@ -6,6 +6,7 @@ namespace BitBag\OpenMarketplace\App\DataQuery\PartsCatalog;
 
 use BitBag\OpenMarketplace\App\Document\Auto;
 use BitBag\OpenMarketplace\App\Document\AutoCatalog;
+use BitBag\OpenMarketplace\App\Document\AutoModel;
 use BitBag\OpenMarketplace\App\Helper\AutoCatalogUrlHelper;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\MongoDBException;
@@ -59,7 +60,7 @@ class AutoCatalogDataQuery extends AbstractDataQuery
 
         $searchParams['transmissionTypeId'] = $autoCatalog->getTransmissionTypeId();
 
-        $searchParams['exactModelId'] = $autoCatalog->getExactModelId();
+        $searchParams['modelName'] = $autoCatalog->getModelName();
 
         $searchParams['engineId'] = $autoCatalog->getEngineId();
 
@@ -108,9 +109,19 @@ class AutoCatalogDataQuery extends AbstractDataQuery
 
         if (empty($autoCatalogSearch)) {
 
+            $autoModel = $this->dm->getRepository(AutoModel::class);
+            $autoModel = $autoModel->findOneBy(['catalogId' => $autoCatalog->getCatalogId()]);
+
+            foreach ($autoModel->getModels() as $model) {
+                if (strtolower($model['name']) === $autoCatalog->getModelName()) {
+                    $autoCatalog->setModelId($model['id']);
+                    break;
+                }
+            }
+
             $parametersCriteria = $this->catalogParametersUrlHelper->buildParametersUrl([$autoCatalog->getYearId(),
                 $autoCatalog->getRegionId(), $autoCatalog->getSteeringId(), $autoCatalog->getSeriesId(), $autoCatalog->getBodyTypeId(),
-                $autoCatalog->getTransmissionTypeId(), $autoCatalog->getExactModelId(), $autoCatalog->getEngineId(), $autoCatalog->getSunroof(),
+                $autoCatalog->getTransmissionTypeId(), $autoCatalog->getEngineId(), $autoCatalog->getSunroof(),
                 $autoCatalog->getNavigation(), $autoCatalog->getVsa(), $autoCatalog->getDoorCount(), $autoCatalog->getAbs(),
                 $autoCatalog->getModificationId(), $autoCatalog->getProductPeriod(), $autoCatalog->getEngineCapacity(), $autoCatalog->getSpecModelDate(),
                 $autoCatalog->getSpecVinPart(), $autoCatalog->getSpecModification(), $autoCatalog->getSpecCatalog(), $autoCatalog->getCarName(),

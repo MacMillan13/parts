@@ -42,7 +42,7 @@ class PartCatalogController extends RestAbstractController
         try {
             $auto = $autoService->getAutoByModification($catalogId, $modelName, $year, $modification);
 
-            $partCatalogGroup = $this->dm->getRepository(PartCatalogGroup::class)->findOneBy(['catalogId' => $catalogId, 'carId' => $auto->getForeignId(), 'group' => $group]);
+            $partCatalogGroup = $this->dm->getRepository(PartCatalogGroup::class)->findOneBy(['catalogId' => $catalogId, 'carId' => $auto->getForeignId(), 'groupName' => $group]);
 
             if (empty($partCatalogGroup)) {
 
