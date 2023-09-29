@@ -30,8 +30,29 @@ class PartSchema
     #[MongoDB\Field(type: 'string')]
     protected $criteria;
 
+    #[MongoDB\Field(type: 'string')]
+    protected $code;
+
     #[MongoDB\Field(type: 'date')]
     protected $dateTime;
+
+    /**
+     * @return mixed
+     */
+    public function getCode()
+    {
+        return $this->code;
+    }
+
+    /**
+     * @param mixed $code
+     */
+    public function setCode($code): self
+    {
+        $this->code = $code;
+
+        return $this;
+    }
 
     /**
      * @return mixed

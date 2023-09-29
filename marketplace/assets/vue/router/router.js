@@ -43,18 +43,18 @@ export default createRouter({
       component: AutoCatalogYear
     },
     {
-      name: 'AutoCode',
+      name: 'PartMenu',
       path: '/:brand/:model/:year/:code',
       component: PartMenuSidebar
     },
     {
-      name: 'AutoPartCategory',
+      name: 'PartCatalogGroup',
       path: '/:brand/:model/:year/:code/:partCategory',
       component: PartCatalogGroup
     },
     {
-      name: 'AutoPart',
-      path: '/:brand/:model/:year/:code/:partCategory/:autoPart',
+      name: 'PartSchema',
+      path: '/:brand/:model/:year/:code/:partCategory/:partSchema',
       component: PartSchema
     },
   ]

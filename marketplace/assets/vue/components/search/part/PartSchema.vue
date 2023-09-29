@@ -30,7 +30,7 @@
           <img id="part-image" :src="partSchema.img" alt="schema">
           <ul id="part-image-ul">
             <li v-for="position in partSchemaPositions">
-              {{position.number }}
+              {{ position.number }}
             </li>
           </ul>
         </div>
@@ -38,57 +38,63 @@
     </div>
   </div>
 </template>
-<script>
+<script setup>
 
-import { useStore } from 'vuex'
-import { computed} from 'vue';
-export default {
-  name: "PartSchema",
-  setup() {
-    const store = useStore()
-    const partSchema = computed(() => store.state.search.partSchema)
-    const partSchemaPositions = computed(() => store.state.search.partSchemaPositions)
+import {useStore} from 'vuex'
+import {computed} from 'vue';
+import {useRoute} from 'vue-router'
 
-    return {
-      partSchema,
-      partSchemaPositions
-    }
-  }
-}
+const store = useStore()
+const route = useRoute()
+
+let params = {}
+
+params.model = route.params.model
+params.brand = route.params.brand
+params.year = route.params.year
+params.code = route.params.code
+params.partCategory = route.params.partCategory
+params.partSchema = route.params.partSchema
+
+store.dispatch('search/getPartGroup', params)
+
+const partSchema = computed(() => store.state.search.partSchema)
+const partSchemaPositions = computed(() => store.state.search.partSchemaPositions)
+
 </script>
 <style scoped>
 
-  .part-group-ul li {
-  }
+.part-group-ul li {
+}
 
-  .part-group-ul {
-    height: 70vh;
-    overflow-x: hidden;
-    overflow-y: auto;
-    text-align: justify;
-  }
+.part-group-ul {
+  height: 70vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  text-align: justify;
+}
 
-  .part-block-position-number {
-    margin-right: 15px;
-  }
+.part-block-position-number {
+  margin-right: 15px;
+}
 
-  #part-image-block {
-    display: flex;
-    justify-content: center;
-  }
+#part-image-block {
+  display: flex;
+  justify-content: center;
+}
 
-  #part-image {
-    max-width: 100%;
-    max-height: 70vh;
-    width: 100%;
-  }
+#part-image {
+  max-width: 100%;
+  max-height: 70vh;
+  width: 100%;
+}
 
-  #part-image-ul {
-    position: absolute;
-    top: 0;
-    left: 0;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
+#part-image-ul {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
 </style>

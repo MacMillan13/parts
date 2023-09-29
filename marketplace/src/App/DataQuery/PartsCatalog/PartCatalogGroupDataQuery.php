@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace BitBag\OpenMarketplace\App\DataQuery\PartsCatalog;
 
 use BitBag\OpenMarketplace\App\Document\PartCatalogGroup;
+use BitBag\OpenMarketplace\App\Service\NamingService;
+use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\MongoDBException;
 use Exception;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
@@ -12,9 +14,17 @@ use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class PartCatalogGroupDataQuery extends AbstractDataQuery
 {
+
+    public function __construct(HttpClientInterface $client, DocumentManager $dm,
+                                private NamingService $namingService)
+    {
+        parent::__construct($client, $dm);
+    }
+
     /**
      * @param string $catalogId
      * @param string $carId
@@ -42,6 +52,11 @@ class PartCatalogGroupDataQuery extends AbstractDataQuery
             );
 
             if (!empty($responseArray = $response->toArray())) {
+
+                foreach ($responseArray as &$data) {
+                    $data['code'] = $this->namingService->prepare($data['name']);
+                }
+
                 $catalogData = (object)$responseArray;
                 $partCatalogGroup = new PartCatalogGroup();
                 $partCatalogGroup->setCatalogData($catalogData)

@@ -31,6 +31,11 @@ class PartSaverService
             $parts = $this->arrayHelper->arrayUniqueByKey($partGroups['parts'], 'number');
 
             foreach ($parts as $part) {
+
+                if (empty($part['number'])) {
+                    continue;
+                }
+
                 $partNumber = trim($part['number']);
 
                 $partValue = $partRep->findOneBy(['partNumber' => $partNumber]);
@@ -38,11 +43,10 @@ class PartSaverService
                 if (empty($partValue)) {
                     $newPart = new Part();
                     $newPart->setName($part['name'])
-                        ->setPartSchemaId(new MongoId($partSchema->getId()))
+                        ->setPartSchemaId($partSchema->getId())
                         ->setPartNumber(trim($part['number']))
                         ->setDescription($part['description'])
                         ->setNotice($part['notice'])
-                        ->setName($part['name'])
                         ->setDateTime();
 
                     foreach ($parts as $crossPart) {

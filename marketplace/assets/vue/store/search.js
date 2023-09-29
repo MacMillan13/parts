@@ -157,15 +157,16 @@ export const actions = {
   async getPartGroup({ commit }, params) {
 
     const response = await fetch(defaultDataApi + 'search/part/schema/' + params.brand + '/'
-      + params + '/' + partGroup.id,
-      this.getRequestOptions('GET'));
+      + params.model + '/' + params.year + '/' + params.code + '/' + params.partCategory
+        + '/' + params.partSchema,
+      getRequestOptions('GET'));
     const responseJson = await response.json();
     const partSchema = responseJson.data;
 
     commit('setPartSchema', partSchema)
     commit('setPartSchemaPositions', partSchema.positions)
 
-    unitUnits(partSchema);
+    // unitUnits(partSchema);
 
     // const url = new URL(location);
     //

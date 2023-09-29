@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace BitBag\OpenMarketplace\App\DataQuery\PartsCatalog;
 
+use BitBag\OpenMarketplace\App\Document\PartCatalogGroup;
 use BitBag\OpenMarketplace\App\Document\PartSchema;
+use BitBag\OpenMarketplace\App\Service\NamingService;
 use BitBag\OpenMarketplace\App\Service\PartSaverService;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\MongoDBException;
@@ -23,7 +25,8 @@ class PartSchemaDataQuery extends AbstractDataQuery
      * @param HttpClientInterface $client
      * @param DocumentManager $dm
      */
-    public function __construct(private PartSaverService $partSaverService, HttpClientInterface $client, DocumentManager $dm)
+    public function __construct(HttpClientInterface $client, DocumentManager $dm, private PartSaverService $partSaverService,
+        private PartCatalogDataQuery $partCatalogDataQuery, private PartCatalogGroupDataQuery $partCatalogGroupDataQuery, private NamingService $namingService)
     {
         parent::__construct($client, $dm);
     }
@@ -31,22 +34,50 @@ class PartSchemaDataQuery extends AbstractDataQuery
     /**
      * @param string $catalogId
      * @param string $carId
-     * @param string $groupId
+     * @param string $groupName
+     * @param string $schemaName
      * @return PartSchema
-     * @throws MongoDBException
      * @throws ClientExceptionInterface
      * @throws DecodingExceptionInterface
+     * @throws MongoDBException
      * @throws RedirectionExceptionInterface
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
      * @throws \MongoException
      */
-    public function query(string $catalogId, string $carId, string $groupId): PartSchema
+    public function query(string $catalogId, string $carId, string $groupName, string $schemaName): PartSchema
     {
         $partSchema = $this->dm->getRepository(PartSchema::class)->findOneBy(['catalogId' => $catalogId,
-            'carId' => $carId, 'groupId' => $groupId]);
+            'carId' => $carId, 'group' => $groupName, 'code' => $schemaName]);
 
         if (empty($partSchema)) {
+
+            $partCatalog = $this->partCatalogDataQuery->query($catalogId, $carId);
+
+            foreach ($partCatalog->getCatalogData() as $partCatalog) {
+
+                if ($partCatalog['code'] === $groupName) {
+                    $partCatalogGroup = $this->partCatalogGroupDataQuery->query($catalogId, $carId, $partCatalog['id'], $groupName);
+                    break;
+                }
+            }
+
+            if (empty($partCatalogGroup)) {
+                throw new \Exception('Error, no part group data');
+            }
+
+            $groupId = null;
+
+            foreach ($partCatalogGroup->getCatalogData() as $subGroups) {
+                if ($schemaName === $subGroups['code']) {
+                    $groupId = $subGroups['id'];
+                }
+            }
+
+            if (empty($groupId)) {
+                throw new \Exception('Error, no chema id');
+            }
+
             $response = $this->client->request(
                 'GET',
                 $_ENV['PART_CATALOG_API'] . 'catalogs/' . $catalogId . '/parts2/?carId=' . $carId . '&groupId=' . $groupId,
@@ -54,13 +85,15 @@ class PartSchemaDataQuery extends AbstractDataQuery
             );
 
             if (!empty($responseArray = $response->toArray())) {
+
                 $partData = (object)$responseArray;
                 $partSchema = new PartSchema();
                 $partSchema->setPartSchemaData($partData)
                     ->setCatalogId($catalogId)
                     ->setCarId($carId)
                     ->setDateTime()
-                    ->setGroup()
+                    ->setCode($schemaName)
+                    ->setGroup($groupName)
                     ->setGroupId($groupId);
 
                 $this->dm->persist($partSchema);

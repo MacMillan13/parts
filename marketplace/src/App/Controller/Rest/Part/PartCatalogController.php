@@ -10,10 +10,10 @@ use BitBag\OpenMarketplace\App\DataQuery\PartsCatalog\PartCatalogGroupDataQuery;
 use BitBag\OpenMarketplace\App\Document\PartCatalog;
 use BitBag\OpenMarketplace\App\Document\PartCatalogGroup;
 use BitBag\OpenMarketplace\App\Service\AutoService;
+use BitBag\OpenMarketplace\App\Service\NamingService;
 use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 #[Route(path: "/api/v3/")]
 class PartCatalogController extends RestAbstractController
@@ -37,7 +37,7 @@ class PartCatalogController extends RestAbstractController
 
     #[Route(path: "part/catalog-group/{catalogId}/{modelName}/{year}/{code}/{group}", name: "get_part_catalog_by_group", methods: ["GET"])]
     public function findPartCatalogGroup(PartCatalogGroupDataQuery $partCatalogGroupDataQuery, AutoService $autoService, PartCatalogDataQuery $partCatalogDataQuery,
-                                         string $catalogId, string $modelName, string $year, string $code, string $group): Response
+                                         NamingService $namingService, string $catalogId, string $modelName, string $year, string $code, string $group): Response
     {
         try {
             $auto = $autoService->getAutoByCode($catalogId, $modelName, $year, $code);
@@ -48,14 +48,16 @@ class PartCatalogController extends RestAbstractController
 
                 $partCatalog = $partCatalogDataQuery->query($catalogId, $auto->getForeignId());
 
-                foreach ($partCatalog->getCatalogData() as $catalog) {
-                    $catalogName = str_replace(['/', ' '], ['-', '_'], $catalog['name']);
-
-                    if (strtolower($catalogName) === $group) {
-                        $partCatalogGroup = $partCatalogGroupDataQuery->query($catalogId, $auto->getForeignId(), $catalog['id'], $group);
+                foreach ($partCatalog->getCatalogData() as $partCatalog) {
+                    if ($partCatalog['code'] === $group) {
+                        $partCatalogGroup = $partCatalogGroupDataQuery->query($catalogId, $auto->getForeignId(), $partCatalog['id'], $group);
                         break;
                     }
                 }
+            }
+
+            if (empty($partCatalogGroup)) {
+                throw new \Exception('Error, no data');
             }
 
             return $this->json(['data' => ['auto' => $auto, 'catalog' => $partCatalogGroup->getCatalogData()]], Response::HTTP_OK);

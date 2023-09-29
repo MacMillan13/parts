@@ -68,10 +68,10 @@ class Part
     }
 
     /**
-     * @param string $description
+     * @param string|null $description
      * @return $this
      */
-    public function setDescription(string $description): Part
+    public function setDescription(?string $description): Part
     {
         $this->description = $description;
 
@@ -89,10 +89,10 @@ class Part
     }
 
     /**
-     * @param MongoId $partSchemaId
+     * @param string $partSchemaId
      * @return $this
      */
-    public function setPartSchemaId(MongoId $partSchemaId): Part
+    public function setPartSchemaId(string $partSchemaId): Part
     {
         $this->partSchemaId = $partSchemaId;
 
