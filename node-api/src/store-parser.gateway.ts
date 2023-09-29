@@ -19,17 +19,22 @@ export class StoreParserGateway {
   server: Server;
 
   handleConnection(client: Socket) {
-    console.log(1111);
+    console.log('Connected');
   }
 
   handleDisconnect(client: Socket) {
-    console.log(2222);
+    console.log('Disconnected');
     // Handle disconnection event
+  }
+
+  @SubscribeMessage('message')
+  getMess(@MessageBody() data: any) {
+    console.log(5555);
   }
 
   @SubscribeMessage('events')
   findAll(@MessageBody() data: any): Observable<WsResponse<number>> {
-    console.log(3333);
+    console.log(data);
     return from([1, 2, 3]).pipe(
       map((item) => ({ event: 'events', data: item })),
     );
@@ -37,7 +42,7 @@ export class StoreParserGateway {
 
   @SubscribeMessage('identity')
   async identity(@MessageBody() data: number): Promise<number> {
-    console.log(4444);
+    console.log(data);
     return data;
   }
 }
