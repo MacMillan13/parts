@@ -82,48 +82,6 @@ export const actions = {
     commit('setStep', 1)
   },
 
-  async getDataPart({ commit }, partNumber) {
-    const response = await fetch(defaultDataApi + 'search/vin/' + vinCode, getRequestOptions('GET'));
-    const responseJson = await response.json();
-
-    if (false === responseJson.exactMatch) {
-
-      const autoList = updateAutoListStructure(responseJson.data[0].carList)
-
-      commit("setAutoList", autoList)
-
-    } else if (true === responseJson.exactMatch) {
-
-      await this.getCatalog({ commit },{
-        auto: responseJson.data,
-        toSet: true
-      });
-    }
-
-    commit('setStep', 1)
-  },
-
-  async getCatalog({ commit }, params) {
-    //TODO uncomment when will have API.
-    // const response = await fetch(this.defaultDataApi + 'part/catalog/' + auto.catalogId + '/' + auto.id,
-    //   getRequestOptions('GET'));
-    const response = await fetch(defaultDataApi + 'part/catalog/skoda/c9c4f4d0fe26e3af5aa36af8c197b096',
-        getRequestOptions('GET'));
-    const responseJson = await response.json();
-    const partCatalog = responseJson.data;
-    commit("setPartCatalog", partCatalog)
-    commit("setSelectedAuto", params.carId)
-
-    if (params.toSet) {
-      const url = new URL(location.origin);
-      url.searchParams.set('brand', 'skoda');
-      url.searchParams.set('auto', 'c9c4f4d0fe26e3af5aa36af8c197b096');
-      history.pushState({}, '', url);
-
-      commit('setStep', 2)
-    }
-  },
-
   async getAutoBrands({ commit }) {
     const response = await fetch(defaultDataApi + 'auto/brand', getRequestOptions('GET'));
     const responseJson = await response.json();
@@ -196,33 +154,11 @@ export const actions = {
     commit('setPartCatalogGroup', partCatalogGroup)
   },
 
-  async getCatalogGroup({ commit }, params) {
-    //TODO uncomment when will have API.
-    // const response = await fetch(this.defaultDataApi + 'part/catalog/' + auto.catalogId + '/' + auto.id + '/' + catalog.id,
-    //   getRequestOptions('GET'));
-    const response = await fetch(defaultDataApi + 'part/catalog/skoda/c9c4f4d0fe26e3af5aa36af8c197b096/MfCfmoAw',
-        getRequestOptions('GET'));
-    const responseJson = await response.json();
+  async getPartGroup({ commit }, params) {
 
-    commit("setPartCatalogGroup", responseJson.data)
-
-    const url = new URL(location);
-
-    url.searchParams.delete('group');
-    url.searchParams.set('brand', 'skoda');
-    url.searchParams.set('auto', 'c9c4f4d0fe26e3af5aa36af8c197b096');
-    url.searchParams.set('catalog', 'MfCfmoAw');
-    history.pushState({}, '', url);
-
-    commit('setStep', 3)
-  },
-
-  async getPartGroup({ commit }, partGroup) {
-    // const response = await fetch(this.defaultDataApi + 'search/part/schema/' + this.selectedAuto.catalogId + '/'
-    //   + this.selectedAuto.id + '/' + partGroup.id,
-    //   this.getRequestOptions('GET'));
-    const response = await fetch(defaultDataApi + 'search/part/schema/skoda/c9c4f4d0fe26e3af5aa36af8c197b096/MCPwn5qAMTAwOTXwn5qBNDYwMTAwOTgw8J-agjYxMjUzMfCflLA2MDc6MTAwOTU4MDU0NjAxMDA5ODDwn5CSNjA38J-QiTEwMDk1ODA1NDYwMTAwOTgw',
-        getRequestOptions('GET'));
+    const response = await fetch(defaultDataApi + 'search/part/schema/' + params.brand + '/'
+      + params + '/' + partGroup.id,
+      this.getRequestOptions('GET'));
     const responseJson = await response.json();
     const partSchema = responseJson.data;
 
@@ -231,16 +167,16 @@ export const actions = {
 
     unitUnits(partSchema);
 
-    const url = new URL(location);
-
-    url.searchParams.delete('catalog');
-    url.searchParams.set('brand', 'skoda');
-    url.searchParams.set('auto', 'c9c4f4d0fe26e3af5aa36af8c197b096');
-    url.searchParams.set('group', 'MCPwn5qAMTAwOTXwn5qBNDYwMTAwOTgw8J-agjYxMjUzMfCflLA2MDc6MTAwOTU4MDU0NjAxMDA5ODDwn5CSNjA38J-QiTEwMDk1ODA1NDYwMTAwOTgw');
-
-    history.pushState({}, '', url);
-
-    commit('setStep', 4)
+    // const url = new URL(location);
+    //
+    // url.searchParams.delete('catalog');
+    // url.searchParams.set('brand', 'skoda');
+    // url.searchParams.set('auto', 'c9c4f4d0fe26e3af5aa36af8c197b096');
+    // url.searchParams.set('group', 'MCPwn5qAMTAwOTXwn5qBNDYwMTAwOTgw8J-agjYxMjUzMfCflLA2MDc6MTAwOTU4MDU0NjAxMDA5ODDwn5CSNjA38J-QiTEwMDk1ODA1NDYwMTAwOTgw');
+    //
+    // history.pushState({}, '', url);
+    //
+    // commit('setStep', 4)
   }
 }
 

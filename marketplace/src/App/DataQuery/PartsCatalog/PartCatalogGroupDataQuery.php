@@ -27,29 +27,35 @@ class PartCatalogGroupDataQuery extends AbstractDataQuery
      * @throws RedirectionExceptionInterface
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
+     * @throws Exception
      */
     public function query(string $catalogId, string $carId, string $groupId, string $groupName): PartCatalogGroup
     {
-        $response = $this->client->request(
-            'GET',
-            $_ENV['PART_CATALOG_API'] . 'catalogs/' . $catalogId . '/groups2/?carId=' . $carId . '&groupId=' . $groupId,
-            $this->getHeaders()
-        );
+        $partCatalogGroup = $this->dm->getRepository(PartCatalogGroup::class)->findOneBy(['catalogId' => $catalogId,
+            'carId' => $carId, 'groupId' => $groupId, 'group' => $groupName]);
 
-        if (!empty($responseArray = $response->toArray())) {
-            $catalogData = (object)$responseArray;
-            $partCatalogGroup = new PartCatalogGroup();
-            $partCatalogGroup->setCatalogData($catalogData)
-                ->setCatalogId($catalogId)
-                ->setCarId($carId)
-                ->setDateTime()
-                ->setGroup($groupName)
-                ->setGroupId($groupId);
+        if (empty($partCatalogGroup)) {
+            $response = $this->client->request(
+                'GET',
+                $_ENV['PART_CATALOG_API'] . 'catalogs/' . $catalogId . '/groups2/?carId=' . $carId . '&groupId=' . $groupId,
+                $this->getHeaders()
+            );
 
-            $this->dm->persist($partCatalogGroup);
-            $this->dm->flush();
-        } else {
-            throw new Exception('The Part Catalog Group does not exist');
+            if (!empty($responseArray = $response->toArray())) {
+                $catalogData = (object)$responseArray;
+                $partCatalogGroup = new PartCatalogGroup();
+                $partCatalogGroup->setCatalogData($catalogData)
+                    ->setCatalogId($catalogId)
+                    ->setCarId($carId)
+                    ->setDateTime()
+                    ->setGroup($groupName)
+                    ->setGroupId($groupId);
+
+                $this->dm->persist($partCatalogGroup);
+                $this->dm->flush();
+            } else {
+                throw new Exception('The Part Catalog Group does not exist');
+            }
         }
 
         return $partCatalogGroup;

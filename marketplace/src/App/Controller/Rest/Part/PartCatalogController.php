@@ -128,27 +128,4 @@ class PartCatalogController extends RestAbstractController
             return $this->json(['error' => $exception->getMessage()], Response::HTTP_BAD_REQUEST);
         }
     }
-
-    #[Route(path: "part/catalog/{catalogId}/{carId}/{groupId}", name: "get_common_part_catalog_group", methods: ["GET"])]
-    public function getPartCatalogGroup(PartCatalogGroupDataQuery $partCatalogGroupDataQuery, string $catalogId, string $carId, string $groupId): Response
-    {
-        try {
-            $partCatalogGroup = $this->dm->getRepository(PartCatalogGroup::class)->findOneBy(['catalogId' => $catalogId,
-                'carId' => $carId, 'groupId' => $groupId]);
-
-            if (empty($partCatalogGroup)) {
-                $partCatalogGroup = $partCatalogGroupDataQuery->query($catalogId, $carId, $groupId);
-            }
-
-            return $this->json(['data' => $partCatalogGroup->getCatalogData()], Response::HTTP_OK);
-
-        } catch (ClientException $exception) {
-
-            return $this->json(['error' => 'Sorry. We cannot get needed data.'], Response::HTTP_BAD_REQUEST);
-
-        } catch (\Exception|TransportExceptionInterface $exception) {
-
-            return $this->json(['error' => $exception->getMessage()], Response::HTTP_BAD_REQUEST);
-        }
-    }
 }

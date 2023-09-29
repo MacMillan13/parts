@@ -60,7 +60,7 @@ const selectedAuto = computed(() => store.state.search.selectedAuto);
 const autoList = computed(() => store.state.search.autoList);
 
 const getCatalog = async (auto) => {
-  console.log(auto)
+
   router.push('/' + auto.catalogId.toLowerCase() + '/' + auto.modelName.toLowerCase() + '/' + auto.year + '/' + auto.code)
 }
 </script>

@@ -163,7 +163,8 @@ class AutoCatalogDataQuery extends AbstractDataQuery
                     foreach ($autoListArray as &$auto) {
 
                         $trimmedName = trim($auto['name']);
-                        $code = str_replace(' ', '_', strtolower($trimmedName));
+                        $code = preg_replace('!\s+!', ' ', strtolower($trimmedName));
+                        $code = str_replace(['/\s+/', ' - ', ' ', '(', ')'], ['_', '-', '_', '', ''], $code);
                         $auto['code'] = $code;
 
                         if (!empty($autoRep->findOneBy(['foreignId' => $auto['id']]))) {

@@ -7,6 +7,7 @@ import PartMenuSidebar from "../components/search/part/PartMenuSidebar.vue";
 import OffersList from "../components/search/OffersList.vue";
 import AutoBrands from "../components/search/auto/AutoBrands.vue";
 import PartCatalogGroup from "../components/search/part/PartCatalogGroup.vue";
+import PartSchema from "../components/search/part/PartSchema.vue";
 
 export default createRouter({
   history: createWebHistory(),
@@ -54,7 +55,7 @@ export default createRouter({
     {
       name: 'AutoPart',
       path: '/:brand/:model/:year/:code/:partCategory/:autoPart',
-      component: Example
+      component: PartSchema
     },
   ]
 })

@@ -11,6 +11,7 @@
 import {useStore} from 'vuex'
 import {computed} from 'vue'
 import {useRoute, useRouter} from 'vue-router'
+import {removeSymbols} from "../../../services/symbolRemoverHelper";
 
 const store = useStore()
 const route = useRoute()
@@ -33,9 +34,7 @@ store.dispatch('search/getPartCatalog', autoParams)
 
 const getCatalogGroup = (catalog) => {
 
-  const catalogName = catalog.name.replace(/\s/g, '_')
-      .replace(/\//g, '-')
-      .toLowerCase()
+  const catalogName = removeSymbols(catalog.name)
 
   router.push('/' + brand + '/' + model + '/' + year + '/' + code + '/' + catalogName)
 }
