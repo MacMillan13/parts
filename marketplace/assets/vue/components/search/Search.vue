@@ -1,34 +1,25 @@
 <template>
   <div id="search-block">
-    <SearchIcon id="search-icon" /><input id="search-input" class="form-control ds-input" type="text" v-model="search" @input="typingSearch($event)" placeholder="Part number, vin, auto">
-    <button v-if="search.length > 0" id="search-btn"  class="btn btn-primary active">Search</button>
+    <SearchIcon id="search-icon"/>
+    <input id="search-input" class="form-control ds-input" type="text" v-model="search" @input="typingSearch($event)"
+           placeholder="Part number, vin, auto">
+    <button v-if="search.length > 0" id="search-btn" class="btn btn-primary active">Search</button>
   </div>
 </template>
-<script>
+<script setup>
 import {ref} from 'vue';
 import {useStore} from 'vuex';
 import SearchIcon from "../icons/search-icon.vue";
 
-export default {
-  name: "FindAuto",
-  components: { SearchIcon },
-  setup() {
-    const search = ref('');
-    const store = useStore()
-    const typingSearch = async () => {
+const search = ref('');
+const store = useStore()
+const typingSearch = async () => {
 
-      const vinCodeLength = 17;
+  const vinCodeLength = 17;
 
-      if (search.value.length === vinCodeLength) {
+  if (search.value.length === vinCodeLength) {
 
-        await store.dispatch('search/getDataByVin', search.value)
-      }
-    };
-
-    return {
-      typingSearch,
-      search
-    }
+    await store.dispatch('search/getDataByVin', search.value)
   }
 }
 </script>

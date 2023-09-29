@@ -24,6 +24,7 @@ class PartCatalogController extends RestAbstractController
     {
         try {
             $auto = $autoService->getAutoByCode($catalogId, $modelName, $year, $code);
+
             $partCatalog = $partCatalogDataQuery->query($catalogId, $auto->getForeignId());
 
             return $this->json(['data' => ['auto' => $auto, 'catalog' => $partCatalog->getCatalogData()]], Response::HTTP_OK);
@@ -35,7 +36,7 @@ class PartCatalogController extends RestAbstractController
     }
 
     #[Route(path: "part/catalog-group/{catalogId}/{modelName}/{year}/{code}/{group}", name: "get_part_catalog_by_group", methods: ["GET"])]
-    public function findPartGroupCatalog(PartCatalogGroupDataQuery $partCatalogGroupDataQuery, AutoService $autoService, PartCatalogDataQuery $partCatalogDataQuery,
+    public function findPartCatalogGroup(PartCatalogGroupDataQuery $partCatalogGroupDataQuery, AutoService $autoService, PartCatalogDataQuery $partCatalogDataQuery,
                                          string $catalogId, string $modelName, string $year, string $code, string $group): Response
     {
         try {
@@ -48,7 +49,9 @@ class PartCatalogController extends RestAbstractController
                 $partCatalog = $partCatalogDataQuery->query($catalogId, $auto->getForeignId());
 
                 foreach ($partCatalog->getCatalogData() as $catalog) {
-                    if (strtolower($catalog['name']) === $group) {
+                    $catalogName = str_replace(['/', ' '], ['-', '_'], $catalog['name']);
+
+                    if (strtolower($catalogName) === $group) {
                         $partCatalogGroup = $partCatalogGroupDataQuery->query($catalogId, $auto->getForeignId(), $catalog['id'], $group);
                         break;
                     }

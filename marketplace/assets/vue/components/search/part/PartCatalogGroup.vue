@@ -2,11 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-3">
-        <ul>
-          <li v-for="catalog in autoCatalog" @click="getCatalogGroup(catalog)">
-            {{ catalog.name }}
-          </li>
-        </ul>
+        <PartMenuSidebar/>
       </div>
       <div class="row col-sm-9">
         <div v-for="partGroup in partCatalogGroup" @click="getPartGroup(partGroup)"
@@ -20,31 +16,45 @@
     </div>
   </div>
 </template>
-<script>
-import { useStore } from 'vuex'
-import { computed} from 'vue';
-export default {
-  name: "PartCatalogGroup",
-  setup() {
-    const store = useStore()
-    const autoCatalog = computed(() => store.state.search.autoCatalog)
-    const partCatalogGroup = computed(() => store.state.search.autoCatalogGroup)
+<script setup>
+import {useStore} from 'vuex'
+import {computed, watch} from 'vue';
+import PartMenuSidebar from "./PartMenuSidebar.vue";
+import {useRoute} from 'vue-router'
 
-    const getCatalogGroup = (catalog) => {
-      store.dispatch('search/getCatalogGroup', catalog)
-    }
+const store = useStore()
+const route = useRoute()
 
-    const getPartGroup = (partGroup) => {
-      store.dispatch('search/getPartGroup', partGroup)
-    }
+const partCatalogGroup = computed(() => store.state.search.partCatalogGroup)
 
-    return {
-      autoCatalog,
-      partCatalogGroup,
-      getCatalogGroup,
-      getPartGroup
-    }
-  }
+const brand = route.params.brand
+const model = route.params.model
+const year = route.params.year
+const code = route.params.code
+const partCategory = route.params.partCategory
+
+let autoParams = {};
+
+autoParams.model = model
+autoParams.brand = brand
+autoParams.year = year
+autoParams.code = code
+autoParams.partCategory = partCategory
+
+watch(route, () => {
+  autoParams.model = route.params.model
+  autoParams.brand = route.params.brand
+  autoParams.year = route.params.year
+  autoParams.code = route.params.code
+  autoParams.partCategory = route.params.partCategory
+
+  store.dispatch('search/getPartCatalogGroup', autoParams)
+})
+
+store.dispatch('search/getPartCatalogGroup', autoParams)
+
+const getPartGroup = (partGroup) => {
+  store.dispatch('search/getPartGroup', partGroup)
 }
 </script>
 <style scoped>

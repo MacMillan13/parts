@@ -3,9 +3,10 @@ import AutoModels from "../components/search/auto/AutoModels.vue";
 import Example from "../components/Example.vue";
 import AutoCatalogModel from "../components/search/auto/AutoCatalogModel.vue";
 import AutoCatalogYear from "../components/search/auto/AutoCatalogYear.vue";
-import PartCatalog from "../components/search/part/PartSidebar.vue";
+import PartMenuSidebar from "../components/search/part/PartMenuSidebar.vue";
 import OffersList from "../components/search/OffersList.vue";
 import AutoBrands from "../components/search/auto/AutoBrands.vue";
+import PartCatalogGroup from "../components/search/part/PartCatalogGroup.vue";
 
 export default createRouter({
   history: createWebHistory(),
@@ -43,12 +44,12 @@ export default createRouter({
     {
       name: 'AutoCode',
       path: '/:brand/:model/:year/:code',
-      component: PartCatalog
+      component: PartMenuSidebar
     },
     {
       name: 'AutoPartCategory',
       path: '/:brand/:model/:year/:code/:partCategory',
-      component: Example
+      component: PartCatalogGroup
     },
     {
       name: 'AutoPart',

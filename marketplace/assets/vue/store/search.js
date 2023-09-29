@@ -185,9 +185,15 @@ export const actions = {
   },
 
   async getPartCatalogGroup({ commit }, params) {
-    const response = await fetch(defaultDataApi + 'part/catalog-group/'  + params.autoParams.brand + '/' + params.autoParams.model
-        + '/' + params.autoParams.year + '/' + params.autoParams.code + '/' + params.catalog.name.toLowerCase(),
+    const response = await fetch(defaultDataApi + 'part/catalog-group/'  + params.brand + '/' + params.model
+        + '/' + params.year + '/' + params.code + '/' + params.partCategory,
         getRequestOptions('GET'));
+
+    const responseJson = await response.json();
+    const data = responseJson.data;
+    const partCatalogGroup = data.catalog;
+
+    commit('setPartCatalogGroup', partCatalogGroup)
   },
 
   async getCatalogGroup({ commit }, params) {
