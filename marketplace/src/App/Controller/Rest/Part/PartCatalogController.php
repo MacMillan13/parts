@@ -18,13 +18,12 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 #[Route(path: "/api/v3/")]
 class PartCatalogController extends RestAbstractController
 {
-    #[Route(path: "part/catalog-modification/{catalogId}/{modelName}/{year}/{modification}", name: "get_part_catalog_by_modification", methods: ["GET"])]
-    public function findCatalogByModification(AutoService $autoService, PartCatalogDataQuery $partCatalogDataQuery, string $catalogId,
-                                              string $modelName, string $year, string $modification): Response
+    #[Route(path: "part/catalog-code/{catalogId}/{modelName}/{year}/{code}", name: "get_part_catalog_by_code", methods: ["GET"])]
+    public function findCatalogByCode(AutoService $autoService, PartCatalogDataQuery $partCatalogDataQuery, string $catalogId,
+                                              string $modelName, string $year, string $code): Response
     {
         try {
-            $auto = $autoService->getAutoByModification($catalogId, $modelName, $year, $modification);
-
+            $auto = $autoService->getAutoByCode($catalogId, $modelName, $year, $code);
             $partCatalog = $partCatalogDataQuery->query($catalogId, $auto->getForeignId());
 
             return $this->json(['data' => ['auto' => $auto, 'catalog' => $partCatalog->getCatalogData()]], Response::HTTP_OK);
@@ -35,12 +34,12 @@ class PartCatalogController extends RestAbstractController
         }
     }
 
-    #[Route(path: "part/catalog-group/{catalogId}/{modelName}/{year}/{modification}/{group}", name: "get_part_catalog_by_group", methods: ["GET"])]
+    #[Route(path: "part/catalog-group/{catalogId}/{modelName}/{year}/{code}/{group}", name: "get_part_catalog_by_group", methods: ["GET"])]
     public function findPartGroupCatalog(PartCatalogGroupDataQuery $partCatalogGroupDataQuery, AutoService $autoService, PartCatalogDataQuery $partCatalogDataQuery,
-                                         string $catalogId, string $modelName, string $year, string $modification, string $group): Response
+                                         string $catalogId, string $modelName, string $year, string $code, string $group): Response
     {
         try {
-            $auto = $autoService->getAutoByModification($catalogId, $modelName, $year, $modification);
+            $auto = $autoService->getAutoByCode($catalogId, $modelName, $year, $code);
 
             $partCatalogGroup = $this->dm->getRepository(PartCatalogGroup::class)->findOneBy(['catalogId' => $catalogId, 'carId' => $auto->getForeignId(), 'groupName' => $group]);
 
@@ -64,12 +63,12 @@ class PartCatalogController extends RestAbstractController
         }
     }
 
-    #[Route(path: "part/catalog-group/{catalogId}/{modelName}/{year}/{modification}/{group}/{subgroup}", name: "get_part_catalog_by_subgroup", methods: ["GET"])]
+    #[Route(path: "part/catalog-group/{catalogId}/{modelName}/{year}/{code}/{group}/{subgroup}", name: "get_part_catalog_by_subgroup", methods: ["GET"])]
     public function findPartSubgroupCatalog(PartCatalogGroupDataQuery $partCatalogGroupDataQuery, AutoService $autoService, PartCatalogDataQuery $partCatalogDataQuery,
-                                         string $catalogId, string $modelName, string $year, string $modification, string $group, string $subgroup): Response
+                                         string $catalogId, string $modelName, string $year, string $code, string $group, string $subgroup): Response
     {
         try {
-            $auto = $autoService->getAutoByModification($catalogId, $modelName, $year, $modification);
+            $auto = $autoService->getAutoByCode($catalogId, $modelName, $year, $code);
 
             $partCatalogSubgroup = $this->dm->getRepository(PartCatalogGroup::class)->findOneBy(['catalogId' => $catalogId, 'carId' => $auto->getForeignId(), 'group' => $subgroup]);
 

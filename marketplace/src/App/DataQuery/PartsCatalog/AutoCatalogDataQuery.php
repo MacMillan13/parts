@@ -158,14 +158,15 @@ class AutoCatalogDataQuery extends AbstractDataQuery
 
                     $autoRep = $this->dm->getRepository(Auto::class);
 
-                    foreach ($autoListArray as $auto) {
+                    foreach ($autoListArray as &$auto) {
+
+                        $trimmedName = trim($auto['name']);
+                        $code = str_replace(' ', '_', strtolower($trimmedName));
+                        $auto['code'] = $code;
 
                         if (!empty($autoRep->findOneBy(['foreignId' => $auto['id']]))) {
                             continue;
                         }
-;
-                        $trimmedName = trim($auto['name']);
-                        $code = str_replace(' ', '_', strtolower($trimmedName));
 
                         $newAuto = new Auto();
                         $newAuto->setCatalogId($auto['catalogId'])

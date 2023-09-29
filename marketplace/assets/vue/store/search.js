@@ -161,7 +161,7 @@ export const actions = {
   },
 
   async getPartCatalog({ commit }, params) {
-    const response = await fetch(defaultDataApi + 'part/catalog-modification/' + params.brand + '/' + params.model + '/' + params.year + '/' + params.modification, getRequestOptions('GET'));
+    const response = await fetch(defaultDataApi + 'part/catalog-code/' + params.brand + '/' + params.model + '/' + params.year + '/' + params.code, getRequestOptions('GET'));
     const responseJson = await response.json();
     const data = responseJson.data;
 
@@ -186,7 +186,7 @@ export const actions = {
 
   async getPartCatalogGroup({ commit }, params) {
     const response = await fetch(defaultDataApi + 'part/catalog-group/'  + params.autoParams.brand + '/' + params.autoParams.model
-        + '/' + params.autoParams.year + '/' + params.autoParams.modification + '/' + params.catalog.name.toLowerCase(),
+        + '/' + params.autoParams.year + '/' + params.autoParams.code + '/' + params.catalog.name.toLowerCase(),
         getRequestOptions('GET'));
   },
 

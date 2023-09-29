@@ -41,11 +41,11 @@ class AutoService
      * @throws TransportExceptionInterface
      * @throws \Exception
      */
-    public function getAutoByModification(string $catalogId, string $modelName, string $year, string $modification): Auto
+    public function getAutoByCode(string $catalogId, string $modelName, string $year, string $code): Auto
     {
         $autoRep = $this->documentManager->getRepository(Auto::class);
 
-        $auto = $autoRep->findOneBy(['catalogId' => $catalogId, 'modelName' => $modelName, 'year' => $year, 'code' => $modification]);
+        $auto = $autoRep->findOneBy(['catalogId' => $catalogId, 'modelName' => $modelName, 'year' => $year, 'code' => $code]);
 
         if (empty($auto)) {
 
@@ -59,14 +59,14 @@ class AutoService
             $autoList = $autoCatalog->getCarList();
 
             foreach ($autoList as $oneAuto) {
-                if (!empty($oneAuto['code']) && $oneAuto['code'] === $modification) {
+                if (!empty($oneAuto['code']) && $oneAuto['code'] === $code) {
                     $auto = new Auto();
                     $auto->setModelId($oneAuto['modelId'])
                         ->setCatalogId($oneAuto['catalogId'])
                         ->setCode($oneAuto['code'])
                         ->setParameters($oneAuto['parameters'])
                         ->setModelName($oneAuto['modelName'])
-                        ->setForeignId($oneAuto['modelId'])
+                        ->setForeignId($oneAuto['id'])
                         ->setDescription($oneAuto['description'])
                         ->setFrame($oneAuto['frame'])
                         ->setCriteria($oneAuto['criteria'])
@@ -74,8 +74,12 @@ class AutoService
                         ->setName($oneAuto['name'])
                         ->setYear($year)
                         ->setVin($oneAuto['vin']);
+
+                    $this->documentManager->persist($auto);
                 }
             }
+
+            $this->documentManager->flush();
         }
 
         if (empty($auto)) {
