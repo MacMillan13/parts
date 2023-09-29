@@ -104,6 +104,8 @@ class AutoCatalogDataQuery extends AbstractDataQuery
 
         $searchParams['autoParameters'] = $autoCatalog->getAutoParameters();
 
+        $searchParams['salesRegion'] = $autoCatalog->getSalesRegion();
+
         $autoCatalogSearch = $this->dm->getRepository(AutoCatalog::class)
             ->findOneBy($searchParams);
 
@@ -126,7 +128,7 @@ class AutoCatalogDataQuery extends AbstractDataQuery
                 $autoCatalog->getModificationId(), $autoCatalog->getProductPeriod(), $autoCatalog->getEngineCapacity(), $autoCatalog->getSpecModelDate(),
                 $autoCatalog->getSpecVinPart(), $autoCatalog->getSpecModification(), $autoCatalog->getSpecCatalog(), $autoCatalog->getCarName(),
                 $autoCatalog->getSpecSeries(), $autoCatalog->getFuelType(), $autoCatalog->getBodyCode(), $autoCatalog->getTransmission(),
-                $autoCatalog->getGrade(), $autoCatalog->getClassification(), $autoCatalog->getAutoParameters()]);
+                $autoCatalog->getGrade(), $autoCatalog->getClassification(), $autoCatalog->getAutoParameters(), $autoCatalog->getSalesRegion()]);
 
             $response = $this->client->request(
                 'GET',

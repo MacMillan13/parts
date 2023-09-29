@@ -106,6 +106,7 @@ class AutoCatalogController extends AbstractController
             $specVinPart = $request->get('spec_vin_part');
             $specModification = $request->get('spec_modification');
             $specCatalog = $request->get('spec_catalog');
+            $salesRegion = $request->get('sales_region');
 
             $autoCatalog = new AutoCatalog();
 
@@ -137,6 +138,7 @@ class AutoCatalogController extends AbstractController
                 ->setGrade($grade)
                 ->setClassification($classification)
                 ->setAutoParameters($autoParameters)
+                ->setSalesRegion($salesRegion)
                 ->setEngineId($engineId);
 
             $autoCatalog = $autoCatalogDataQuery->query($autoCatalog);

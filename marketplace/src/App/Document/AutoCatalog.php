@@ -117,6 +117,9 @@ class AutoCatalog
     #[MongoDB\Field(type: 'string')]
     protected $model;
 
+    #[MongoDB\Field(type: 'string')]
+    protected $salesRegion;
+
     /**
      * @param object|null $id
      * @return void
@@ -124,6 +127,24 @@ class AutoCatalog
     public function setId(?object $id): void
     {
         $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSalesRegion()
+    {
+        return $this->salesRegion;
+    }
+
+    /**
+     * @param mixed $salesRegion
+     */
+    public function setSalesRegion($salesRegion): self
+    {
+        $this->salesRegion = $salesRegion;
+
+        return $this;
     }
 
     /**
