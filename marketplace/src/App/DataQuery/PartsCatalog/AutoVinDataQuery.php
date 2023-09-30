@@ -39,11 +39,12 @@ class AutoVinDataQuery extends AbstractDataQuery
             if (!empty($responseArray = $response->toArray())) {
                 $autoData = (object)$responseArray[0];
                 $autoVin = new AutoVin();
+
                 $autoVin->setAutoData($autoData)
                     ->setDateTime()
                     ->setExactMatch(true)
                     ->setVinCode($vinCode);
-
+                dd(44444);
                 $this->dm->persist($autoVin);
                 $this->dm->flush();
 
@@ -65,7 +66,7 @@ class AutoVinDataQuery extends AbstractDataQuery
         $autoVin->setExactMatch($auto['exactMatch'])
             ->setVinCode($auto['vinCode'])
             ->setAutoData((object)$autoData);
-
+        dd(555555);
         return $autoVin;
     }
 }

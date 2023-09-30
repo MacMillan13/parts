@@ -40,7 +40,7 @@ class CarVinDecoderService
      * @throws TransportExceptionInterface
      * @throws Exception
      */
-    public function decoder(AutoVin $carVin, array $carData): AutoCatalog
+    public function decoder(AutoVin $carVin, array $carData): AutoVin
     {
         $brand = strtolower($carData['make']);
 
@@ -57,11 +57,13 @@ class CarVinDecoderService
 
         $autoCatalog = $this->setValues($autoCatalog, (array)$autoCatalog->getParameters());
 
-        $autoCatalog = $this->autoCatalogDataQuery->query($autoCatalog);
+        $autoCatalog = $this->autoCatalogDataQuery->query($autoCatalog, true);
 
-        $this->saveCarVin($carVin, $autoCatalog, $carData['vin']);
+        $autoVin = $this->saveCarVin($carVin, $autoCatalog, $carData['vin']);
 
-        return $autoCatalog;
+        $autoVin->setAutoData($autoCatalog);
+
+        return $autoVin;
     }
 
     /**
@@ -122,7 +124,7 @@ class CarVinDecoderService
      * @throws MongoDBException
      * @throws \MongoException
      */
-    private function saveCarVin(AutoVin $carVin, AutoCatalog $autoCatalog, string $vinCode): void
+    private function saveCarVin(AutoVin $carVin, AutoCatalog $autoCatalog, string $vinCode): AutoVin
     {
         $carVin->setCatalogId($autoCatalog->getId())
             ->setVinCode($vinCode)
@@ -132,7 +134,7 @@ class CarVinDecoderService
         $this->documentManager->persist($carVin);
         $this->documentManager->flush();
 
-        return;
+        return $carVin;
     }
 
     /**

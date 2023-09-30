@@ -2,14 +2,14 @@ import { defaultDataApi } from '../constants/server'
 export const state = () => ({
   step: 0,
   autoList: null,
+  autoByVin: null,
   partCatalog: null,
-  selectedAuto: null,
   autoBrands: null,
   autoModel: null,
   autoFilter: null,
   partSchema: null,
   partSchemaPositions: null,
-  partCatalogGroup: null
+  partCatalogGroup: null,
 })
 
 export const getters = {
@@ -29,9 +29,6 @@ const updateAutoListStructure = (autoList) => {
 }
 
 export const mutations = {
-  setStep: (state, step) => {
-    state.step = step
-  },
   setAutoBrands: (state, autoBrands) => {
     state.autoBrands = autoBrands
   },
@@ -47,9 +44,6 @@ export const mutations = {
   setPartCatalog: (state, partCatalog) => {
     state.partCatalog = partCatalog
   },
-  setSelectedAuto: (state, selectedAuto) => {
-    state.selectedAuto = selectedAuto
-  },
   setPartCatalogGroup: (state, partCatalogGroup) => {
     state.partCatalogGroup = partCatalogGroup
   },
@@ -59,6 +53,9 @@ export const mutations = {
   setPartSchemaPositions: (state, partSchemaPositions) => {
     state.partSchemaPositions = partSchemaPositions
   },
+  setAutoByVin: (state, auto) => {
+    state.autoByVin = auto
+  }
 }
 
 export const actions = {
@@ -75,13 +72,20 @@ export const actions = {
 
     } else if (true === responseJson.exactMatch) {
 
-      await this.getCatalog({ commit },{
-        auto: responseJson.data,
-        toSet: true
-      });
+      commit("setAutoByVin", responseJson.data)
     }
+  },
 
-    commit('setStep', 1)
+  async getPartCatalogByVin({ commit }, vinCode) {
+    const response = await fetch(defaultDataApi + 'part/catalog-vin/' + vinCode, getRequestOptions('GET'));
+    const responseJson = await response.json();
+    const data = responseJson.data;
+
+    if (data.exactMatch) {
+      commit('setPartCatalog', data.catalog)
+    } else {
+      console.log(222, responseJson)
+    }
   },
 
   async getAutoBrands({ commit }) {
@@ -89,7 +93,6 @@ export const actions = {
     const responseJson = await response.json();
     commit('setAutoBrands', responseJson.data)
   },
-
   async getAutoModels({ commit }, autoModel) {
     const response = await fetch(defaultDataApi + 'auto/model/' + autoModel, getRequestOptions('GET'));
     const responseJson = await response.json();
@@ -167,19 +170,6 @@ export const actions = {
 
     commit('setPartSchema', partSchema)
     commit('setPartSchemaPositions', partSchema.positions)
-
-    // unitUnits(partSchema);
-
-    // const url = new URL(location);
-    //
-    // url.searchParams.delete('catalog');
-    // url.searchParams.set('brand', 'skoda');
-    // url.searchParams.set('auto', 'c9c4f4d0fe26e3af5aa36af8c197b096');
-    // url.searchParams.set('group', 'MCPwn5qAMTAwOTXwn5qBNDYwMTAwOTgw8J-agjYxMjUzMfCflLA2MDc6MTAwOTU4MDU0NjAxMDA5ODDwn5CSNjA38J-QiTEwMDk1ODA1NDYwMTAwOTgw');
-    //
-    // history.pushState({}, '', url);
-    //
-    // commit('setStep', 4)
   }
 }
 

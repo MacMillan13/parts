@@ -1,0 +1,1 @@
+export const vinCodeLength = 17;

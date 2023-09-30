@@ -16,25 +16,36 @@ const store = useStore()
 const route = useRoute()
 const router = useRouter()
 
-const brand = route.params.brand
-const model = route.params.model
-const year = route.params.year
-const code = route.params.code
+let link = '';
 
 const partCatalog = computed(() => store.state.search.partCatalog)
 
-let autoParams = {};
-autoParams.model = model
-autoParams.brand = brand
-autoParams.year = year
-autoParams.code = code
+const getPartCatalogByAutoData = () => {
+  let autoParams = {};
 
-store.dispatch('search/getPartCatalog', autoParams)
+  autoParams.brand = route.params.brand
+  autoParams.model = route.params.model
+  autoParams.year = route.params.year
+  autoParams.code = route.params.code
+
+  store.dispatch('search/getPartCatalog', autoParams)
+}
+
+if (undefined === route.params.vin) {
+  getPartCatalogByAutoData();
+}
 
 const getCatalogGroup = (catalog) => {
-  console.log(catalog);
-  router.push('/' + brand + '/' + model + '/' + year + '/' + code + '/' + catalog.code)
+  if (undefined === route.params.vin) {
+    link = '/' + route.params.brand + '/' + route.params.model + '/' + route.params.year
+        + '/' + route.params.code + '/' + catalog.code
+  } else {
+    link = '/vin/' + route.params.vin + '/' + catalog.code
+  }
+
+  router.push(link)
 }
+
 </script>
 <style scoped>
 li {

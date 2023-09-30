@@ -43,7 +43,7 @@ class AutoCatalogDataQuery extends AbstractDataQuery
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
      */
-    public function query(AutoCatalog $autoCatalog): AutoCatalog
+    public function query(AutoCatalog $autoCatalog, bool $lastQuery = false): AutoCatalog
     {
         $searchParams = [];
 
@@ -203,6 +203,10 @@ class AutoCatalogDataQuery extends AbstractDataQuery
                 $this->dm->persist($notIdentifiedAutoCatalog);
 
                 $this->dm->flush();
+
+                if ($lastQuery) {
+                    return $notIdentifiedAutoCatalog;
+                }
             }
 
             return $autoCatalog;

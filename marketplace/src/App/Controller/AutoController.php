@@ -37,6 +37,7 @@ class AutoController extends AbstractController
     #[Route(path: "/honda", name: "vue_honda_single_models_page", requirements: ["route" => ".+"], methods: ["GET"])]
     #[Route(path: "/bmw/{route}", name: "vue_bmw_models_page", requirements: ["route" => ".+"], methods: ["GET"])]
     #[Route(path: "/bmw", name: "vue_bmw_single_models_page", requirements: ["route" => ".+"], methods: ["GET"])]
+    #[Route(path: "/vin/{route}", name: "vue_vin_page", requirements: ["route" => ".+"], methods: ["GET"])]
     public function vueAutoModelPage(Request $request): Response
     {
         $requestUri = $request->getRequestUri();

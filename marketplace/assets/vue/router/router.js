@@ -8,6 +8,7 @@ import OffersList from "../components/search/OffersList.vue";
 import AutoBrands from "../components/search/auto/AutoBrands.vue";
 import PartCatalogGroup from "../components/search/part/PartCatalogGroup.vue";
 import PartSchema from "../components/search/part/PartSchema.vue";
+import AutoVin from "../components/search/auto/vin/AutoVin.vue";
 
 export default createRouter({
   history: createWebHistory(),
@@ -21,6 +22,16 @@ export default createRouter({
       name: 'AutoBrands',
       path: '/',
       component: AutoBrands
+    },
+    {
+      name: 'VinMenu',
+      path: '/vin/:vin',
+      component: AutoVin
+    },
+    {
+      name: 'VinCatalogGroup',
+      path: '/vin/:vin/:code',
+      component: AutoVin
     },
     {
       name: 'Models',
