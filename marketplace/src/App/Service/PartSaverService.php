@@ -42,7 +42,7 @@ class PartSaverService
 
                 if (empty($partValue)) {
                     $newPart = new Part();
-                    $newPart->setName($part['name'])
+                    $newPart->setName($part['name'] ?? $part['number'])
                         ->setPartSchemaId($partSchema->getId())
                         ->setPartNumber(trim($part['number']))
                         ->setDescription($part['description'])

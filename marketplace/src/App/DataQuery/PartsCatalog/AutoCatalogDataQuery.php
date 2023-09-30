@@ -8,7 +8,7 @@ use BitBag\OpenMarketplace\App\Document\Auto;
 use BitBag\OpenMarketplace\App\Document\AutoCatalog;
 use BitBag\OpenMarketplace\App\Document\AutoModel;
 use BitBag\OpenMarketplace\App\Helper\AutoCatalogUrlHelper;
-use BitBag\OpenMarketplace\App\Service\NamingService;
+use BitBag\OpenMarketplace\App\Helper\ElementCodeHelper;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\MongoDBException;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
@@ -23,11 +23,11 @@ class AutoCatalogDataQuery extends AbstractDataQuery
     /**
      * @param HttpClientInterface $client
      * @param DocumentManager $dm
-     * @param NamingService $namingService
+     * @param ElementCodeHelper $elementCodeHelper
      * @param AutoCatalogUrlHelper $catalogParametersUrlHelper
      */
-    public function __construct(HttpClientInterface $client, DocumentManager $dm,
-                                private NamingService $namingService,
+    public function __construct(HttpClientInterface          $client, DocumentManager $dm,
+                                private ElementCodeHelper    $elementCodeHelper,
                                 private AutoCatalogUrlHelper $catalogParametersUrlHelper)
     {
         parent::__construct($client, $dm);
@@ -166,7 +166,7 @@ class AutoCatalogDataQuery extends AbstractDataQuery
                     foreach ($autoListArray as &$auto) {
 
                         $trimmedName = trim($auto['name']);
-                        $code = $this->namingService->prepare($auto['name']);
+                        $code = $this->elementCodeHelper->prepare($auto['name']);
                         $auto['code'] = $code;
 
                         if (!empty($autoRep->findOneBy(['foreignId' => $auto['id']]))) {

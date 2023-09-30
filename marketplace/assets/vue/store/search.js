@@ -16,7 +16,9 @@ export const getters = {
 }
 
 const updateAutoListStructure = (autoList) => {
-
+  if (null === autoList) {
+    throw new Error('Auto list is empty');
+  }
   autoList.forEach(element => {
     element.parameters.forEach(parameter => {
       element[parameter.key] = parameter.value;

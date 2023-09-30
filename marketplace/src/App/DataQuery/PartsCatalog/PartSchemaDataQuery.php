@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace BitBag\OpenMarketplace\App\DataQuery\PartsCatalog;
 
-use BitBag\OpenMarketplace\App\Document\PartCatalogGroup;
 use BitBag\OpenMarketplace\App\Document\PartSchema;
-use BitBag\OpenMarketplace\App\Service\NamingService;
+use BitBag\OpenMarketplace\App\Helper\ElementCodeHelper;
 use BitBag\OpenMarketplace\App\Service\PartSaverService;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\MongoDBException;
@@ -26,7 +25,7 @@ class PartSchemaDataQuery extends AbstractDataQuery
      * @param DocumentManager $dm
      */
     public function __construct(HttpClientInterface $client, DocumentManager $dm, private PartSaverService $partSaverService,
-        private PartCatalogDataQuery $partCatalogDataQuery, private PartCatalogGroupDataQuery $partCatalogGroupDataQuery, private NamingService $namingService)
+        private PartCatalogDataQuery                $partCatalogDataQuery, private PartCatalogGroupDataQuery $partCatalogGroupDataQuery, private ElementCodeHelper $elementCodeHelper)
     {
         parent::__construct($client, $dm);
     }

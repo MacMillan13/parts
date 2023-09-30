@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace BitBag\OpenMarketplace\App\DataQuery\PartsCatalog;
 
 use BitBag\OpenMarketplace\App\Document\PartCatalog;
-use BitBag\OpenMarketplace\App\Service\NamingService;
+use BitBag\OpenMarketplace\App\Helper\ElementCodeHelper;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\MongoDBException;
 use Exception;
@@ -18,8 +18,8 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class PartCatalogDataQuery extends AbstractDataQuery
 {
-    public function __construct(HttpClientInterface $client, DocumentManager $dm,
-                                private NamingService $namingService)
+    public function __construct(HttpClientInterface       $client, DocumentManager $dm,
+                                private ElementCodeHelper $elementCodeHelper)
     {
         parent::__construct($client, $dm);
     }
@@ -51,7 +51,7 @@ class PartCatalogDataQuery extends AbstractDataQuery
             if (!empty($responseArray = $response->toArray())) {
 
                 foreach ($responseArray as &$data) {
-                    $data['code'] = $this->namingService->prepare($data['name']);
+                    $data['code'] = $this->elementCodeHelper->prepare($data['name']);
                 }
 
                 $catalogData = (object)$responseArray;

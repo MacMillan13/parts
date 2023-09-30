@@ -21,7 +21,6 @@ import {useStore} from 'vuex'
 import {computed, watch} from 'vue';
 import PartMenuSidebar from "./PartMenuSidebar.vue";
 import {useRoute, useRouter} from 'vue-router'
-import {removeSymbols} from "../../../services/symbolRemoverHelper";
 
 const store = useStore()
 const route = useRoute()
@@ -50,12 +49,8 @@ function getPartCatalogGroup() {
 
 
 const getPartGroup = (partGroup) => {
-
-  const partGroupName = removeSymbols(partGroup.name)
-  console.log(222, partGroupName)
-
   router.push('/' + params.brand + '/' + params.model + '/' + params.year + '/' + params.code
-      + '/' + params.partCategory + '/' + partGroupName)
+      + '/' + params.partCategory + '/' + partGroup.code)
 }
 </script>
 <style scoped>

@@ -9,8 +9,8 @@ use BitBag\OpenMarketplace\App\DataQuery\PartsCatalog\PartCatalogDataQuery;
 use BitBag\OpenMarketplace\App\DataQuery\PartsCatalog\PartCatalogGroupDataQuery;
 use BitBag\OpenMarketplace\App\Document\PartCatalog;
 use BitBag\OpenMarketplace\App\Document\PartCatalogGroup;
+use BitBag\OpenMarketplace\App\Helper\ElementCodeHelper;
 use BitBag\OpenMarketplace\App\Service\AutoService;
-use BitBag\OpenMarketplace\App\Service\NamingService;
 use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -37,7 +37,7 @@ class PartCatalogController extends RestAbstractController
 
     #[Route(path: "part/catalog-group/{catalogId}/{modelName}/{year}/{code}/{group}", name: "get_part_catalog_by_group", methods: ["GET"])]
     public function findPartCatalogGroup(PartCatalogGroupDataQuery $partCatalogGroupDataQuery, AutoService $autoService, PartCatalogDataQuery $partCatalogDataQuery,
-                                         NamingService $namingService, string $catalogId, string $modelName, string $year, string $code, string $group): Response
+                                         ElementCodeHelper         $elementCodeHelper, string $catalogId, string $modelName, string $year, string $code, string $group): Response
     {
         try {
             $auto = $autoService->getAutoByCode($catalogId, $modelName, $year, $code);

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace BitBag\OpenMarketplace\App\Service;
+namespace BitBag\OpenMarketplace\App\Helper;
 
-class NamingService
+class ElementCodeHelper
 {
     /**
      * @param $name
@@ -16,6 +16,6 @@ class NamingService
 
         $code = preg_replace('!\s+!', ' ', strtolower($trimmedName));
 
-        return str_replace([' - ', ' ', '(', ')'], ['-', '_', '', ''], $code);
+        return str_replace([' - ', ' ', '(', ')', ',', '/'], ['-', '_', '', '', '-', '-'], $code);
     }
 }
