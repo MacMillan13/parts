@@ -11,9 +11,6 @@
         </option>
       </select>
     </div>
-    <div v-if="showSearchButton" class="auto-filter col-md-3 col-sm-4 col-12">
-      <button @click="search" id="search-btn" class="btn btn-primary active">Search</button>
-    </div>
   </div>
 </template>
 
@@ -27,22 +24,18 @@ const route = useRoute()
 
 const autoFilter = computed(() => store.state.search.autoFilter);
 const selectedParams = ref({});
-const showSearchButton = ref(false);
 
 let autoParams = {};
 
-
 watch(autoFilter, async () => {
-
   autoFilter.value.forEach(filter => {
     selectedParams.value[filter.key] = ''
   })
+})
 
-  if (autoFilter.value.length > 0) {
-    showSearchButton.value = true
-  } else {
-    showSearchButton.value = false
-  }
+watch(selectedParams.value, async () => {
+  //TODO fix double request
+  search()
 })
 
 const search = () => {

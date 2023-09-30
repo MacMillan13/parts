@@ -124,7 +124,7 @@ class CarVinDecoderService
      */
     private function saveCarVin(AutoVin $carVin, AutoCatalog $autoCatalog, string $vinCode): void
     {
-        $carVin->setCatalogId(new MongoId($autoCatalog->getId()))
+        $carVin->setCatalogId($autoCatalog->getId())
             ->setVinCode($vinCode)
             ->setExactMatch(false)
             ->setDateTime();

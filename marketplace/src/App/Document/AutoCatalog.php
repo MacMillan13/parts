@@ -186,24 +186,6 @@ class AutoCatalog
     /**
      * @return mixed
      */
-    public function getModif()
-    {
-        return $this->modif;
-    }
-
-    /**
-     * @param mixed $modif
-     */
-    public function setModif($modif): AutoCatalog
-    {
-        $this->modif = $modif;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getCarName()
     {
         return $this->carName;

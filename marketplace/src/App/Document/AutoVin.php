@@ -78,10 +78,10 @@ class AutoVin
     }
 
     /**
-     * @param MongoId $catalogId
+     * @param string $catalogId
      * @return AutoVin
      */
-    public function setCatalogId(MongoId $catalogId): AutoVin
+    public function setCatalogId(string $catalogId): AutoVin
     {
         $this->catalogId = $catalogId;
 
