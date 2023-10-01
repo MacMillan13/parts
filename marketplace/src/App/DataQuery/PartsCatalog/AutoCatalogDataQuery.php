@@ -166,7 +166,7 @@ class AutoCatalogDataQuery extends AbstractDataQuery
                     foreach ($autoListArray as &$auto) {
 
                         $trimmedName = trim($auto['name']);
-                        $code = $this->elementCodeHelper->prepare($auto['name']);
+                        $code = $this->elementCodeHelper->prepareAutoCode($auto['name']);
                         $auto['code'] = $code;
 
                         if (!empty($autoRep->findOneBy(['foreignId' => $auto['id']]))) {
