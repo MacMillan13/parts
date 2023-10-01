@@ -5,12 +5,15 @@
            placeholder="Part number, vin, auto">
     <button v-if="search.length > 0" id="search-btn" class="btn btn-primary active">Search</button>
   </div>
-  <div v-if="null !== autoListData || null !== autoByVin">
+  <div v-if="null === autoListData && null !== autoByVin">
+    <router-link :to="'vin/' + autoByVin.vin">{{ autoByVin.carId }}</router-link>
+  </div>
+  <div v-if="null !== autoListData">
     <AutoList />
   </div>
 </template>
 <script setup>
-import {ref, computed } from 'vue';
+import {ref, computed, watch } from 'vue';
 import {useStore} from 'vuex';
 import SearchIcon from "../icons/search-icon.vue";
 import {vinCodeLength} from "../../constants/auto"

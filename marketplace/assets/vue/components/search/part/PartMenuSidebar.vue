@@ -34,20 +34,13 @@ const getPartCatalogByAutoData = () => {
 
 const getPartCatalogByVin = () => {
 
-  const autoByVin = computed(() => store.state.search.autoByVin)
-
   const vinCode = route.params.vin
 
-  if ((autoByVin.value === null && vinCode.length === vinCodeLength)
-      || (autoByVin.value !== null && autoByVin.value.vin !== vinCode)) {
-
-    store.dispatch('search/getPartCatalogByVin', vinCode)
-  }
+  store.dispatch('search/getPartCatalogByVin', vinCode)
 }
 
 if (undefined === route.params.vin) {
   getPartCatalogByAutoData();
-
 } else {
   getPartCatalogByVin();
 }
