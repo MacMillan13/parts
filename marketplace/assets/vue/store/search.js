@@ -10,6 +10,7 @@ export const state = () => ({
   partSchema: null,
   partSchemaPositions: null,
   partCatalogGroup: null,
+  autoListTableHeader: null
 })
 
 export const getters = {
@@ -41,6 +42,9 @@ export const mutations = {
   setAutoList: (state, autoList) => {
     state.autoList = autoList
   },
+  setAutoListTableHeader: (state, autoListTableHeader) => {
+    state.autoListTableHeader = autoListTableHeader
+  },
   setPartCatalog: (state, partCatalog) => {
     state.partCatalog = partCatalog
   },
@@ -59,6 +63,16 @@ export const mutations = {
 }
 
 export const actions = {
+
+  handleAutoListTableHeader({commit}, autoList) {
+    let autoListTableHeader = []
+
+    autoList[0].parameters.forEach(parameter => {
+      autoListTableHeader.push({key: parameter.key, name: parameter.name})
+    });
+
+    commit("setAutoListTableHeader", autoListTableHeader)
+  },
 
 // by vin
 
@@ -133,6 +147,8 @@ export const actions = {
 
     commit('setAutoFilter', updatedAutoFilter)
     commit('setAutoList', autoList)
+
+    actions.handleAutoListTableHeader({ commit }, autoList);
   },
 
   async getAutoCatalogYear({ commit }, params) {
@@ -145,6 +161,8 @@ export const actions = {
 
     commit('setAutoFilter', updatedAutoFilter)
     commit('setAutoList', autoList)
+
+    actions.handleAutoListTableHeader({ commit }, autoList);
   },
 
   async getAutoCatalog({ commit }, params) {
@@ -161,6 +179,8 @@ export const actions = {
 
     commit('setAutoFilter', updatedAutoFilter)
     commit('setAutoList', autoList)
+
+    actions.handleAutoListTableHeader({ commit }, autoList);
   },
 
   // get part
