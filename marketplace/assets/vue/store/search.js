@@ -84,8 +84,7 @@ export const actions = {
     if (data.exactMatch) {
       commit('setPartCatalog', data.catalog)
     } else {
-      //TODO set not exact match
-      console.log(222, responseJson)
+      console.log('not exact match')
     }
   },
 

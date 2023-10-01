@@ -74,7 +74,6 @@ class PartVinCatalogController extends RestAbstractController
 
             $partCatalogCriteriaGroup = $partCatalogCriteriaGroupDataQuery->query($auto, $group);
 
-
             return $this->json(['data' => ['auto' => $auto, 'catalog' => $partCatalogCriteriaGroup->getCatalogData()]], Response::HTTP_OK);
 
         } catch (\Exception $exception) {
