@@ -7,6 +7,7 @@ namespace BitBag\OpenMarketplace\App\Service;
 use BitBag\OpenMarketplace\App\DataQuery\PartsCatalog\AutoCatalogDataQuery;
 use BitBag\OpenMarketplace\App\Document\Auto;
 use BitBag\OpenMarketplace\App\Document\AutoCatalog;
+use BitBag\OpenMarketplace\App\Helper\ElementCodeHelper;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\MongoDBException;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
@@ -23,7 +24,7 @@ class AutoService
      * @param AutoCatalogDataQuery $autoCatalogDataQuery
      */
     public function __construct(private DocumentManager $documentManager, private AutoModelService $autoModelService,
-        private AutoCatalogDataQuery $autoCatalogDataQuery)
+        private AutoCatalogDataQuery $autoCatalogDataQuery, private ElementCodeHelper $elementCodeHelper)
     {
     }
 
@@ -61,6 +62,7 @@ class AutoService
             foreach ($autoList as $oneAuto) {
                 if (!empty($oneAuto['code']) && $oneAuto['code'] === $code) {
                     $auto = new Auto();
+
                     $auto->setModelId($oneAuto['modelId'])
                         ->setCatalogId($oneAuto['catalogId'])
                         ->setCode($oneAuto['code'])
@@ -74,12 +76,8 @@ class AutoService
                         ->setName($oneAuto['name'])
                         ->setYear($year)
                         ->setVin($oneAuto['vin']);
-
-                    $this->documentManager->persist($auto);
                 }
             }
-
-            $this->documentManager->flush();
         }
 
         if (empty($auto)) {

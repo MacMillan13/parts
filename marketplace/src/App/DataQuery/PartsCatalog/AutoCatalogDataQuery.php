@@ -167,7 +167,10 @@ class AutoCatalogDataQuery extends AbstractDataQuery
 
                         $trimmedName = trim($auto['name']);
                         $code = $this->elementCodeHelper->prepareAutoCode($auto['name']);
+                        $modelName = $this->elementCodeHelper->prepareAutoCode($auto['modelName']);
                         $auto['code'] = $code;
+                        $auto['modelName'] = $modelName;
+                        $auto['name'] = $trimmedName;
 
                         if (!empty($autoRep->findOneBy(['foreignId' => $auto['id']]))) {
                             continue;
@@ -175,17 +178,17 @@ class AutoCatalogDataQuery extends AbstractDataQuery
 
                         $newAuto = new Auto();
                         $newAuto->setCatalogId($auto['catalogId'])
-                            ->setName($trimmedName)
+                            ->setName($auto['name'])
                             ->setBrand($auto['brand'])
                             ->setCriteria($auto['criteria'])
                             ->setFrame($auto['frame'])
                             ->setDescription($auto['description'])
                             ->setForeignId($auto['id'])
                             ->setModelId($auto['modelId'])
-                            ->setModelName(strtolower($auto['modelName']))
+                            ->setModelName($auto['modelName'])
                             ->setVin($auto['vin'])
                             ->setParameters($auto['parameters'])
-                            ->setCode($code)
+                            ->setCode($auto['code'])
                             ->setYear($autoCatalog->getYear())
                             ->setDateTime();
 

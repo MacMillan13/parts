@@ -18,12 +18,12 @@ class ElementCodeHelper
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @return string
      */
     public function prepareAutoCode(string $name): string
     {
-        $trimmedName = trim($name);
+        $trimmedName = strtolower(trim($name));
 
         $code = preg_replace('!\s+!', ' ', strtolower($trimmedName));
 
