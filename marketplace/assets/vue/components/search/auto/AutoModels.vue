@@ -2,7 +2,7 @@
   <FindAuto />
   <div class="row block-margin">
     <div v-for="model in models" class="item-tab col-md-2 col-sm-4 col-6">
-      <router-link :to="'/' + brand + '/' + model.name.toLowerCase()" >{{ model.name }}</router-link>
+      <router-link :to="'/' + brand + '/' + model.code" >{{ model.name }}</router-link>
     </div>
   </div>
 </template>

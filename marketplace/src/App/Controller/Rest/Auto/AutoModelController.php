@@ -19,11 +19,8 @@ class AutoModelController extends RestAbstractController
     public function search(AutoModelDataQuery $carModelDataQuery, string $catalogId): Response
     {
         try {
-            $carModel = $this->dm->getRepository(AutoModel::class)->findOneBy(['catalogId' => $catalogId]);
 
-            if (empty($carModel)) {
-                $carModel = $carModelDataQuery->query($catalogId);
-            }
+            $carModel = $carModelDataQuery->query($catalogId);
 
             return $this->json(['data' => $carModel->getModels()], Response::HTTP_OK);
 

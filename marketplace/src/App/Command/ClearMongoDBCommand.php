@@ -6,6 +6,7 @@ namespace BitBag\OpenMarketplace\App\Command;
 
 use BitBag\OpenMarketplace\App\Document\Auto;
 use BitBag\OpenMarketplace\App\Document\AutoCatalog;
+use BitBag\OpenMarketplace\App\Document\AutoModel;
 use BitBag\OpenMarketplace\App\Document\AutoVin;
 use BitBag\OpenMarketplace\App\Document\Part;
 use BitBag\OpenMarketplace\App\Document\PartCatalog;
@@ -35,6 +36,7 @@ class ClearMongoDBCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->documentManager->getSchemaManager()->dropDocumentCollection(Auto::class);
+        $this->documentManager->getSchemaManager()->dropDocumentCollection(AutoModel::class);
         $this->documentManager->getSchemaManager()->dropDocumentCollection(AutoCatalog::class);
         $this->documentManager->getSchemaManager()->dropDocumentCollection(AutoVin::class);
         $this->documentManager->getSchemaManager()->dropDocumentCollection(Part::class);

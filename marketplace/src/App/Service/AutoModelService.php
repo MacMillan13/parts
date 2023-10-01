@@ -25,7 +25,7 @@ class AutoModelService
         $models = $autoModel->getModels();
 
         foreach ($models as $model) {
-            if (strtolower($model['name']) === $modelName) {
+            if ($model['code'] === $modelName) {
                 $modelId = $model['id'];
                 break;
             }

@@ -12,11 +12,9 @@ class ElementCodeHelper
      */
     public function prepare(string $name): string
     {
-        $trimmedName = trim($name);
+        $code = $this->prepareAutoCode($name);
 
-        $code = preg_replace('!\s+!', ' ', strtolower($trimmedName));
-
-        return str_replace([' - ', ', ', ' ', '(', ')', ',', '/', '.'], ['-', '-', '_', '', '', '-', '-', ''], $code);
+        return str_replace(['.'], [''], $code);
     }
 
     /**
@@ -29,6 +27,6 @@ class ElementCodeHelper
 
         $code = preg_replace('!\s+!', ' ', strtolower($trimmedName));
 
-        return str_replace([' - ', ', ', ' ', '(', ')', ',', '/'], ['-', '-', '_', '', '', '-', '-'], $code);
+        return str_replace([' - ', ' / ', ', ', ' ', '(', ')', ',', '/'], ['-', '-', '-', '_', '', '', '-', '-'], $code);
     }
 }
