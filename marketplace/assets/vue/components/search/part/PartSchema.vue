@@ -49,17 +49,35 @@ const route = useRoute()
 
 let params = {}
 
-params.model = route.params.model
-params.brand = route.params.brand
-params.year = route.params.year
-params.code = route.params.code
-params.partCategory = route.params.partCategory
-params.partSchema = route.params.partSchema
-
-store.dispatch('search/getPartGroup', params)
-
 const partSchema = computed(() => store.state.search.partSchema)
 const partSchemaPositions = computed(() => store.state.search.partSchemaPositions)
+
+if (undefined !== route.params.vin) {
+  getPartSchemaByVin()
+} else {
+  getPartSchemaByAuto()
+}
+
+function getPartSchemaByAuto() {
+
+  params.model = route.params.model
+  params.brand = route.params.brand
+  params.year = route.params.year
+  params.code = route.params.code
+  params.partCategory = route.params.partCategory
+  params.partSchema = route.params.partSchema
+
+  store.dispatch('search/getPartSchema', params)
+}
+
+function getPartSchemaByVin() {
+
+  params.vin = route.params.vin
+  params.partCategory = route.params.partCategory
+  params.partSchema = route.params.partSchema
+
+  store.dispatch('search/getPartSchemaByVin', params)
+}
 
 </script>
 <style scoped>

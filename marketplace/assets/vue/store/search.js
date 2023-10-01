@@ -60,6 +60,8 @@ export const mutations = {
 
 export const actions = {
 
+// by vin
+
   async getDataByVin({ commit }, vinCode) {
     const response = await fetch(defaultDataApi + 'search/vin/' + vinCode, getRequestOptions('GET'));
     const responseJson = await response.json();
@@ -75,7 +77,6 @@ export const actions = {
       commit("setAutoByVin", responseJson.data)
     }
   },
-
   async getPartCatalogByVin({ commit }, vinCode) {
     const response = await fetch(defaultDataApi + 'part/catalog-vin/' + vinCode, getRequestOptions('GET'));
     const responseJson = await response.json();
@@ -89,7 +90,7 @@ export const actions = {
   },
 
   async getPartCatalogGroupByVin({ commit }, params) {
-    const response = await fetch(defaultDataApi + 'part/catalog-group-vin/' + params.vin + '/' + params.code, getRequestOptions('GET'));
+    const response = await fetch(defaultDataApi + 'part/catalog-group-vin/' + params.vin + '/' + params.partCategory, getRequestOptions('GET'));
     const responseJson = await response.json();
     const data = responseJson.data;
     const partCatalogGroup = data.catalog;
@@ -102,11 +103,25 @@ export const actions = {
     const responseJson = await response.json();
     commit('setAutoBrands', responseJson.data)
   },
+
   async getAutoModels({ commit }, autoModel) {
     const response = await fetch(defaultDataApi + 'auto/model/' + autoModel, getRequestOptions('GET'));
     const responseJson = await response.json();
     commit('setAutoModel', responseJson.data)
   },
+
+  async getPartSchemaByVin({ commit }, params) {
+
+    const response = await fetch(defaultDataApi + 'part/schema-vin/' + params.vin + '/'
+       + params.partCategory + '/' + params.partSchema, getRequestOptions('GET'));
+    const responseJson = await response.json();
+    const partSchema = responseJson.data;
+
+    commit('setPartSchema', partSchema)
+    commit('setPartSchemaPositions', partSchema.positions)
+  },
+
+// get auto
 
   async getAutoCatalogModel({ commit }, params) {
     const response = await fetch(defaultDataApi + 'auto/catalog-model/' + params.brand + '/' + params.model, getRequestOptions('GET'));
@@ -132,14 +147,6 @@ export const actions = {
     commit('setAutoList', autoList)
   },
 
-  async getPartCatalog({ commit }, params) {
-    const response = await fetch(defaultDataApi + 'part/catalog-code/' + params.brand + '/' + params.model + '/' + params.year + '/' + params.code, getRequestOptions('GET'));
-    const responseJson = await response.json();
-    const data = responseJson.data;
-
-    commit('setPartCatalog', data.catalog)
-  },
-
   async getAutoCatalog({ commit }, params) {
     let url = defaultDataApi + 'auto/catalog/' + params.brand + '/' + params.model
     if (undefined !== params.query) {
@@ -156,6 +163,17 @@ export const actions = {
     commit('setAutoList', autoList)
   },
 
+  // get part
+
+  async getPartCatalog({ commit }, params) {
+    const response = await fetch(defaultDataApi + 'part/catalog-code/' + params.brand + '/' + params.model + '/' + params.year + '/' + params.code, getRequestOptions('GET'));
+    const responseJson = await response.json();
+    const data = responseJson.data;
+
+    commit('setPartCatalog', data.catalog)
+  },
+
+
   async getPartCatalogGroup({ commit }, params) {
     const response = await fetch(defaultDataApi + 'part/catalog-group/'  + params.brand + '/' + params.model
         + '/' + params.year + '/' + params.code + '/' + params.partCategory,
@@ -168,9 +186,9 @@ export const actions = {
     commit('setPartCatalogGroup', partCatalogGroup)
   },
 
-  async getPartGroup({ commit }, params) {
+  async getPartSchema({ commit }, params) {
 
-    const response = await fetch(defaultDataApi + 'search/part/schema/' + params.brand + '/'
+    const response = await fetch(defaultDataApi + 'part/schema/' + params.brand + '/'
       + params.model + '/' + params.year + '/' + params.code + '/' + params.partCategory
         + '/' + params.partSchema,
       getRequestOptions('GET'));

@@ -46,7 +46,7 @@ function getCatalogGroup() {
 
 function getPartCatalogGroupByVin() {
   params.vin = route.params.vin
-  params.code = route.params.code
+  params.partCategory = route.params.partCategory
 
   store.dispatch('search/getPartCatalogGroupByVin', params)
 }
@@ -64,8 +64,12 @@ function getPartCatalogGroup() {
 
 
 const getPartGroup = (partGroup) => {
-  router.push('/' + params.brand + '/' + params.model + '/' + params.year + '/' + params.code
-      + '/' + params.partCategory + '/' + partGroup.code)
+  if (undefined === route.params.vin) {
+    router.push('/' + params.brand + '/' + params.model + '/' + params.year + '/' + params.code
+        + '/' + params.partCategory + '/' + partGroup.code)
+  } else {
+    router.push('/vin/' + params.vin + '/' + params.partCategory + '/' + partGroup.code)
+  }
 }
 </script>
 <style scoped>

@@ -21,15 +21,7 @@ class PartVinCatalogController extends RestAbstractController
                                       GetAutoByVinCodeService $getAutoByVinCodeService, string $vinCode): Response
     {
         try {
-            $auto = $this->dm->getRepository(AutoVin::class)->findOneBy(['vinCode' => $vinCode]);
-
-            if (empty($auto)) {
-                $auto = $getAutoByVinCodeService->execute($vinCode);
-            }
-
-            if (empty($auto)) {
-                throw new \Exception('Cannot find the car');
-            }
+            $auto = $getAutoByVinCodeService->execute($vinCode);
 
             if ($auto->getExactMatch()) {
                 $autoData = $auto->getAutoData();
@@ -62,15 +54,7 @@ class PartVinCatalogController extends RestAbstractController
                                               string $vinCode, string $group): Response
     {
         try {
-            $auto = $this->dm->getRepository(AutoVin::class)->findOneBy(['vinCode' => $vinCode]);
-
-            if (empty($auto)) {
-                $auto = $getAutoByVinCodeService->execute($vinCode);
-            }
-
-            if (empty($auto)) {
-                throw new \Exception('Cannot find the car');
-            }
+            $auto = $getAutoByVinCodeService->execute($vinCode);
 
             $partCatalogCriteriaGroup = $partCatalogCriteriaGroupDataQuery->query($auto, $group);
 

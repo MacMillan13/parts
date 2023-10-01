@@ -29,8 +29,13 @@ export default createRouter({
     },
     {
       name: 'VinCatalogGroup',
-      path: '/vin/:vin/:code',
+      path: '/vin/:vin/:partCategory',
       component: PartCatalogGroup
+    },
+    {
+      name: 'VinPartShema',
+      path: '/vin/:vin/:partCategory/:partSchema',
+      component: PartSchema
     },
     {
       name: 'Models',
