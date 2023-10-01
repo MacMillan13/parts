@@ -31,6 +31,12 @@ class PartCatalogCriteriaGroupDataQuery extends AbstractDataQuery
      * @param AutoVin $auto
      * @param string $group
      * @return PartCatalogCriteriaGroup
+     * @throws ClientExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws MongoDBException
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
      */
     public function query(AutoVin $auto, string $group): PartCatalogCriteriaGroup
     {
@@ -49,10 +55,9 @@ class PartCatalogCriteriaGroupDataQuery extends AbstractDataQuery
                 foreach ($catalogData as $catalogGroup) {
                     if ($catalogGroup['code'] === $group) {
                         $partCatalogCriteriaGroup = $this->request($auto, $catalogGroup);
+                        break;
                     }
                 }
-            } else {
-                dd(2222);
             }
         }
 
