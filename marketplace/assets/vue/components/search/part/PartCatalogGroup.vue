@@ -30,11 +30,23 @@ const partCatalogGroup = computed(() => store.state.search.partCatalogGroup)
 
 let params = {};
 
-getPartCatalogGroup()
-
 watch(route, () => {
-  getPartCatalogGroup()
+  getCatalogGroup();
 })
+
+getCatalogGroup();
+
+function getCatalogGroup() {
+  if (undefined === route.params.vin) {
+    getPartCatalogGroup()
+  } else {
+    getPartCatalogGroupByVin()
+  }
+}
+
+function getPartCatalogGroupByVin() {
+
+}
 
 function getPartCatalogGroup() {
 

@@ -11,6 +11,7 @@
 import {useStore} from 'vuex'
 import {computed} from 'vue'
 import {useRoute, useRouter} from 'vue-router'
+import {vinCodeLength} from "../../../constants/auto";
 
 const store = useStore()
 const route = useRoute()
@@ -31,8 +32,24 @@ const getPartCatalogByAutoData = () => {
   store.dispatch('search/getPartCatalog', autoParams)
 }
 
+const getPartCatalogByVin = () => {
+
+  const autoByVin = computed(() => store.state.search.autoByVin)
+
+  const vinCode = route.params.vin
+
+  if ((autoByVin.value === null && vinCode.length === vinCodeLength)
+      || (autoByVin.value !== null && autoByVin.value.vin !== vinCode)) {
+
+    store.dispatch('search/getPartCatalogByVin', vinCode)
+  }
+}
+
 if (undefined === route.params.vin) {
   getPartCatalogByAutoData();
+
+} else {
+  getPartCatalogByVin();
 }
 
 const getCatalogGroup = (catalog) => {
