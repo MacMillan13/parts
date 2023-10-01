@@ -30,15 +30,16 @@ class CarVinDecoderService
     }
 
     /**
+     * @param AutoVin $carVin
      * @param array $carData
-     * @return AutoCatalog
-     * @throws MongoDBException
+     * @return AutoVin
      * @throws ClientExceptionInterface
      * @throws DecodingExceptionInterface
+     * @throws MongoDBException
      * @throws RedirectionExceptionInterface
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
-     * @throws Exception
+     * @throws \MongoException
      */
     public function decoder(AutoVin $carVin, array $carData): AutoVin
     {

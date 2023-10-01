@@ -89,6 +89,15 @@ export const actions = {
     }
   },
 
+  async getPartCatalogGroupByVin({ commit }, params) {
+    const response = await fetch(defaultDataApi + 'part/catalog-group-vin/' + params.vin + '/' + params.code, getRequestOptions('GET'));
+    const responseJson = await response.json();
+    const data = responseJson.data;
+    const partCatalogGroup = data.catalog;
+
+    commit('setPartCatalogGroup', partCatalogGroup)
+  },
+
   async getAutoBrands({ commit }) {
     const response = await fetch(defaultDataApi + 'auto/brand', getRequestOptions('GET'));
     const responseJson = await response.json();

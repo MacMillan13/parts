@@ -45,7 +45,10 @@ function getCatalogGroup() {
 }
 
 function getPartCatalogGroupByVin() {
+  params.vin = route.params.vin
+  params.code = route.params.code
 
+  store.dispatch('search/getPartCatalogGroupByVin', params)
 }
 
 function getPartCatalogGroup() {
