@@ -2,7 +2,7 @@
   <Search />
   <div class="row block-margin">
     <div v-if="null !== autoBrands" v-for="brand in autoBrands" class="item-tab col-md-2 col-sm-4 col-6">
-      <router-link :to="brand.carId">{{ brand.name }}</router-link>
+      <router-link :to="brand.catalogId">{{ brand.name }}</router-link>
     </div>
   </div>
 </template>
@@ -13,7 +13,8 @@ import {useStore} from 'vuex';
 import Search from "../Search.vue";
 
 const store = useStore()
-const autoBrands = computed(() => store.state.search.autoBrands);
+let autoBrands = computed(() => store.state.search.autoBrands);
+
 
 store.dispatch('search/getAutoBrands')
 
