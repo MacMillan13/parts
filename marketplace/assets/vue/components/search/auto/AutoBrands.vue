@@ -15,7 +15,6 @@ import Search from "../Search.vue";
 const store = useStore()
 let autoBrands = computed(() => store.state.search.autoBrands);
 
-
 store.dispatch('search/getAutoBrands')
 
 </script>

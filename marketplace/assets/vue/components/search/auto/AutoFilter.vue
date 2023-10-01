@@ -60,8 +60,6 @@ const search = () => {
 
   autoParams.brand = route.params.brand
   autoParams.model = route.params.model
-
-  store.dispatch('search/getAutoCatalog', autoParams)
 }
 </script>
 
