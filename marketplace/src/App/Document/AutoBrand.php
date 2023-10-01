@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace BitBag\OpenMarketplace\App\Document;
 
+use BitBag\OpenMarketplace\App\DocumentRepository\AutoBrandRepository;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
-#[MongoDB\Document]
+#[MongoDB\Document(repositoryClass: AutoBrandRepository::class)]
 class AutoBrand
 {
     #[MongoDB\Id]
     protected $id;
 
     #[MongoDB\Field(type: 'string')]
-    protected $carId;
+    protected $catalogId;
 
     #[MongoDB\Field(type: 'string')]
     protected $name;
@@ -21,12 +22,33 @@ class AutoBrand
     #[MongoDB\Field(type: 'integer')]
     protected $modelsCount;
 
+    #[MongoDB\Field(type: 'integer')]
+    protected $priority;
+
     #[MongoDB\Field(type: 'date')]
     protected $dateTime;
 
-    public function getCarId(): string
+    /**
+     * @return mixed
+     */
+    public function getPriority()
     {
-        return $this->carId;
+        return $this->priority;
+    }
+
+    /**
+     * @param mixed $priority
+     */
+    public function setPriority($priority): self
+    {
+        $this->priority = $priority;
+
+        return $this;
+    }
+
+    public function getCatalogId(): string
+    {
+        return $this->catalogId;
     }
 
     public function getName(): string
@@ -40,27 +62,33 @@ class AutoBrand
     }
 
     /**
-     * @param mixed $carId
+     * @param mixed $catalogId
      */
-    public function setCarId($carId): void
+    public function setCatalogId($catalogId): self
     {
-        $this->carId = $carId;
+        $this->catalogId = $catalogId;
+
+        return $this;
     }
 
     /**
      * @param mixed $name
      */
-    public function setName($name): void
+    public function setName($name): self
     {
         $this->name = $name;
+
+        return $this;
     }
 
     /**
      * @param mixed $modelsCount
      */
-    public function setModelsCount($modelsCount): void
+    public function setModelsCount($modelsCount): self
     {
         $this->modelsCount = $modelsCount;
+
+        return $this;
     }
 
     /**

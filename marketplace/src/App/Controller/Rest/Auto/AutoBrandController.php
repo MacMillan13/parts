@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace BitBag\OpenMarketplace\App\Controller\Rest\Auto;
 
-use BitBag\OpenMarketplace\App\Document\AutoBrand;
-use Doctrine\ODM\MongoDB\DocumentManager;
+use BitBag\OpenMarketplace\App\DataQuery\PartsCatalog\AutoBrandDataQuery;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,9 +13,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class AutoBrandController extends AbstractController
 {
     /**
-     * @param DocumentManager $dm
+     * @param AutoBrandDataQuery $autoBrandDataQuery
      */
-    public function __construct(private DocumentManager $dm)
+    public function __construct(private AutoBrandDataQuery $autoBrandDataQuery)
     {
     }
 
@@ -24,7 +23,7 @@ class AutoBrandController extends AbstractController
     public function getAutoBrands(): Response
     {
         try {
-            $autoBrands = $this->dm->getRepository(AutoBrand::class)->findAll();
+            $autoBrands = $this->autoBrandDataQuery->query();
 
             return $this->json(['data' => $autoBrands], Response::HTTP_OK);
 

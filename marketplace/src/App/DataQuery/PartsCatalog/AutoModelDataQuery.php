@@ -25,8 +25,7 @@ class AutoModelDataQuery extends AbstractDataQuery
     public function __construct(HttpClientInterface $client, DocumentManager $dm,
         private ElementCodeHelper $elementCodeHelper)
     {
-        $this->client = $client;
-        $this->dm = $dm;
+        parent::__construct($client, $dm);
     }
 
     /**
