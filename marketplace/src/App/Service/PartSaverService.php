@@ -44,12 +44,17 @@ class PartSaverService
                     $newPart = new Part();
                     $newPart->setName($part['name'] ?? $part['number'])
                         ->setPartSchemaId($partSchema->getId())
-                        ->setPartNumber(trim($part['number']))
+                        ->setPartNumber($partNumber)
                         ->setDescription($part['description'])
                         ->setNotice($part['notice'])
                         ->setDateTime();
 
                     foreach ($parts as $crossPart) {
+                        // TODO save separate parts with crosses
+                        if (empty($crossPart['number'])) {
+                            continue;
+                        }
+
                         $crossPartNumber = trim($crossPart['number']);
                         if ($partNumber !== $crossPartNumber && $part['positionNumber'] == $crossPart['positionNumber']) {
                             $newPart->setCross($crossPartNumber);

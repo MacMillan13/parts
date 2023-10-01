@@ -126,6 +126,9 @@ export const actions = {
 
   async getPartSchemaByVin({ commit }, params) {
 
+    commit('setPartSchema', null)
+    commit('setPartSchemaPositions', null)
+
     const response = await fetch(defaultDataApi + 'part/schema-vin/' + params.vin + '/'
        + params.partCategory + '/' + params.partSchema, getRequestOptions('GET'));
     const responseJson = await response.json();
@@ -208,6 +211,9 @@ export const actions = {
 
   async getPartSchema({ commit }, params) {
 
+    commit('setPartSchema', null)
+    commit('setPartSchemaPositions', null)
+    
     const response = await fetch(defaultDataApi + 'part/schema/' + params.brand + '/'
       + params.model + '/' + params.year + '/' + params.code + '/' + params.partCategory
         + '/' + params.partSchema,

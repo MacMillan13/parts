@@ -43,6 +43,7 @@ class PartSchemaDataQuery extends AbstractDataQuery
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
      * @throws \MongoException
+     * @throws Exception
      */
     public function query(string $catalogId, string $carId, string $groupName, string $schemaName): PartSchema
     {
@@ -74,7 +75,7 @@ class PartSchemaDataQuery extends AbstractDataQuery
             }
 
             if (empty($groupId)) {
-                throw new \Exception('Error, no chema id');
+                throw new \Exception('Error, no schema id');
             }
 
             $response = $this->client->request(
