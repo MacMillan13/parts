@@ -30,18 +30,18 @@
         <td>{{ auto.door_count }}</td>
         <td>{{ auto.abs }}</td>
       </tr>
-      <tr v-if="selectedAuto !== null">
-        <td>{{ selectedAuto.brand }}</td>
-        <td>{{ selectedAuto.name }}</td>
-        <td>{{ selectedAuto.year }}</td>
-        <td>{{ selectedAuto.sales_region }}</td>
-        <td>{{ selectedAuto.steering }}</td>
-        <td>{{ selectedAuto.trans_type }}</td>
-        <td>{{ selectedAuto.sunroof }}</td>
-        <td>{{ selectedAuto.navigation }}</td>
-        <td>{{ selectedAuto.vsa }}</td>
-        <td>{{ selectedAuto.door_count }}</td>
-        <td>{{ selectedAuto.abs }}</td>
+      <tr v-if="autoByVin !== null">
+        <td>{{ autoByVin.brand }}</td>
+        <td>{{ autoByVin.name }}</td>
+        <td>{{ autoByVin.year }}</td>
+        <td>{{ autoByVin.sales_region }}</td>
+        <td>{{ autoByVin.steering }}</td>
+        <td>{{ autoByVin.trans_type }}</td>
+        <td>{{ autoByVin.sunroof }}</td>
+        <td>{{ autoByVin.navigation }}</td>
+        <td>{{ autoByVin.vsa }}</td>
+        <td>{{ autoByVin.door_count }}</td>
+        <td>{{ autoByVin.abs }}</td>
       </tr>
       </tbody>
     </table>
@@ -56,11 +56,10 @@ const store = useStore()
 const route = useRoute()
 const router = useRouter()
 
-const selectedAuto = computed(() => store.state.search.selectedAuto);
+const autoByVin = computed(() => store.state.search.autoByVin);
 const autoList = computed(() => store.state.search.autoList);
 
 const getCatalog = async (auto) => {
-
   router.push('/' + auto.catalogId.toLowerCase() + '/' + auto.modelName.toLowerCase() + '/' + auto.year + '/' + auto.code)
 }
 </script>
