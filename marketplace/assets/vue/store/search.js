@@ -199,7 +199,6 @@ export const actions = {
   },
 
   async getPartCatalogGroup({ commit }, params) {
-    console.log('z')
     let url = defaultDataApi + 'part/catalog-group/'  + params.brand + '/' + params.model
         + '/' + params.year + '/' + params.code + '/' + params.partCategory
 

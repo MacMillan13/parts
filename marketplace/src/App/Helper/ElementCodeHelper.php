@@ -27,6 +27,6 @@ class ElementCodeHelper
 
         $code = preg_replace('!\s+!', ' ', strtolower($trimmedName));
 
-        return str_replace([' - ', ' / ', ' — ', '—', ', ', ' ', '(', ')', ',', '/'], ['-', '-', '-', '-', '-', '_', '', '', '-', '-'], $code);
+        return str_replace([' - ', ' / ', ' — ', '—', ', ', ' ', '(', ')', ',', '/', ';'], ['-', '-', '-', '-', '-', '_', '', '', '-', '-', '-'], $code);
     }
 }

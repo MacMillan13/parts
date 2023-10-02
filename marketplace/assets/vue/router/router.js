@@ -43,7 +43,7 @@ export default createRouter({
       component: PartSchema
     },
     {
-      name: 'VinPartSchema',
+      name: 'VinPartSchemaSubcategory',
       path: '/vin/:vin/:partCategory/:subCategory/schema/:partSchema',
       component: PartSchema
     },
