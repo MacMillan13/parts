@@ -65,4 +65,21 @@ class PartVinCatalogController extends RestAbstractController
             return $this->json(['error' => $exception->getMessage()], Response::HTTP_BAD_REQUEST);
         }
     }
+
+    #[Route(path: "part/catalog-group-vin/{vinCode}/{group}/{subgroup}", name: "get_part_catalog_group_by_vin_and_subgroup", methods: ["GET"])]
+    public function findPartCatalogGroupByVinAndSubgroup(GetAutoByVinCodeService $getAutoByVinCodeService, PartCatalogCriteriaGroupDataQuery $partCatalogCriteriaGroupDataQuery,
+                                              string $vinCode, string $group, string $subgroup): Response
+    {
+        try {
+            $auto = $getAutoByVinCodeService->execute($vinCode);
+
+            $partCatalogCriteriaGroup = $partCatalogCriteriaGroupDataQuery->query($auto, $group, $subgroup);
+
+            return $this->json(['data' => ['auto' => $auto, 'catalog' => $partCatalogCriteriaGroup->getCatalogData()]], Response::HTTP_OK);
+
+        } catch (\Exception $exception) {
+
+            return $this->json(['error' => $exception->getMessage()], Response::HTTP_BAD_REQUEST);
+        }
+    }
 }

@@ -21,7 +21,6 @@ const route = useRoute()
 const brand = route.params.brand
 
 const getModels = (autoModel) => {
-  console.log(autoModel)
   store.dispatch('search/getAutoModels', autoModel)
 }
 

@@ -104,7 +104,14 @@ export const actions = {
   },
 
   async getPartCatalogGroupByVin({ commit }, params) {
-    const response = await fetch(defaultDataApi + 'part/catalog-group-vin/' + params.vin + '/' + params.partCategory, getRequestOptions('GET'));
+
+    let url = defaultDataApi + 'part/catalog-group-vin/' + params.vin + '/' + params.partCategory
+
+    if (undefined !== params.subCategory) {
+      url += '/' + params.subCategory
+    }
+
+    const response = await fetch(url, getRequestOptions('GET'));
     const responseJson = await response.json();
     const data = responseJson.data;
     const partCatalogGroup = data.catalog;
@@ -137,7 +144,7 @@ export const actions = {
     }
 
     url += '/' + params.partSchema
-
+    console.log(params)
     const response = await fetch(url, getRequestOptions('GET'));
 
     const responseJson = await response.json();
@@ -192,6 +199,7 @@ export const actions = {
   },
 
   async getPartCatalogGroup({ commit }, params) {
+    console.log('z')
     let url = defaultDataApi + 'part/catalog-group/'  + params.brand + '/' + params.model
         + '/' + params.year + '/' + params.code + '/' + params.partCategory
 

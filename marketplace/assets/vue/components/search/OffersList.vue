@@ -13,8 +13,6 @@
 
   const partNumber = route.params.partNumber;
 
-  console.log(1111)
-
 </script>
 
 <style scoped>

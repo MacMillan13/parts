@@ -38,10 +38,15 @@ class PartCatalogCriteriaGroupDataQuery extends AbstractDataQuery
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
      */
-    public function query(AutoVin $auto, string $group): PartCatalogCriteriaGroup
+    public function query(AutoVin $auto, string $group, string $subgroup = null): PartCatalogCriteriaGroup
     {
+        if (!empty($subgroup)) {
+            $searchGroup = $subgroup;
+        } else {
+            $searchGroup = $group;
+        }
         $partCatalogCriteriaGroup = $this->dm->getRepository(PartCatalogCriteriaGroup::class)
-            ->findOneBy(['carId' => $auto->getAutoData()->carId, 'group' => $group]);
+            ->findOneBy(['carId' => $auto->getAutoData()->carId, 'group' => $searchGroup]);
 
         if (empty($partCatalogCriteriaGroup)) {
             if ($auto->getExactMatch()) {
@@ -56,6 +61,21 @@ class PartCatalogCriteriaGroupDataQuery extends AbstractDataQuery
                     if ($catalogGroup['code'] === $group) {
                         $partCatalogCriteriaGroup = $this->request($auto, $catalogGroup);
                         break;
+                    }
+                }
+
+                if (!empty($subgroup)) {
+                    foreach ($partCatalogCriteriaGroup->getCatalogData() as $catalogGroup) {
+                        if ($catalogGroup['code'] === $subgroup) {
+                            $partCatalogCriteriaSubGroup = $this->request($auto, $catalogGroup);
+                            break;
+                        }
+                    }
+
+                    if (!empty($partCatalogCriteriaSubGroup)) {
+                        $partCatalogCriteriaGroup = $partCatalogCriteriaSubGroup;
+                    } else {
+                        throw new \Exception('Error, no part sub group data');
                     }
                 }
             }

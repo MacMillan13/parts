@@ -48,6 +48,10 @@ function getPartCatalogGroupByVin() {
   params.vin = route.params.vin
   params.partCategory = route.params.partCategory
 
+  if (undefined !== route.params.subCategory) {
+    params.subCategory = route.params.subCategory
+  }
+
   store.dispatch('search/getPartCatalogGroupByVin', params)
 }
 
@@ -99,7 +103,6 @@ const getPartSchema = (partGroup) => {
     router.push(url)
 
   } else {
-
     let url = '/vin/' + params.vin + '/' + params.partCategory
 
     if (undefined !== route.params.subCategory) {
