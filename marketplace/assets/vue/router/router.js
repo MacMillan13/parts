@@ -68,8 +68,18 @@ export default createRouter({
       component: PartCatalogGroup
     },
     {
+      name: 'PartCatalogGroupSubCategory',
+      path: '/:brand/:model/:year/:code/:partCategory/:subCategory',
+      component: PartCatalogGroup
+    },
+    {
       name: 'PartSchema',
-      path: '/:brand/:model/:year/:code/:partCategory/:partSchema',
+      path: '/:brand/:model/:year/:code/:partCategory/schema/:partSchema',
+      component: PartSchema
+    },
+    {
+      name: 'PartSchemaForSubcategory',
+      path: '/:brand/:model/:year/:code/:partCategory/:subCategory/schema/:partSchema',
       component: PartSchema
     },
   ]

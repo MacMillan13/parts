@@ -38,6 +38,28 @@ class PartSchemaController extends AbstractController
         }
     }
 
+    #[Route(path: "part/schema/{catalogId}/{modelName}/{year}/{code}/{groupName}/{subGroup}/{schemaName}", name: "get_schema_for_subgroup", methods: ["GET"])]
+    public function searchWithSubgroup(AutoService $autoService, PartSchemaDataQuery $partSchemaDataQuery,
+                           string $catalogId, string $modelName, string $year, string $code,
+                           string $groupName, string $schemaName, string $subGroup): Response
+    {
+        try {
+            $auto = $autoService->getAutoByCode($catalogId, $modelName, $year, $code);
+
+            $partSchema = $partSchemaDataQuery->query($catalogId, $auto->getForeignId(), $groupName, $schemaName, $subGroup);
+
+            return $this->json(['data' => $partSchema->getPartData()], Response::HTTP_OK);
+
+        } catch (ClientException $exception) {
+
+            return $this->json(['error' => 'Sorry. We cannot get needed data.'], Response::HTTP_BAD_REQUEST);
+
+        } catch (\Exception|TransportExceptionInterface $exception) {
+
+            return $this->json(['error' => $exception->getMessage()], Response::HTTP_BAD_REQUEST);
+        }
+    }
+
     #[Route(path: "part/schema-vin/{vinCode}/{group}/{schemaName}", name: "get_schema_by_vin", methods: ["GET"])]
     public function searchByVin(GetAutoByVinCodeService $getAutoByVinCodeService, PartSchemaDataQuery $partSchemaDataQuery,
                                 string $vinCode, string $group, string $schemaName): Response
@@ -49,6 +71,30 @@ class PartSchemaController extends AbstractController
                 $autoData = $auto->getAutoData();
 
                 $partSchema = $partSchemaDataQuery->query($autoData->catalogId, $autoData->carId, $group, $schemaName);
+
+                return $this->json(['data' => $partSchema->getPartData()], Response::HTTP_OK);
+            }
+
+            throw new \Exception('Current auto does not have an exact match');
+
+        } catch (\Exception $exception) {
+
+            return $this->json(['error' => $exception->getMessage()], Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    #[Route(path: "part/schema-vin/{vinCode}/{group}/{subGroup}/{schemaName}", name: "get_schema_by_vin_for_subgroup", methods: ["GET"])]
+    public function searchByVinForSubgroup(GetAutoByVinCodeService $getAutoByVinCodeService, PartSchemaDataQuery $partSchemaDataQuery,
+                                string $vinCode, string $group, string $schemaName, string $subGroup): Response
+    {
+        try {
+            $auto = $getAutoByVinCodeService->execute($vinCode);
+
+            if ($auto->getExactMatch()) {
+
+                $autoData = $auto->getAutoData();
+
+                $partSchema = $partSchemaDataQuery->query($autoData->catalogId, $autoData->carId, $group, $schemaName, $subGroup);
 
                 return $this->json(['data' => $partSchema->getPartData()], Response::HTTP_OK);
             }

@@ -35,6 +35,7 @@ class PartSchemaDataQuery extends AbstractDataQuery
      * @param string $carId
      * @param string $groupName
      * @param string $schemaName
+     * @param string|null $subGroup
      * @return PartSchema
      * @throws ClientExceptionInterface
      * @throws DecodingExceptionInterface
@@ -43,12 +44,17 @@ class PartSchemaDataQuery extends AbstractDataQuery
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
      * @throws \MongoException
-     * @throws Exception
      */
-    public function query(string $catalogId, string $carId, string $groupName, string $schemaName): PartSchema
+    public function query(string $catalogId, string $carId, string $groupName, string $schemaName, string $subGroup = null): PartSchema
     {
+        if (!empty($subGroup)) {
+            $searchGroup = $subGroup;
+        } else {
+            $searchGroup = $groupName;
+        }
+
         $partSchema = $this->dm->getRepository(PartSchema::class)->findOneBy(['catalogId' => $catalogId,
-            'carId' => $carId, 'group' => $groupName, 'code' => $schemaName]);
+            'carId' => $carId, 'group' => $searchGroup, 'code' => $schemaName]);
 
         if (empty($partSchema)) {
 
@@ -64,6 +70,22 @@ class PartSchemaDataQuery extends AbstractDataQuery
 
             if (empty($partCatalogGroup)) {
                 throw new \Exception('Error, no part group data');
+            }
+
+            if (!empty($subGroup)) {
+                foreach ($partCatalogGroup->getCatalogData() as $partCatalog) {
+
+                    if ($partCatalog['code'] === $subGroup) {
+                        $partCatalogSubGroup = $this->partCatalogGroupDataQuery->query($catalogId, $carId, $partCatalog['id'], $subGroup);
+                        break;
+                    }
+                }
+
+                if (!empty($partCatalogSubGroup)) {
+                    $partCatalogGroup = $partCatalogSubGroup;
+                } else {
+                    throw new \Exception('Error, no part sub group data');
+                }
             }
 
             $groupId = null;

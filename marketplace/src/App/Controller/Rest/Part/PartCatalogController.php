@@ -84,7 +84,6 @@ class PartCatalogController extends RestAbstractController
                 if (empty($partCatalogGroup)) {
 
                     $partCatalog = $partCatalogDataQuery->query($catalogId, $auto->getForeignId());
-
                     foreach ($partCatalog->getCatalogData() as $partGroup) {
                         if (strtolower($partGroup['name']) === $group) {
                             $partCatalogGroup = $partCatalogGroupDataQuery->query($catalogId, $auto->getForeignId(), $partGroup['id'], $group);
@@ -94,12 +93,11 @@ class PartCatalogController extends RestAbstractController
                 }
 
                 foreach ($partCatalogGroup->getCatalogData() as $partGroup) {
-                    if (strtolower($partGroup['name']) === $group) {
+                    if ($partGroup['code'] === $subgroup) {
                         $partCatalogSubgroup = $partCatalogGroupDataQuery->query($catalogId, $auto->getForeignId(), $partGroup['id'], $subgroup);
                         break;
                     }
                 }
-
             }
             return $this->json(['data' => ['auto' => $auto, 'catalog' => $partCatalogSubgroup->getCatalogData()]], Response::HTTP_OK);
 

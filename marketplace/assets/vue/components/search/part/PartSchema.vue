@@ -62,6 +62,10 @@ function getPartSchemaByAuto() {
   params.partCategory = route.params.partCategory
   params.partSchema = route.params.partSchema
 
+  if (undefined !== route.params.subCategory) {
+    params.subCategory = route.params.subCategory
+  }
+
   store.dispatch('search/getPartSchema', params)
 }
 
@@ -70,6 +74,10 @@ function getPartSchemaByVin() {
   params.vin = route.params.vin
   params.partCategory = route.params.partCategory
   params.partSchema = route.params.partSchema
+
+  if (undefined !== route.params.subCategory) {
+    params.subCategory = route.params.subCategory
+  }
 
   store.dispatch('search/getPartSchemaByVin', params)
 }

@@ -16,8 +16,6 @@ const store = useStore()
 
 const models = computed(() => store.state.search.autoModel);
 
-console.log(models.value)
-
 const route = useRoute()
 
 const brand = route.params.brand

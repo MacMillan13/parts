@@ -59,16 +59,56 @@ function getPartCatalogGroup() {
   params.code = route.params.code
   params.partCategory = route.params.partCategory
 
+  if (undefined !== route.params.subCategory) {
+    params.subCategory = route.params.subCategory
+  }
+
   store.dispatch('search/getPartCatalogGroup', params)
 }
 
 
 const getPartGroup = (partGroup) => {
+  if (partGroup.hasSubgroups && !partGroup.hasParts) {
+    getSubGroup(partGroup)
+  } else {
+    getPartSchema(partGroup)
+  }
+}
+
+const getSubGroup = (partGroup) => {
   if (undefined === route.params.vin) {
     router.push('/' + params.brand + '/' + params.model + '/' + params.year + '/' + params.code
         + '/' + params.partCategory + '/' + partGroup.code)
   } else {
     router.push('/vin/' + params.vin + '/' + params.partCategory + '/' + partGroup.code)
+  }
+}
+
+const getPartSchema = (partGroup) => {
+
+  if (undefined === route.params.vin) {
+    let url = '/' + params.brand + '/' + params.model + '/' + params.year + '/' + params.code
+        + '/' + params.partCategory
+
+    if (undefined !== route.params.subCategory) {
+      url += '/' + route.params.subCategory
+    }
+
+    url += '/schema/' + partGroup.code
+
+    router.push(url)
+
+  } else {
+
+    let url = '/vin/' + params.vin + '/' + params.partCategory
+
+    if (undefined !== route.params.subCategory) {
+      url += '/' + route.params.subCategory
+    }
+
+    url += '/schema/' + partGroup.code
+
+    router.push(url)
   }
 }
 </script>

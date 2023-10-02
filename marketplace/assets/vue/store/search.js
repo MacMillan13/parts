@@ -129,8 +129,17 @@ export const actions = {
     commit('setPartSchema', null)
     commit('setPartSchemaPositions', null)
 
-    const response = await fetch(defaultDataApi + 'part/schema-vin/' + params.vin + '/'
-       + params.partCategory + '/' + params.partSchema, getRequestOptions('GET'));
+    let url = defaultDataApi + 'part/schema-vin/' + params.vin + '/'
+        + params.partCategory
+
+    if (undefined !== params.subCategory) {
+      url += '/' + params.subCategory
+    }
+
+    url += '/' + params.partSchema
+
+    const response = await fetch(url, getRequestOptions('GET'));
+
     const responseJson = await response.json();
     const partSchema = responseJson.data;
 
@@ -182,10 +191,15 @@ export const actions = {
     commit('setPartCatalog', data.catalog)
   },
 
-
   async getPartCatalogGroup({ commit }, params) {
-    const response = await fetch(defaultDataApi + 'part/catalog-group/'  + params.brand + '/' + params.model
-        + '/' + params.year + '/' + params.code + '/' + params.partCategory,
+    let url = defaultDataApi + 'part/catalog-group/'  + params.brand + '/' + params.model
+        + '/' + params.year + '/' + params.code + '/' + params.partCategory
+
+    if (undefined !== params.subCategory) {
+      url += '/' + params.subCategory
+    }
+
+    const response = await fetch(url,
         getRequestOptions('GET'));
 
     const responseJson = await response.json();
@@ -200,10 +214,18 @@ export const actions = {
     commit('setPartSchema', null)
     commit('setPartSchemaPositions', null)
 
-    const response = await fetch(defaultDataApi + 'part/schema/' + params.brand + '/'
-      + params.model + '/' + params.year + '/' + params.code + '/' + params.partCategory
-        + '/' + params.partSchema,
-      getRequestOptions('GET'));
+    let url = defaultDataApi + 'part/schema/' + params.brand + '/'
+        + params.model + '/' + params.year + '/' + params.code + '/' + params.partCategory
+
+    if (undefined !== params.subCategory) {
+      url += '/' + params.subCategory
+    }
+
+    url += '/' + params.partSchema
+
+    const response = await fetch(url,
+        getRequestOptions('GET'));
+
     const responseJson = await response.json();
     const partSchema = responseJson.data;
 
