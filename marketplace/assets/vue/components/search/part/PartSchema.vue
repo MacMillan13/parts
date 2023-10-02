@@ -28,11 +28,6 @@
       <div class="col-sm-7">
         <div id="part-image-block">
           <img id="part-image" :src="partSchema.img" alt="schema">
-          <ul id="part-image-ul">
-            <li v-for="position in partSchemaPositions">
-              {{ position.number }}
-            </li>
-          </ul>
         </div>
       </div>
     </div>
@@ -83,6 +78,7 @@ function getPartSchemaByVin() {
 <style scoped>
 
 .part-group-ul li {
+  display: flex;
 }
 
 .part-group-ul {

@@ -134,25 +134,11 @@ export const actions = {
     const responseJson = await response.json();
     const partSchema = responseJson.data;
 
-    commit('setPartSchema', partSchema)
+    commit('setPartSchema', unitUnits(partSchema))
     commit('setPartSchemaPositions', partSchema.positions)
   },
 
 // get auto
-
-  async getAutoCatalogModel({ commit }, params) {
-    const response = await fetch(defaultDataApi + 'auto/catalog-model/' + params.brand + '/' + params.model, getRequestOptions('GET'));
-    const responseJson = await response.json();
-    const data = responseJson.data;
-
-    const autoList = updateAutoListStructure(data.autoList)
-    const updatedAutoFilter = autoFilterParametersUpdate(data.parameters)
-
-    commit('setAutoFilter', updatedAutoFilter)
-    commit('setAutoList', autoList)
-
-    actions.handleAutoListTableHeader({ commit }, autoList);
-  },
 
   async getAutoCatalogYear({ commit }, params) {
     const response = await fetch(defaultDataApi + 'auto/catalog-year/' + params.brand + '/' + params.model + '/' + params.year, getRequestOptions('GET'));
@@ -213,7 +199,7 @@ export const actions = {
 
     commit('setPartSchema', null)
     commit('setPartSchemaPositions', null)
-    
+
     const response = await fetch(defaultDataApi + 'part/schema/' + params.brand + '/'
       + params.model + '/' + params.year + '/' + params.code + '/' + params.partCategory
         + '/' + params.partSchema,
@@ -221,7 +207,7 @@ export const actions = {
     const responseJson = await response.json();
     const partSchema = responseJson.data;
 
-    commit('setPartSchema', partSchema)
+    commit('setPartSchema', unitUnits(partSchema))
     commit('setPartSchemaPositions', partSchema.positions)
   }
 }
@@ -270,6 +256,8 @@ const unitUnits = (partSchema) => {
   });
 
   partSchema.unitedPartGroups = parts;
+
+  return partSchema;
 };
 
 export const search = {

@@ -52,31 +52,9 @@ class AutoCatalogController extends AbstractController
         }
     }
 
-    #[Route(path: "auto/catalog-model/{catalogId}/{modelName}", name: "get_catalog_by_model", methods: ["GET"])]
-    public function getAutoCatalogByModel(AutoCatalogDataQuery $autoCatalogDataQuery, AutoModelService $autoModelService,
-                                string $catalogId, string $modelName): Response
-    {
-        try {
-            $modelId = $autoModelService->getAutoModelId($catalogId, $modelName);
-
-            $autoCatalog = new AutoCatalog();
-            $autoCatalog->setCatalogId($catalogId);
-            $autoCatalog->setModelId($modelId);
-
-            $autoCatalog = $autoCatalogDataQuery->query($autoCatalog);
-
-            return $this->json(['data' => ['parameters' => $autoCatalog->getParameters(),
-                'autoList' => $autoCatalog->getCarList()]], Response::HTTP_OK);
-
-        } catch (\Exception $exception) {
-
-            return $this->json(['error' => $exception->getMessage()], Response::HTTP_BAD_REQUEST);
-        }
-    }
-
     #[Route(path: "auto/catalog/{catalogId}/{modelName}", name: "get_catalog_car_parameters", methods: ["GET"])]
     public function getAutoCatalogParameters(Request $request, AutoCatalogDataQuery $autoCatalogDataQuery,
-                                            string  $catalogId, string $modelName): Response
+                                             AutoModelService $autoModelService, string  $catalogId, string $modelName): Response
     {
         try {
             $yearId = $request->get('year');
@@ -107,6 +85,8 @@ class AutoCatalogController extends AbstractController
             $specModification = $request->get('spec_modification');
             $specCatalog = $request->get('spec_catalog');
             $salesRegion = $request->get('sales_region');
+
+            $modelId = $autoModelService->getAutoModelId($catalogId, $modelName);
 
             $autoCatalog = new AutoCatalog();
 
@@ -139,6 +119,7 @@ class AutoCatalogController extends AbstractController
                 ->setClassification($classification)
                 ->setAutoParameters($autoParameters)
                 ->setSalesRegion($salesRegion)
+                ->setModelId($modelId)
                 ->setEngineId($engineId);
 
             $autoCatalog = $autoCatalogDataQuery->query($autoCatalog);
