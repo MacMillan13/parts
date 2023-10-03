@@ -81,10 +81,12 @@ export const actions = {
     const responseJson = await response.json();
 
     if (false === responseJson.exactMatch) {
-
-      const autoList = updateAutoListStructure(responseJson.data[0].carList)
+      const data = responseJson.data[0]
+      const autoList = updateAutoListStructure(data.carList)
 
       commit("setAutoList", autoList)
+
+      actions.handleAutoListTableHeader({ commit }, autoList);
 
     } else if (true === responseJson.exactMatch) {
 
