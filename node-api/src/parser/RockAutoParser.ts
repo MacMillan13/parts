@@ -22,11 +22,13 @@ export class RockAutoParser {
     const $ = cheerio.load(axiosResponse.data);
     const elements = [];
 
-    $('tbody').each((index, element) => {
+    $('.nobmp tbody').each((index, element) => {
+
       const text = $(element).find('.listing-text-row').text();
 
-      if (undefined !== text) {
+      if (undefined !== text && '' !== text) {
         const price = $(element).find('.listing-price').text();
+
         const manufacture = $(element)
           .find('.listing-final-manufacturer')
           .text();
