@@ -3,7 +3,6 @@ import axios from "axios";
 export abstract class AbstractParser {
   protected async getDom(url: string, partNumber: string) {
 
-    console.log(url + partNumber);
     const axiosResponse = await axios.get(url + partNumber, this.getConfig())
 
     return axiosResponse.data;
