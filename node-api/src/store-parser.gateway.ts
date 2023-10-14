@@ -8,6 +8,7 @@ import {
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Server, Socket } from 'socket.io';
+import { ParserService } from './service/parser.service';
 
 @WebSocketGateway({
   cors: {
@@ -15,6 +16,7 @@ import { Server, Socket } from 'socket.io';
   },
 })
 export class StoreParserGateway {
+  constructor(private readonly parserService: ParserService) {}
   @WebSocketServer()
   server: Server;
 
@@ -27,22 +29,10 @@ export class StoreParserGateway {
     // Handle disconnection event
   }
 
-  @SubscribeMessage('message')
-  getMess(@MessageBody() data: any) {
-    console.log(5555);
-  }
-
   @SubscribeMessage('events')
-  findAll(@MessageBody() data: any): Observable<WsResponse<number>> {
-    console.log(data);
-    return from([1, 2, 3]).pipe(
-      map((item) => ({ event: 'events', data: item })),
-    );
-  }
-
-  @SubscribeMessage('identity')
-  async identity(@MessageBody() data: number): Promise<number> {
-    console.log(data);
-    return data;
+  findAll(@MessageBody() data: any): Observable<WsResponse<unknown>> {
+    return this.parserService
+      .startParsing(data)
+      .pipe(map((item) => ({ event: 'events', data: item })));
   }
 }

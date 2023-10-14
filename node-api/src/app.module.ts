@@ -6,11 +6,13 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ParserService } from './service/parser.service';
 import { RockAutoParser } from './parser/RockAutoParser';
 import { PartsGeekParser } from "./parser/PartsGeek.parser";
+import { MoparPartsGiantParser } from "./parser/MoparPartsGiant.parser";
+import { TurnerMotorSportParser } from "./parser/TurnerMotorSport.parser";
 
 @Module({
   imports: [MongooseModule.forRoot('mongodb://localhost/parts')],
   controllers: [AppController],
   providers: [AppService, StoreParserGateway, ParserService, RockAutoParser,
-    PartsGeekParser],
+    PartsGeekParser, MoparPartsGiantParser, TurnerMotorSportParser],
 })
 export class AppModule {}

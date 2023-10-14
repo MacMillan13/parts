@@ -13,6 +13,10 @@ export class TurnerMotorSportParser extends AbstractParser {
 
     const elements = []
 
+    if (undefined === axiosResponse.contents[0].data.contents) {
+      return elements
+    }
+
     axiosResponse.contents[0].data.contents[0].data.mainContent.filter(
       function(item) {
         if ('ContentSlotMain' === item['@type']) {
