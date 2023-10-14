@@ -91,8 +91,6 @@ export default {
 
         query = query.slice(0, -1)
 
-        console.log(query)
-
         autoParams['query'] = query
       }
 

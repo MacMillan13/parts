@@ -35,7 +35,7 @@ class MoparPartsGiant extends AbstractParser
 
         $element = $html->findOne('.part-number');
 
-        $price = $element->findOne('.price-section-price')->innertext;
+        $price = $element->findOne('.price-section-price.price-section-price')->innertext;
         $text = $element->findOne('.pn-detail-main-desc')->innertext
             . $element->findOne('.pn-detail-sub-desc')->innertext;
 //        $elementLink = $element->findOne('.listing-text-row-moreinfo-truck a')->href;
