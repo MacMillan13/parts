@@ -5,6 +5,7 @@ import { ParsedElement } from '../dto/ParsedElement';
 
 @Injectable()
 export class RockAutoParser {
+  // Test code 83530-0e010
   private readonly searchUrl: string =
     'https://www.rockauto.com/en/partsearch/?partnum=';
   async parse(partNumber: string): Promise<Array<any>> {
@@ -12,6 +13,7 @@ export class RockAutoParser {
       method: 'GET',
       url: this.searchUrl + partNumber,
       headers: {
+        'Accept-Language': 'en',
         'User-Agent':
           'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36',
       },

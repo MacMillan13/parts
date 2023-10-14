@@ -1,13 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
 import * as cheerio from 'cheerio';
+import { ParsedElement } from "../dto/ParsedElement";
 
 @Injectable()
 export class MoparPartsGiantParser {
+  // 68440808AA
   private readonly storeUrl: string = 'https://www.moparpartsgiant.com';
   private readonly searchUrl: string =
     this.storeUrl + '/api/search/search-words?isConflict=false&searchText=';
-  async parse(partNumber: string): Promise<{ elements:  Array<any> }> {
+  async parse(partNumber: string): Promise<Array<any>> {
     const axiosResponse = await axios.request({
       method: 'GET',
       url: this.searchUrl + partNumber,
@@ -23,14 +25,12 @@ export class MoparPartsGiantParser {
     const param = axiosResponse.data.data.redirectUrl
 
     if (param.length < 10) {
-      return {
-        elements: [],
-      }
+      return []
     }
 
-    const redirectUrl = this.storeUrl + param
+    const elementLink = this.storeUrl + param
 
-    const $ = cheerio.load(this.storeUrl + redirectUrl);
+    const $ = cheerio.load(elementLink);
 
     const element = $('.part-number');
 
@@ -38,12 +38,12 @@ export class MoparPartsGiantParser {
     const text = element.find('.pn-detail-main-desc').text()
       + element.find('.pn-detail-sub-desc').text()
 
-    return {
-      elements: [{
-        price: price,
-        text: text,
-        link: redirectUrl
-      }]
-    };
+    const parsedElement = new ParsedElement();
+
+    parsedElement.price = price
+    parsedElement.text = text
+    parsedElement.elementLink = elementLink
+
+    return [parsedElement]
   }
 }
