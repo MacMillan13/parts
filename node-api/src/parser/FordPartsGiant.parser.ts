@@ -1,19 +1,18 @@
-import { Injectable } from '@nestjs/common';
+import { AbstractParser } from './abstract.parser';
 import axios from 'axios';
 import * as cheerio from 'cheerio';
 import { ParsedElement } from '../dto/ParsedElement';
-import { AbstractParser } from './abstract.parser';
 
-@Injectable()
-export class MoparPartsGiantParser extends AbstractParser {
-  // 68440808AA
-  private readonly storeUrl: string = 'https://www.moparpartsgiant.com';
+export class FordPartsGiantParser extends AbstractParser {
+  private readonly storeUrl: string = 'https://www.fordpartsgiant.com';
+
   private readonly searchUrl: string =
     this.storeUrl + '/api/search/search-words?isConflict=false&searchText=';
+
   async parse(partNumber: string): Promise<Array<any>> {
     const config = this.getConfig();
 
-    config.headers['site'] = 'MPG';
+    config.headers['site'] = 'FPG';
 
     const axiosSearchResponse = await axios.get(
       this.searchUrl + partNumber,
