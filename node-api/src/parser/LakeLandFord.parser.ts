@@ -14,14 +14,18 @@ export class LakeLandFordParser extends AbstractParser {
     const $ = cheerio.load(axiosSearchResponse.data);
     const element = $('.productDetails');
     const price = $(element)
-      .find('.item-desc')
+      .find('.panel-title .productPriceSpan')
       .text()
-      .replace('\\t', '');
+      .replaceAll('$ ', '');
     const text = $(element)
-      .find('.product-title-module .product-title')
+      .find('.panel-title .prodDescriptH2')
       .text()
       .replace('\\t', '');
-    const shipping = $(element).find('.shippingImg').text().replace('/t', '');
+    const shipping = $(element)
+      .find('.panel-body .shippingImg')
+      .text()
+      .replaceAll('\t', '')
+      .replaceAll('\n', '');
 
     const link = axiosSearchResponse.request.path;
 
