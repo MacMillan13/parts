@@ -1,6 +1,12 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { AppService } from './app.service';
-import { RockAutoParser } from './parser/RockAutoParser';
+import { TurnerMotorSportParser } from './parser/TurnerMotorSport.parser';
+import { ECSTuningParser } from './parser/ECSTuning.parser';
+import { FordPartsGiantParser } from './parser/FordPartsGiant.parser';
+import { MoparPartsGiantParser } from './parser/MoparPartsGiant.parser';
+import { OemFordPartsDirectParser } from './parser/OemFordPartsDirect.parser';
+import { TascaPartsParser } from './parser/TascaParts.parser';
+import { LakeLandFordParser } from "./parser/LakeLandFord.parser";
 
 @Controller()
 export class AppController {
@@ -12,8 +18,10 @@ export class AppController {
   }
 
   @Get(':partNumber')
-  async getData(@Param('partNumber') partNumber: string): Promise<Array<any>> {
-    const rockAutoParser = new RockAutoParser();
-    return rockAutoParser.parse(partNumber);
+  async getData(@Param('partNumber') partNumber: string) {
+    // Actual shipping time will be calculated at checkout.
+    const parser = new LakeLandFordParser();
+
+    return parser.parse(partNumber);
   }
 }

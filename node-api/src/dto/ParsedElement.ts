@@ -3,4 +3,5 @@ export class ParsedElement {
   price: string;
   manufacture: string;
   elementLink: string;
+  shipping: string;
 }

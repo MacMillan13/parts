@@ -16,6 +16,8 @@ class TurnerMotorSportParser extends AbstractParser
 
         $html = $this->getDom($partSearchUrl);
 
+        dd($html);
+
         $notFoundBlock = $html->findOne('.black-header-text')->innerhtml;
 
         if (str_starts_with($notFoundBlock, 'No results')) {

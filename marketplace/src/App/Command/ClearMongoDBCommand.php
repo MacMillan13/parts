@@ -25,9 +25,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 #[AsCommand(name: 'app:clear-mongodb')]
 class ClearMongoDBCommand extends Command
 {
-    public function __construct(private DocumentManager $documentManager)
+    /**
+     * @param string|null $name
+     * @param DocumentManager $documentManager
+     */
+    public function __construct(private DocumentManager $documentManager, string $name = null)
     {
-        parent::__construct('app:clear-mongodb');
+        parent::__construct($name);
     }
 
     /**

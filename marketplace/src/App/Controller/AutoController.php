@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace BitBag\OpenMarketplace\App\Controller;
 
+use BitBag\OpenMarketplace\App\Parser\PartsGeekParser;
+use BitBag\OpenMarketplace\App\Parser\RockAutoParser;
+use BitBag\OpenMarketplace\App\Parser\TurnerMotorSportParser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,8 +29,10 @@ class AutoController extends AbstractController
     }
 
     #[Route(path: "/example", name: "vue_example_page", methods: ["GET"])]
-    public function vueExamplePage(): Response
+    public function vueExamplePage(PartsGeekParser $partsGeekParser): Response
     {
+//        $a = $partsGeekParser->execute('11378662525');
+//        dd($a);
         return new Response($this->templatingEngine->render('@SyliusShop/Homepage/index.html.twig'));
     }
 

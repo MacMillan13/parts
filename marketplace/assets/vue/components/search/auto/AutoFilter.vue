@@ -6,7 +6,7 @@
         <option value="All" selected>
           All
         </option>
-        <option v-for="value in filter.values" :value="value.idx">
+        <option v-for="value in filter.values" :value="value.value">
           {{ value.value }}
         </option>
       </select>
@@ -34,33 +34,63 @@ watch(autoFilter, async () => {
 })
 
 watch(selectedParams.value, async () => {
-  //TODO fix double request
   search()
 })
 
-const search = () => {
-  const selectedParamsArray = toRaw(selectedParams.value)
+const getSearchFilterIdByName = () => {
+  const selectedParamsObject = toRaw(selectedParams.value)
+  console.log(222, selectedParamsObject)
+  let searchParams = {}
 
-  if (0 !== Object.keys(selectedParamsArray).length) {
+  for (const property in selectedParamsObject) {
+    if (selectedParamsObject[property].length > 0) {
+      console.log(333)
+      autoFilter.value.forEach(filter => {
+        console.log(5555)
+        if (filter.key === property) {
+          filter.values.forEach(parameter => {
+            if (parameter.value === selectedParamsObject[property]) {
+              searchParams[property] = parameter.idx;
+            }
+          })
+        }
+      })
+    }
+  }
+
+  return searchParams;
+}
+
+const search = () => {
+
+  const searchParams = getSearchFilterIdByName()
+
+  if (0 !== Object.keys(searchParams).length) {
 
     let query = "?"
-
-    for (const key in selectedParamsArray) {
-      const value = selectedParamsArray[key];
+    for (const key in searchParams) {
+      const value = searchParams[key];
       if ('All' !== value && value.length > 0) {
         query += key + "=" + value + "&"
       }
     }
 
-
     query = query.slice(0, -1)
 
-    autoParams['query'] = query
-  }
+    autoParams.query = query
 
+    sendRequest(autoParams)
+  }
+}
+
+function sendRequest(autoParams) {
   autoParams.brand = route.params.brand
   autoParams.model = route.params.model
+
+  store.dispatch('search/getAutoCatalog', autoParams)
 }
+
+sendRequest(autoParams);
 </script>
 
 <style scoped>
