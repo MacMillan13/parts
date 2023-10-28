@@ -6,6 +6,7 @@ export class TurnerMotorSportParser extends AbstractParser {
   private readonly url: string = 'https://www.turnermotorsport.com/'
   private readonly searchUrl: string = this.url + 'Search?No=0&Nrpp=50&Ntt='
   // 11128654272
+  // TP 1.5
 
   async parse(partNumber: string): Promise<Array<any>> {
 

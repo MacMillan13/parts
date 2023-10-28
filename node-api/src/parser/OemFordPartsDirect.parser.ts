@@ -7,6 +7,7 @@ import { ParsedElement } from '../dto/ParsedElement';
 
 export class OemFordPartsDirectParser extends AbstractParser {
   private readonly storeUrl: string = 'https://www.oemfordpartsdirect.com';
+  // TP none
   // l1mz10a313ba
   private readonly searchUrl: string = this.storeUrl + '/search?search_str=';
 

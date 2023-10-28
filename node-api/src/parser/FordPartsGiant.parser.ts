@@ -8,6 +8,7 @@ export class FordPartsGiantParser extends AbstractParser {
 
   private readonly searchUrl: string =
     this.storeUrl + '/api/search/search-words?isConflict=false&searchText=';
+  // TP none
   // FL3Z-1620125-B
 
   async parse(partNumber: string): Promise<Array<any>> {

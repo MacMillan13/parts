@@ -6,7 +6,9 @@ import { FordPartsGiantParser } from './parser/FordPartsGiant.parser';
 import { MoparPartsGiantParser } from './parser/MoparPartsGiant.parser';
 import { OemFordPartsDirectParser } from './parser/OemFordPartsDirect.parser';
 import { TascaPartsParser } from './parser/TascaParts.parser';
-import { LakeLandFordParser } from "./parser/LakeLandFord.parser";
+import { LakeLandFordParser } from './parser/LakeLandFord.parser';
+import { FordOEMPartsOnlineParser } from './parser/FordOEMPartsOnline.parser';
+import { OneAautoParser } from './parser/OneAauto.parser';
 
 @Controller()
 export class AppController {
@@ -20,7 +22,7 @@ export class AppController {
   @Get(':partNumber')
   async getData(@Param('partNumber') partNumber: string) {
     // Actual shipping time will be calculated at checkout.
-    const parser = new LakeLandFordParser();
+    const parser = new OneAautoParser();
 
     return parser.parse(partNumber);
   }

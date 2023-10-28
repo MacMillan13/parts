@@ -6,6 +6,7 @@ import { AbstractParser } from './abstract.parser';
 
 @Injectable()
 export class MoparPartsGiantParser extends AbstractParser {
+  // TP 2.5
   // 68440808AA
   private readonly storeUrl: string = 'https://www.moparpartsgiant.com';
   private readonly searchUrl: string =

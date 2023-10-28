@@ -7,7 +7,7 @@ export class LakeLandFordParser extends AbstractParser {
   private readonly storeUrl: string = 'https://parts.lakelandford.com';
   private readonly searchUrl: string =
     this.storeUrl + '/productSearch.aspx?searchTerm=';
-
+  // TP 3.2
   async parse(partNumber: string): Promise<Array<any>> {
     const axiosSearchResponse = await axios.get(this.searchUrl + partNumber);
 
